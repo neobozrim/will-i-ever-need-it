@@ -1,27 +1,14 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, BarChart3, BookOpen } from 'lucide-react';
-import { mathConcepts } from '../data/concepts';
+import { ArrowLeft, BarChart3, BookOpen, AlertCircle, Loader2 } from 'lucide-react';
+import { useMathConcept } from '../hooks/useMathConcepts';
 import AudioPlayer from '../components/Concept/AudioPlayer';
 import VoiceAIAgent from '../components/Concept/VoiceAIAgent';
 import BlogContent from '../components/Concept/BlogContent';
 
 const ConceptPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const concept = mathConcepts.find(c => c.slug === slug);
-
-  if (!concept) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Concept Not Found</h1>
-          <Link to="/" className="text-blue-600 hover:text-blue-700 font-medium">
-            Return to Home
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const { concept, loading, error } = useMathConcept(slug || '');
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -35,6 +22,79 @@ const ConceptPage: React.FC = () => {
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        {/* Back button */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <Link 
+              to="/" 
+              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="font-medium">Back to Concepts</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center py-20">
+          <div className="flex items-center space-x-3 text-gray-600">
+            <Loader2 className="h-8 w-8 animate-spin" />
+            <span className="text-xl">Loading concept...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !concept) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        {/* Back button */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <Link 
+              to="/" 
+              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="font-medium">Back to Concepts</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-red-100 rounded-xl">
+                <AlertCircle className="h-8 w-8 text-red-600" />
+              </div>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+              {error === 'Concept not found' ? 'Concept Not Found' : 'Error Loading Concept'}
+            </h1>
+            <p className="text-gray-600 mb-6">
+              {error === 'Concept not found' 
+                ? 'The concept you\'re looking for doesn\'t exist or has been moved.'
+                : error || 'Something went wrong while loading this concept.'
+              }
+            </p>
+            <Link 
+              to="/" 
+              className="text-blue-600 hover:text-blue-700 font-medium"
+            >
+              Return to Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback image if hero image is not available
+  const heroImageUrl = concept.hero_image_url || concept.thumbnail_url || 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -88,9 +148,14 @@ const ConceptPage: React.FC = () => {
             <div className="relative">
               <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden">
                 <img 
-                  src={concept.thumbnail} 
+                  src={heroImageUrl} 
                   alt={concept.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback to default image if hero image fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
@@ -109,7 +174,7 @@ const ConceptPage: React.FC = () => {
           </div>
           
           {/* Main content */}
-          <BlogContent content={concept.content} />
+          <BlogContent content={concept.blog_post_content || concept.description} />
         </div>
       </div>
     </div>

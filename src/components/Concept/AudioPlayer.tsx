@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
 
-const AudioPlayer: React.FC = () => {
+interface AudioPlayerProps {
+  audioUrl?: string | null;
+}
+
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration] = useState(180); // 3 minutes placeholder
@@ -13,6 +17,40 @@ const AudioPlayer: React.FC = () => {
   };
 
   const progressPercentage = (currentTime / duration) * 100;
+
+  // Show placeholder if no audio URL is provided
+  if (!audioUrl) {
+    return (
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Audio Explanation</h3>
+          <div className="flex items-center space-x-1 text-sm text-gray-400">
+            <Volume2 className="h-4 w-4" />
+            <span>Coming Soon</span>
+          </div>
+        </div>
+        
+        {/* Placeholder waveform */}
+        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+          <div className="flex items-center justify-center h-16 space-x-1">
+            {Array.from({ length: 40 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-1 bg-gray-300 rounded-full opacity-30"
+                style={{
+                  height: `${Math.random() * 40 + 10}px`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        
+        <div className="text-center text-gray-500">
+          <p className="text-sm">Audio explanation will be available soon!</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -76,6 +114,18 @@ const AudioPlayer: React.FC = () => {
           <SkipForward className="h-5 w-5" />
         </button>
       </div>
+      
+      {/* Audio element (hidden) */}
+      {audioUrl && (
+        <audio
+          className="hidden"
+          src={audioUrl}
+          onLoadedMetadata={(e) => {
+            // You can set the actual duration here when audio loads
+            // setDuration(e.currentTarget.duration);
+          }}
+        />
+      )}
     </div>
   );
 };

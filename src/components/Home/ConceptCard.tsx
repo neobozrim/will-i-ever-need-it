@@ -21,15 +21,23 @@ const ConceptCard: React.FC<ConceptCardProps> = ({ concept }) => {
     }
   };
 
+  // Fallback image if thumbnail is not available
+  const thumbnailUrl = concept.thumbnail_url || 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=400';
+
   return (
     <Link to={`/concepts/${concept.slug}`} className="group block">
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl hover:border-gray-300 transition-all duration-300 transform hover:-translate-y-1">
         {/* Thumbnail */}
         <div className="aspect-square bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden">
           <img 
-            src={concept.thumbnail} 
+            src={thumbnailUrl} 
             alt={concept.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              // Fallback to default image if thumbnail fails to load
+              const target = e.target as HTMLImageElement;
+              target.src = 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=400';
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           

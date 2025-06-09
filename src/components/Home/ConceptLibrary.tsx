@@ -1,9 +1,96 @@
 import React from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, AlertCircle, Loader2 } from 'lucide-react';
 import ConceptCard from './ConceptCard';
-import { mathConcepts } from '../../data/concepts';
+import { useMathConcepts } from '../../hooks/useMathConcepts';
 
 const ConceptLibrary: React.FC = () => {
+  const { concepts, loading, error } = useMathConcepts();
+
+  if (loading) {
+    return (
+      <section id="concepts" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-blue-100 rounded-xl">
+                <BookOpen className="h-8 w-8 text-blue-600" />
+              </div>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              real world math concepts
+            </h2>
+            
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              that are not boring and give you a{' '}
+              <span className="font-bold text-blue-600">clear answer to</span>{' '}
+              "when will i ever need it?"
+            </p>
+          </div>
+          
+          <div className="flex justify-center items-center py-12">
+            <div className="flex items-center space-x-3 text-gray-600">
+              <Loader2 className="h-6 w-6 animate-spin" />
+              <span className="text-lg">Loading concepts...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section id="concepts" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-red-100 rounded-xl">
+                <AlertCircle className="h-8 w-8 text-red-600" />
+              </div>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Oops! Something went wrong
+            </h2>
+            
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+              We couldn't load the math concepts right now. Please try again later.
+            </p>
+            
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 max-w-md mx-auto">
+              <p className="text-red-700 text-sm">{error}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (concepts.length === 0) {
+    return (
+      <section id="concepts" className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="flex justify-center mb-4">
+              <div className="p-3 bg-blue-100 rounded-xl">
+                <BookOpen className="h-8 w-8 text-blue-600" />
+              </div>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              real world math concepts
+            </h2>
+            
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              No concepts available yet. Check back soon!
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="concepts" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,7 +113,7 @@ const ConceptLibrary: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {mathConcepts.map((concept) => (
+          {concepts.map((concept) => (
             <ConceptCard key={concept.id} concept={concept} />
           ))}
         </div>
