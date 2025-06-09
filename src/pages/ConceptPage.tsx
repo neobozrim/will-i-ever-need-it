@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BarChart3, BookOpen, AlertCircle, Loader2 } from 'lucide-react';
 import { useMathConcept } from '../hooks/useMathConcepts';
@@ -9,6 +9,11 @@ import BlogContent from '../components/Concept/BlogContent';
 const ConceptPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { concept, loading, error } = useMathConcept(slug || '');
+
+  // Force scroll to top when component mounts or slug changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -169,7 +174,7 @@ const ConceptPage: React.FC = () => {
         <div className="space-y-8">
           {/* Audio and AI blocks - two columns on desktop, stacked on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <AudioPlayer />
+            <AudioPlayer audioUrl={concept.audio_recording_url} />
             <VoiceAIAgent />
           </div>
           
