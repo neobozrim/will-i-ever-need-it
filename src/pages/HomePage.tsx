@@ -1,0 +1,16 @@
+import React from 'react';
+import Hero from '../components/Home/Hero';
+import VideoBlock from '../components/Home/VideoBlock';
+import ConceptLibrary from '../components/Home/ConceptLibrary';
+
+const HomePage: React.FC = () => {
+  return (
+    <div>
+      <Hero />
+      <VideoBlock />
+      <ConceptLibrary />
+    </div>
+  );
+};
+
+export default HomePage;
