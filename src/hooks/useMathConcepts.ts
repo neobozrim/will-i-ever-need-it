@@ -2,20 +2,37 @@ import { useState, useEffect } from 'react';
 import { supabase, getStorageUrl } from '../lib/supabase';
 import { MathConcept, DatabaseMathConcept } from '../types';
 
+// Helper function to check if a string is a full URL
+const isFullUrl = (url: string | null): boolean => {
+  if (!url) return false;
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 // Helper function to transform database concept to app concept
 const transformConcept = (dbConcept: DatabaseMathConcept): MathConcept => {
   // Extract category and difficulty from title or description, or use defaults
   const category = extractCategory(dbConcept.title, dbConcept.description);
   const difficulty = extractDifficulty(dbConcept.title, dbConcept.description);
   
+  // Handle thumbnail URL - use as is if it's already a full URL, otherwise construct it
+  const getMediaUrl = (url: string | null, bucket: string) => {
+    if (!url) return null;
+    return isFullUrl(url) ? url : getStorageUrl(bucket, url);
+  };
+  
   return {
     id: dbConcept.id,
     slug: dbConcept.slug,
     title: dbConcept.title,
     description: dbConcept.description,
-    thumbnail_url: dbConcept.thumbnail_url ? getStorageUrl('thumbnails', dbConcept.thumbnail_url) : null,
-    hero_image_url: dbConcept.hero_image_url ? getStorageUrl('hero-images', dbConcept.hero_image_url) : null,
-    audio_recording_url: dbConcept.audio_recording_url ? getStorageUrl('audio-recordings', dbConcept.audio_recording_url) : null,
+    thumbnail_url: getMediaUrl(dbConcept.thumbnail_url, 'thumbnails'),
+    hero_image_url: getMediaUrl(dbConcept.hero_image_url, 'hero-images'),
+    audio_recording_url: getMediaUrl(dbConcept.audio_recording_url, 'audio-recordings'),
     blog_post_content: dbConcept.blog_post_content,
     category,
     difficulty,
@@ -56,24 +73,49 @@ export const useMathConcepts = () => {
   useEffect(() => {
     const fetchConcepts = async () => {
       try {
+        console.log('Starting to fetch concepts...');
         setLoading(true);
         setError(null);
 
-        const { data, error: supabaseError } = await supabase
+        console.log('Supabase URL:', import.meta.env.VITE_SUPABASE_URL);
+        
+        // First, test the connection to Supabase
+        const { data: authData, error: authError } = await supabase.auth.getSession();
+        
+        if (authError) {
+          console.error('Supabase auth error:', authError);
+          throw new Error(`Authentication failed: ${authError.message}`);
+        }
+        
+        console.log('Supabase session:', authData);
+        
+        // Then fetch the concepts
+        const { data, error: supabaseError, count } = await supabase
           .from('math_concepts')
-          .select('*')
+          .select('*', { count: 'exact' })
           .order('created_at', { ascending: false });
 
+        console.log('Supabase response - data:', data);
+        console.log('Supabase response - error:', supabaseError);
+        console.log('Total concepts found:', count);
+
         if (supabaseError) {
-          throw new Error(`Failed to fetch concepts: ${supabaseError.message}`);
+          console.error('Supabase query error:', supabaseError);
+          throw new Error(`Failed to fetch concepts: ${supabaseError.message} (${supabaseError.code})`);
+        }
+
+        if (!data || data.length === 0) {
+          console.warn('No concepts found in the database');
         }
 
         const transformedConcepts = data?.map(transformConcept) || [];
+        console.log('Transformed concepts:', transformedConcepts);
         setConcepts(transformedConcepts);
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+        console.error('Error in fetchConcepts:', err);
+        const errorMessage = err instanceof Error ? 
+          `${err.message} (${err.name})` : 'An unknown error occurred';
         setError(errorMessage);
-        console.error('Error fetching math concepts:', err);
       } finally {
         setLoading(false);
       }

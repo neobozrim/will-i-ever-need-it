@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BarChart3, BookOpen, AlertCircle, Loader2 } from 'lucide-react';
 import { useMathConcept } from '../hooks/useMathConcepts';
@@ -9,11 +9,20 @@ import BlogContent from '../components/Concept/BlogContent';
 const ConceptPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { concept, loading, error } = useMathConcept(slug || '');
+  const [heroImageError, setHeroImageError] = useState(false);
+  const defaultHeroImage = 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
 
   // Force scroll to top when component mounts or slug changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Handle image error
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    setHeroImageError(true);
+    const target = e.target as HTMLImageElement;
+    target.src = defaultHeroImage;
+  };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -98,8 +107,11 @@ const ConceptPage: React.FC = () => {
     );
   }
 
-  // Fallback image if hero image is not available
-  const heroImageUrl = concept.hero_image_url || concept.thumbnail_url || 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
+  // Handle media URLs from Supabase with error state
+  const heroImageUrl = !heroImageError ? (concept?.hero_image_url || concept?.thumbnail_url || defaultHeroImage) : defaultHeroImage;
+  
+  // Use blog content from concept or fallback to description
+  const blogContent = concept?.blog_post_content || `# ${concept?.title || 'Concept'}\n\n${concept?.description || 'No description available'}`;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -156,11 +168,7 @@ const ConceptPage: React.FC = () => {
                   src={heroImageUrl} 
                   alt={concept.title}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback to default image if hero image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
-                  }}
+                  onError={handleImageError}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
@@ -179,7 +187,7 @@ const ConceptPage: React.FC = () => {
           </div>
           
           {/* Main content */}
-          <BlogContent content={concept.blog_post_content || concept.description} />
+          <BlogContent content={blogContent} />
         </div>
       </div>
     </div>

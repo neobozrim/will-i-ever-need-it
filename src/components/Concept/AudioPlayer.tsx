@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from 'lucide-react';
 
 interface AudioPlayerProps {
@@ -8,7 +8,26 @@ interface AudioPlayerProps {
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration] = useState(180); // 3 minutes placeholder
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const progressInterval = useRef<number>();
+
+  // Update progress bar
+  useEffect(() => {
+    if (isPlaying) {
+      progressInterval.current = window.setInterval(() => {
+        if (audioRef.current) {
+          setCurrentTime(audioRef.current.currentTime);
+        }
+      }, 1000);
+    } else {
+      clearInterval(progressInterval.current);
+    }
+
+    return () => {
+      clearInterval(progressInterval.current);
+    };
+  }, [isPlaying]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -17,6 +36,39 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl }) => {
   };
 
   const progressPercentage = (currentTime / duration) * 100;
+
+  // Toggle play/pause
+  const togglePlayPause = () => {
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch(error => {
+        console.error('Error playing audio:', error);
+      });
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  // Handle time update
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  // Handle seeking
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    const newTime = pos * duration;
+    
+    audioRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
 
   // Show placeholder if no audio URL is provided
   if (!audioUrl) {
@@ -100,7 +152,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl }) => {
         </button>
         
         <button
-          onClick={() => setIsPlaying(!isPlaying)}
+          onClick={togglePlayPause}
           className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:shadow-lg transition-all duration-200 transform hover:scale-105"
         >
           {isPlaying ? (
@@ -115,17 +167,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioUrl }) => {
         </button>
       </div>
       
-      {/* Audio element (hidden) */}
-      {audioUrl && (
-        <audio
-          className="hidden"
-          src={audioUrl}
-          onLoadedMetadata={(e) => {
-            // You can set the actual duration here when audio loads
-            // setDuration(e.currentTarget.duration);
-          }}
-        />
-      )}
+      {/* Audio element */}
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={(e) => {
+          const audio = e.currentTarget;
+          setDuration(audio.duration);
+        }}
+        className="hidden"
+      />
     </div>
   );
 };
