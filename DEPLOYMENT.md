@@ -2,7 +2,16 @@
 
 ## Setup Instructions
 
-### 1. Install Supabase CLI
+### 1. Install Dependencies
+```bash
+# Install project dependencies
+npm install
+
+# Install ElevenLabs client package
+npm install @elevenlabs/client
+```
+
+### 2. Install Supabase CLI
 ```bash
 npm install -g supabase
 ```
