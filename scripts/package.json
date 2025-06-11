@@ -1,0 +1,19 @@
+{
+  "name": "elevenlabs-sync",
+  "version": "1.0.0",
+  "description": "Sync Supabase blog posts to ElevenLabs",
+  "type": "module",
+  "scripts": {
+    "start": "ts-node sync-to-elevenlabs.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "axios": "^1.6.5",
+    "dotenv": "^16.3.1",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "ts-node": "^10.9.2"
+  }
+}
