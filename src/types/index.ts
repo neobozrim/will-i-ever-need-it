@@ -32,3 +32,30 @@ export interface DatabaseMathConcept {
   created_at: string;
   updated_at: string;
 }
+
+// ElevenLabs types
+export interface ElevenLabsConversation {
+  id: string;
+  agent_id: string;
+  status: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface ElevenLabsError {
+  error: string;
+  details?: string;
+  message?: string;
+}
+
+// Supabase Edge Function types
+export interface EdgeFunctionResponse<T = any> {
+  data: T | null;
+  error: {
+    message: string;
+    [key: string]: any;
+  } | null;
+}
+
+// Voice AI Component states
+export type VoiceAIStatus = 'ready' | 'loading' | 'active' | 'recording' | 'error';
