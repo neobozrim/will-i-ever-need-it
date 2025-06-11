@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const VideoBlock: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
-  const videoId = 'h3pJZSTQqIg';
+  const videoId = 'y7dxoxVptX0';
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   
   const iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?` +
