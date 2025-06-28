@@ -9,7 +9,7 @@ const Header: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="flex items-center justify-center w-10 h-10 group-hover:scale-105 transition-transform duration-200">
               <img 
-                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails/logo.svg" 
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//logo.svg" 
                 alt="Will I Ever Need It Logo"
                 className="w-full h-full object-contain"
                 onError={(e) => {
