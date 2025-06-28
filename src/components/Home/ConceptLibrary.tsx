@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2 } from 'lucide-react';
 import ConceptCard from './ConceptCard';
 import { useMathConcepts } from '../../hooks/useMathConcepts';
 
@@ -16,12 +16,6 @@ const ConceptLibrary: React.FC = () => {
       <section id="concepts" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="flex justify-center mb-4">
-              <div className="p-3 bg-blue-100 rounded-xl">
-                <BookOpen className="h-8 w-8 text-blue-600" />
-              </div>
-            </div>
-            
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               real world math concepts
             </h2>
@@ -77,12 +71,6 @@ const ConceptLibrary: React.FC = () => {
       <section id="concepts" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="flex justify-center mb-4">
-              <div className="p-3 bg-blue-100 rounded-xl">
-                <BookOpen className="h-8 w-8 text-blue-600" />
-              </div>
-            </div>
-            
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               real world math concepts
             </h2>
@@ -103,12 +91,6 @@ const ConceptLibrary: React.FC = () => {
     <section id="concepts" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 bg-blue-100 rounded-xl">
-              <BookOpen className="h-8 w-8 text-blue-600" />
-            </div>
-          </div>
-          
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             real world math concepts
           </h2>
