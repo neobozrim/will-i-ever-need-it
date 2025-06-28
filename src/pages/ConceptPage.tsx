@@ -117,7 +117,7 @@ const ConceptPage: React.FC = () => {
       {/* Hero section */}
       <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                 {concept.title}
@@ -129,14 +129,13 @@ const ConceptPage: React.FC = () => {
             </div>
             
             <div className="relative">
-              <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden">
+              <div className="aspect-[9/16] bg-white rounded-xl overflow-hidden shadow-lg">
                 <img 
                   src={heroImageUrl} 
                   alt={concept.title}
                   className="w-full h-full object-cover"
                   onError={handleImageError}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
             </div>
           </div>
