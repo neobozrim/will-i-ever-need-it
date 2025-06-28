@@ -28,7 +28,7 @@ const ConceptPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50">
         {/* Back button */}
         <div className="bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Link 
               to="/" 
               className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -54,7 +54,7 @@ const ConceptPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50">
         {/* Back button */}
         <div className="bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Link 
               to="/" 
               className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -103,7 +103,7 @@ const ConceptPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Back button */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link 
             to="/" 
             className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -114,42 +114,41 @@ const ConceptPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Hero section */}
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                {concept.title}
-              </h1>
-              
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                {concept.description}
-              </p>
-            </div>
+      {/* Single column layout */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="space-y-8 sm:space-y-12">
+          {/* Header section */}
+          <div className="text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+              {concept.title}
+            </h1>
             
-            <div className="relative">
-              <div className="aspect-[9/16] bg-white rounded-xl overflow-hidden shadow-lg">
-                <img 
-                  src={heroImageUrl} 
-                  alt={concept.title}
-                  className="w-full h-full object-cover"
-                  onError={handleImageError}
-                />
-              </div>
+            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              {concept.description}
+            </p>
+          </div>
+          
+          {/* Hero image */}
+          <div className="w-full">
+            <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg">
+              <img 
+                src={heroImageUrl} 
+                alt={concept.title}
+                className="w-full h-full object-cover"
+                onError={handleImageError}
+              />
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Main content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="space-y-8">
           {/* Voice AI Agent */}
-          <VoiceAIAgent />
+          <div className="w-full">
+            <VoiceAIAgent />
+          </div>
           
-          {/* Main content */}
-          <BlogContent content={blogContent} />
+          {/* Blog content */}
+          <div className="w-full">
+            <BlogContent content={blogContent} />
+          </div>
         </div>
       </div>
     </div>
