@@ -12,6 +12,12 @@ const Header: React.FC = () => {
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails/logo.svg" 
                 alt="Will I Ever Need It Logo"
                 className="w-full h-full object-contain"
+                onError={(e) => {
+                  console.error('Failed to load logo:', e);
+                  // Fallback to a simple text logo if image fails
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
               />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
