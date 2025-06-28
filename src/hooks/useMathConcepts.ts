@@ -15,10 +15,6 @@ const isFullUrl = (url: string | null): boolean => {
 
 // Helper function to transform database concept to app concept
 const transformConcept = (dbConcept: DatabaseMathConcept): MathConcept => {
-  // Extract category and difficulty from title or description, or use defaults
-  const category = extractCategory(dbConcept.title, dbConcept.description);
-  const difficulty = extractDifficulty(dbConcept.title, dbConcept.description);
-  
   // Handle thumbnail URL - use as is if it's already a full URL, otherwise construct it
   const getMediaUrl = (url: string | null, bucket: string) => {
     if (!url) return null;
@@ -34,35 +30,9 @@ const transformConcept = (dbConcept: DatabaseMathConcept): MathConcept => {
     hero_image_url: getMediaUrl(dbConcept.hero_image_url, 'hero-images'),
     audio_recording_url: getMediaUrl(dbConcept.audio_recording_url, 'audio-recordings'),
     blog_post_content: dbConcept.blog_post_content,
-    category,
-    difficulty,
     created_at: dbConcept.created_at,
     updated_at: dbConcept.updated_at,
   };
-};
-
-// Helper functions to extract category and difficulty
-const extractCategory = (title: string, description: string): string => {
-  const text = `${title} ${description}`.toLowerCase();
-  
-  if (text.includes('algebra') || text.includes('equation')) return 'Algebra';
-  if (text.includes('calculus') || text.includes('derivative') || text.includes('integral')) return 'Calculus';
-  if (text.includes('trigonometry') || text.includes('sine') || text.includes('cosine')) return 'Trigonometry';
-  if (text.includes('linear algebra') || text.includes('vector') || text.includes('matrix')) return 'Linear Algebra';
-  if (text.includes('statistics') || text.includes('probability')) return 'Statistics';
-  if (text.includes('number theory') || text.includes('prime')) return 'Number Theory';
-  if (text.includes('geometry')) return 'Geometry';
-  
-  return 'Mathematics';
-};
-
-const extractDifficulty = (title: string, description: string): 'beginner' | 'intermediate' | 'advanced' => {
-  const text = `${title} ${description}`.toLowerCase();
-  
-  if (text.includes('advanced') || text.includes('calculus') || text.includes('linear algebra')) return 'advanced';
-  if (text.includes('intermediate') || text.includes('trigonometry') || text.includes('algebra')) return 'intermediate';
-  
-  return 'beginner';
 };
 
 export const useMathConcepts = () => {

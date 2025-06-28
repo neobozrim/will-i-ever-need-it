@@ -7,8 +7,6 @@ export interface MathConcept {
   hero_image_url: string | null;
   audio_recording_url: string | null;
   blog_post_content: string | null;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  category: string;
   created_at?: string;
   updated_at?: string;
 }

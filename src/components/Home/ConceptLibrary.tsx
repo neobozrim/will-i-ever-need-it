@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BookOpen, AlertCircle, Loader2 } from 'lucide-react';
 import ConceptCard from './ConceptCard';
 import { useMathConcepts } from '../../hooks/useMathConcepts';
 
 const ConceptLibrary: React.FC = () => {
   const { concepts, loading, error } = useMathConcepts();
+  const [displayCount, setDisplayCount] = useState(15);
+
+  const handleLoadMore = () => {
+    setDisplayCount(prev => prev + 15);
+  };
 
   if (loading) {
     return (
@@ -91,6 +96,9 @@ const ConceptLibrary: React.FC = () => {
     );
   }
 
+  const displayedConcepts = concepts.slice(0, displayCount);
+  const hasMoreConcepts = concepts.length > displayCount;
+
   return (
     <section id="concepts" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -113,16 +121,21 @@ const ConceptLibrary: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {concepts.map((concept) => (
+          {displayedConcepts.map((concept) => (
             <ConceptCard key={concept.id} concept={concept} />
           ))}
         </div>
         
-        <div className="text-center mt-12">
-          <button className="bg-white text-gray-700 px-8 py-3 rounded-xl font-semibold border-2 border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-            view all concepts
-          </button>
-        </div>
+        {hasMoreConcepts && (
+          <div className="text-center mt-12">
+            <button 
+              onClick={handleLoadMore}
+              className="bg-white text-gray-700 px-8 py-3 rounded-xl font-semibold border-2 border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+              load more
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

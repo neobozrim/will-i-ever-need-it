@@ -73,17 +73,6 @@ const BlogContent: React.FC<BlogContentProps> = ({ content }) => {
       <div className="prose prose-lg max-w-none">
         {formatContent(content)}
       </div>
-      
-      {/* Interactive elements placeholder */}
-      <div className="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
-        <h4 className="text-lg font-semibold text-blue-900 mb-3">Try It Yourself</h4>
-        <p className="text-blue-800 mb-4">
-          Practice what you've learned with interactive exercises and real-time feedback.
-        </p>
-        <button className="bg-blue-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors duration-200">
-          Start Practice
-        </button>
-      </div>
     </div>
   );
 };
