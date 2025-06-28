@@ -22,7 +22,7 @@ const VideoBlock: React.FC = () => {
 
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             yes, you will need math and will be loving it!
@@ -32,8 +32,8 @@ const VideoBlock: React.FC = () => {
           </p>
         </div>
         
-        <div className="relative">
-          <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden shadow-2xl">
+        <div className="relative max-w-2xl mx-auto">
+          <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
             <div className="relative aspect-video cursor-pointer group" onClick={handlePlayClick}>
               <img 
                 src={thumbnailUrl} 
@@ -46,35 +46,35 @@ const VideoBlock: React.FC = () => {
                 }}
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center transform transition-transform group-hover:scale-110">
-                  <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center transform transition-transform group-hover:scale-110 shadow-lg">
+                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M6.3 2.84L16.5 10 6.3 17.16V2.84z" />
                   </svg>
                 </div>
               </div>
             </div>
             
-            <div className="bg-gray-800 px-6 py-4 flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+            <div className="bg-gray-800 px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 <span className="text-white text-sm font-medium">jody's treehouse adventure</span>
               </div>
-              <div className="text-gray-400 text-sm">click to watch</div>
+              <div className="text-gray-400 text-xs">click to watch</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Video Modal */}
+      {/* Video Modal - Larger size */}
       {showVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75" onClick={handleCloseModal}>
-          <div className="relative w-full max-w-4xl bg-black rounded-lg overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80" onClick={handleCloseModal}>
+          <div className="relative w-full max-w-6xl bg-black rounded-lg overflow-hidden" onClick={e => e.stopPropagation()}>
             <button 
               onClick={handleCloseModal}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+              className="absolute top-4 right-4 text-white hover:text-gray-300 z-10 bg-black bg-opacity-50 rounded-full p-2 transition-colors"
               aria-label="Close video"
             >
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
