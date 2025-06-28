@@ -31,16 +31,16 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right side - Animated portrait */}
+          {/* Right side - Animated monster */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
               <div className="w-80 h-96 lg:w-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300 animate-jiggle">
                 <img 
-                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Stylish%20Woman%20Portrait.jpeg" 
-                  alt="Stylish woman portrait"
+                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//monster.png" 
+                  alt="Friendly monster character"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    console.error('Failed to load portrait image');
+                    console.error('Failed to load monster image');
                     // Fallback to a placeholder if image fails to load
                     const target = e.target as HTMLImageElement;
                     target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
