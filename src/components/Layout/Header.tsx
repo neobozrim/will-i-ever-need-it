@@ -15,21 +15,6 @@ const Header: React.FC = () => {
               will i ever need it?
             </span>
           </Link>
-          
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/" 
-              className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200"
-            >
-              home
-            </Link>
-            <Link 
-              to="/#concepts" 
-              className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200"
-            >
-              concepts
-            </Link>
-          </nav>
         </div>
       </div>
     </header>
