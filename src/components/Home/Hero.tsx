@@ -78,15 +78,18 @@ const Hero: React.FC = () => {
     }
   };
 
+  // FIXED: Description animation - slides from left but stays at proper Y position
   const slideInFromLeftVariants = {
     hidden: { 
       x: -200, 
+      y: 0, // FIXED: Keep Y at 0 so it doesn't appear above heading
       opacity: 0, 
       scale: 0.9,
       rotate: -5
     },
     visible: { 
       x: 0, 
+      y: 0, // FIXED: Return to Y: 0, not negative
       opacity: 1, 
       scale: 1,
       rotate: 0,
@@ -209,7 +212,7 @@ const Hero: React.FC = () => {
         case 'description':
           return {
             x: -1000,
-            y: -200,
+            y: -200, // Flies out to upper left
             rotate: -25,
             scale: 0.4,
             opacity: 0,
@@ -238,11 +241,7 @@ const Hero: React.FC = () => {
       }
     }
     
-    // Return to normal position with jingle for heading, button, and image
-    if (element === 'heading' || element === 'button' || element === 'image') {
-      return ["visible", "idle"];
-    }
-    
+    // FIXED: Return to normal position - description returns to its proper place below heading
     return "visible";
   };
 
@@ -355,7 +354,7 @@ const Hero: React.FC = () => {
               </motion.span>
             </motion.h1>
             
-            {/* Description with SLIDE IN FROM LEFT animation - ALWAYS RENDERED */}
+            {/* FIXED: Description with SLIDE IN FROM LEFT animation - stays below heading */}
             <motion.p 
               className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
               variants={slideInFromLeftVariants}
@@ -363,6 +362,9 @@ const Hero: React.FC = () => {
               animate={getAnimationState('description')}
               transition={{
                 delay: 0.5
+              }}
+              style={{
+                willChange: 'transform'
               }}
             >
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
