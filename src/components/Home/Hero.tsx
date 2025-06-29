@@ -8,11 +8,11 @@ const Hero: React.FC = () => {
           {/* Left content */}
           <div className="text-left">
             <h1 className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight">
-              Bored? Opposite!
+              Math could be boring!
             </h1>
             
             <p className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
-              Use that "boring" math to build epic stuff, crush rivals, and become a legend, while the rest remain bored and... clueless!
+              Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </p>
             
             <div className="flex justify-start">
