@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
     return () => unsubscribe();
   }, [scrollYProgress, hasTriggered]);
 
-  // Handle "WATCH THIS" button click - FIXED: Smooth scroll without auto-play
+  // FIXED: Handle "WATCH THIS" button click - Scroll AND auto-play video
   const handleWatchClick = () => {
     // Find the video section and scroll to it smoothly
     const videoSection = document.querySelector('[data-video-section]');
@@ -53,6 +53,15 @@ const Hero: React.FC = () => {
         behavior: 'smooth',
         block: 'start'
       });
+      
+      // FIXED: Auto-play video after scrolling
+      setTimeout(() => {
+        // Find the video thumbnail and trigger click to auto-play
+        const videoThumbnail = videoSection.querySelector('[data-video-thumbnail]');
+        if (videoThumbnail) {
+          (videoThumbnail as HTMLElement).click();
+        }
+      }, 800); // Wait for scroll to complete before auto-playing
     }
   };
 
@@ -160,18 +169,19 @@ const Hero: React.FC = () => {
     }
   };
 
-  const imageJiggleVariants = {
+  // FIXED: Hero image jiggle animation - MORE PRONOUNCED for the characters
+  const heroImageJiggleVariants = {
     idle: {
-      x: [0, 2, -2, 1, -1, 0],
-      y: [0, -1, 2, -1.5, 1, 0],
-      rotate: [0, 0.8, -0.8, 0.5, -0.5, 0],
-      scale: [1, 1.03, 0.97, 1.02, 0.98, 1],
+      x: [0, 4, -4, 3, -2, 0],
+      y: [0, -3, 4, -2, 2, 0],
+      rotate: [0, 1.2, -1.2, 0.8, -0.6, 0],
+      scale: [1, 1.04, 0.96, 1.03, 0.97, 1],
       transition: {
-        duration: 3.5,
+        duration: 4, // Slightly longer for more character
         repeat: Infinity,
         repeatType: "loop",
         ease: "easeInOut",
-        delay: 1, // Offset from heading
+        delay: 1.5, // Different delay from heading
         times: [0, 0.2, 0.4, 0.6, 0.8, 1]
       }
     }
@@ -379,7 +389,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* FIXED: Right side - BoredOppo and Maya characters with JIGGLE + CLEAN DIRECT RETURN PATH */}
+          {/* FIXED: Right side - BoredOppo and Maya characters with ENHANCED JIGGLE + CLEAN DIRECT RETURN PATH */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
@@ -393,12 +403,16 @@ const Hero: React.FC = () => {
                 willChange: 'transform'
               }}
             >
+              {/* FIXED: Hero image with ENHANCED JIGGLE animation */}
               <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
-                variants={imageJiggleVariants}
+                variants={heroImageJiggleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
+                style={{
+                  willChange: 'transform'
+                }}
                 onError={(e) => {
                   console.error('Failed to load BoredOppoAndMaya.png image');
                   const target = e.target as HTMLImageElement;

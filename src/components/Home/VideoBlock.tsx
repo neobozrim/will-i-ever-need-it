@@ -31,7 +31,12 @@ const VideoBlock: React.FC = () => {
         
         <div className="relative max-w-2xl mx-auto">
           <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="relative aspect-video cursor-pointer group" onClick={handlePlayClick}>
+            {/* FIXED: Added data-video-thumbnail attribute for auto-play targeting */}
+            <div 
+              className="relative aspect-video cursor-pointer group" 
+              onClick={handlePlayClick}
+              data-video-thumbnail
+            >
               <img 
                 src={thumbnailUrl} 
                 alt="Math in Action - Click to play"
