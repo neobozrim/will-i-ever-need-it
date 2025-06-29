@@ -188,8 +188,9 @@ const ConceptPage: React.FC = () => {
 
           {/* Large tablet and desktop: two column layout */}
           <div className="hidden lg:grid lg:grid-cols-2 lg:gap-12 lg:items-start">
-            {/* Left column - Hero image positioned at top - clickable */}
-            <div className="sticky top-8">
+            {/* Left column - Hero image positioned at top */}
+            <div className="flex flex-col space-y-8">
+              {/* Hero image at the top - clickable */}
               <div 
                 className="w-full aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
                 onClick={handleImageClick}
