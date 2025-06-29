@@ -56,8 +56,8 @@ const ConceptPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen dotted-background">
-        {/* Floating Back Button */}
-        <div className="fixed top-20 left-4 sm:left-6 lg:left-8 z-20">
+        {/* Floating Back Button - positioned below header */}
+        <div className="fixed top-24 left-4 sm:left-6 lg:left-8 z-20">
           <Link 
             to="/" 
             className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200/50"
@@ -67,7 +67,7 @@ const ConceptPage: React.FC = () => {
           </Link>
         </div>
 
-        <div className="flex items-center justify-center py-20">
+        <div className="flex items-center justify-center py-20 pt-32">
           <div className="flex items-center space-x-3 text-gray-600">
             <Loader2 className="h-8 w-8 animate-spin" />
             <span className="font-nunito text-xl">Loading concept...</span>
@@ -80,8 +80,8 @@ const ConceptPage: React.FC = () => {
   if (error || !concept) {
     return (
       <div className="min-h-screen dotted-background">
-        {/* Floating Back Button */}
-        <div className="fixed top-20 left-4 sm:left-6 lg:left-8 z-20">
+        {/* Floating Back Button - positioned below header */}
+        <div className="fixed top-24 left-4 sm:left-6 lg:left-8 z-20">
           <Link 
             to="/" 
             className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200/50"
@@ -91,7 +91,7 @@ const ConceptPage: React.FC = () => {
           </Link>
         </div>
 
-        <div className="flex items-center justify-center py-20">
+        <div className="flex items-center justify-center py-20 pt-32">
           <div className="text-center">
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-red-100 rounded-xl">
@@ -128,8 +128,8 @@ const ConceptPage: React.FC = () => {
   return (
     <>
       <div className="min-h-screen dotted-background">
-        {/* Floating Back Button - Overlays on content */}
-        <div className="fixed top-20 left-4 sm:left-6 lg:left-8 z-20">
+        {/* Floating Back Button - positioned below header with proper spacing */}
+        <div className="fixed top-24 left-4 sm:left-6 lg:left-8 z-20">
           <Link 
             to="/" 
             className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200/50 hover:bg-white/95"
@@ -139,8 +139,8 @@ const ConceptPage: React.FC = () => {
           </Link>
         </div>
 
-        {/* Main content - centered single column layout */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Main content - starts below header with proper spacing */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pt-24 sm:pt-28">
           <div className="space-y-8 sm:space-y-12">
             {/* Header section - centered */}
             <div className="text-center">
