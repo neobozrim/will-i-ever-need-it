@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
-              Use that "boring" math to build an epic treehouse, run a slime empire, crush gaming rivals, and become the smartest kid who actually gets stuff done... while the rest are still clueless!
+              Use that "boring" math to build epic stuff, crush rivals, and become a legend, while the rest remain bored and... clueless!
             </p>
             
             <div className="flex justify-start">
