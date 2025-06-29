@@ -74,14 +74,14 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       const response = await fetch(`https://xjmktjcflmjrqbtofdjq.supabase.co/functions/v1/start-conversation`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbWt0amNmbG1qcnFidG9mZGpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0OTYxODksImV4cCI6MjA2NTA3MjE4OX0.SWyvV0aoi8KmrW8fJGzEzy8cC3qXTy5_OyobTbVanXc',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbWt0amNmbG1qcnFidG9mZGpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0OTYxODksImV4cCI6MjA2NTA3MjE4OX0.SWyvV0aoi8KmrW8fJGzEzy8cC3qXTy5_OyobTbVanXc`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ concept: slug })
       });
       
       const data = await response.json();
-      const functionError = !response.ok ? new Error(`${response.status}: ${data.error || 'Unknown error'}`) : null;
+      const functionError = !response.ok ? new Error(\`${response.status}: ${data.error || 'Unknown error'}`) : null;
 
       console.log('Function response:', { data, error: functionError });
 
@@ -173,7 +173,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
         },
         onError: (error) => {
           console.error('ElevenLabs error:', error);
-          setError(`Voice connection error: ${error.message || error}`);
+          setError(\`Voice connection error: ${error.message || error}`);
         },
         onModeChange: (mode) => {
           console.log('Mode changed to:', mode);
@@ -193,7 +193,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       
     } catch (err) {
       console.error('Error starting ElevenLabs conversation:', err);
-      setError(`Failed to connect to voice service: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      setError(\`Failed to connect to voice service: ${err instanceof Error ? err.message : 'Unknown error'}`);
       setConnectionStatus('disconnected');
     }
   };
@@ -236,7 +236,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   const getStatusColor = () => {
     if (error) return 'text-red-600';
     if (isConnected && isListening) return 'text-green-600';
-    if (isConnected) return `text-${primaryColor}-600`;
+    if (isConnected) return \`text-${primaryColor}-600`;
     if (connectionStatus === 'connecting') return 'text-yellow-600';
     return 'text-gray-600';
   };
@@ -252,7 +252,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   const getStatusIcon = () => {
     if (error) return 'bg-red-500';
     if (isConnected && isListening) return 'bg-green-500 animate-pulse';
-    if (isConnected) return `bg-${primaryColor}-500`;
+    if (isConnected) return \`bg-${primaryColor}-500`;
     if (connectionStatus === 'connecting') return 'bg-yellow-500 animate-pulse';
     return 'bg-gray-500';
   };
@@ -277,7 +277,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           />
           {/* Status indicator */}
           {showStatusIndicator && (
-            <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusIcon()}`}></div>
+            <div className={\`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusIcon()}`}></div>
           )}
         </button>
       </div>
@@ -285,7 +285,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 ${isExpanded ? 'w-96 h-96' : 'w-80 h-80'} transition-all duration-300`}>
+    <div className={\`fixed bottom-6 right-6 z-50 ${isExpanded ? 'w-96 h-96' : 'w-80 h-80'} transition-all duration-300`}>
       <div className="w-full h-full bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-purple-50 to-pink-50">
@@ -307,8 +307,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               <h3 className="font-barriecito text-lg text-gray-900">Discuss with Maya</h3>
               {showStatusIndicator && (
                 <div className="flex items-center space-x-2">
-                  <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
-                  <span className={`font-nunito text-xs font-medium transition-colors ${getStatusColor()}`}>
+                  <div className={\`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
+                  <span className={\`font-nunito text-xs font-medium transition-colors ${getStatusColor()}`}>
                     {getStatusText()}
                   </span>
                 </div>
@@ -375,12 +375,12 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             <button
               onClick={startTutor}
               disabled={isLoading}
-              className={`w-24 h-24 relative transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-purple-300 ${
+              className={\`w-24 h-24 relative transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-purple-300 ${
                 isLoading
                   ? 'cursor-not-allowed opacity-50'
                   : 'hover:scale-105 active:scale-95'
               }`}
-              aria-label={`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
+              aria-label={\`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
             >
               {isLoading ? (
                 <div className="absolute inset-0 flex items-center justify-center bg-white rounded-full">
@@ -410,7 +410,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           {/* Voice interaction controls */}
           {conversation && (
             <div className="flex flex-col items-center space-y-4">
-              <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
+              <div className={\`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
                 isListening
                   ? 'bg-green-500 animate-pulse shadow-lg'
                   : isConnected
