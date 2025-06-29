@@ -59,6 +59,197 @@ const Hero: React.FC = () => {
     }
   };
 
+  // Mathematical components data
+  const mathComponents = [
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2010triangle.svg",
+      alt: "Triangle",
+      size: "w-8 h-8",
+      initialX: -100,
+      initialY: 50,
+      floatX: [0, 30, -20, 0],
+      floatY: [0, -15, 10, 0],
+      duration: 8,
+      delay: 0
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2012PYTHAGOR-F.svg",
+      alt: "Pythagorean Formula",
+      size: "w-12 h-6",
+      initialX: 80,
+      initialY: 120,
+      floatX: [0, -25, 15, 0],
+      floatY: [0, 20, -10, 0],
+      duration: 10,
+      delay: 1
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2013DISTANCE-F.svg",
+      alt: "Distance Formula",
+      size: "w-10 h-5",
+      initialX: -80,
+      initialY: 200,
+      floatX: [0, 20, -30, 0],
+      floatY: [0, -25, 15, 0],
+      duration: 12,
+      delay: 2
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2014QUADRATIC-F.svg",
+      alt: "Quadratic Formula",
+      size: "w-14 h-6",
+      initialX: 120,
+      initialY: 80,
+      floatX: [0, -15, 25, 0],
+      floatY: [0, 30, -20, 0],
+      duration: 9,
+      delay: 0.5
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2015PERC-CHANGE-F.svg",
+      alt: "Percentage Change",
+      size: "w-12 h-5",
+      initialX: -120,
+      initialY: 150,
+      floatX: [0, 35, -10, 0],
+      floatY: [0, -20, 25, 0],
+      duration: 11,
+      delay: 1.5
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201611.svg",
+      alt: "Number 11",
+      size: "w-6 h-8",
+      initialX: 60,
+      initialY: 250,
+      floatX: [0, -20, 40, 0],
+      floatY: [0, 15, -30, 0],
+      duration: 7,
+      delay: 2.5
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201713.svg",
+      alt: "Number 13",
+      size: "w-6 h-8",
+      initialX: -60,
+      initialY: 80,
+      floatX: [0, 25, -35, 0],
+      floatY: [0, -10, 20, 0],
+      duration: 8.5,
+      delay: 3
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201817.svg",
+      alt: "Number 17",
+      size: "w-6 h-8",
+      initialX: 100,
+      initialY: 180,
+      floatX: [0, -30, 20, 0],
+      floatY: [0, 25, -15, 0],
+      duration: 9.5,
+      delay: 0.8
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201919.svg",
+      alt: "Number 19",
+      size: "w-6 h-8",
+      initialX: -40,
+      initialY: 300,
+      floatX: [0, 15, -25, 0],
+      floatY: [0, -35, 10, 0],
+      duration: 10.5,
+      delay: 1.8
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201cube.svg",
+      alt: "Cube",
+      size: "w-10 h-10",
+      initialX: 140,
+      initialY: 220,
+      floatX: [0, -40, 30, 0],
+      floatY: [0, 20, -25, 0],
+      duration: 13,
+      delay: 2.2
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%202cone.svg",
+      alt: "Cone",
+      size: "w-8 h-10",
+      initialX: -140,
+      initialY: 100,
+      floatX: [0, 45, -20, 0],
+      floatY: [0, -15, 30, 0],
+      duration: 11.5,
+      delay: 3.5
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%203cylinder.svg",
+      alt: "Cylinder",
+      size: "w-8 h-10",
+      initialX: 20,
+      initialY: 350,
+      floatX: [0, -25, 35, 0],
+      floatY: [0, 40, -20, 0],
+      duration: 14,
+      delay: 1.2
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%204sphere.svg",
+      alt: "Sphere",
+      size: "w-9 h-9",
+      initialX: -20,
+      initialY: 400,
+      floatX: [0, 30, -40, 0],
+      floatY: [0, -30, 15, 0],
+      duration: 12.5,
+      delay: 4
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%205heart.svg",
+      alt: "Heart",
+      size: "w-8 h-8",
+      initialX: 160,
+      initialY: 300,
+      floatX: [0, -35, 25, 0],
+      floatY: [0, 25, -35, 0],
+      duration: 8,
+      delay: 2.8
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%206diamond.svg",
+      alt: "Diamond",
+      size: "w-8 h-8",
+      initialX: -160,
+      initialY: 250,
+      floatX: [0, 40, -15, 0],
+      floatY: [0, -20, 35, 0],
+      duration: 9,
+      delay: 3.8
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%208rectangle.svg",
+      alt: "Rectangle",
+      size: "w-10 h-6",
+      initialX: 80,
+      initialY: 380,
+      floatX: [0, -20, 30, 0],
+      floatY: [0, 35, -25, 0],
+      duration: 10,
+      delay: 0.3
+    },
+    {
+      src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%209trappezoid.svg",
+      alt: "Trapezoid",
+      size: "w-10 h-6",
+      initialX: -100,
+      initialY: 350,
+      floatX: [0, 25, -30, 0],
+      floatY: [0, -25, 20, 0],
+      duration: 11,
+      delay: 4.5
+    }
+  ];
+
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden">
       {/* White Circle in Top Right Corner - Responsive - Links to Bolt.new */}
@@ -315,6 +506,79 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
+      </div>
+
+      {/* Flowing Mathematical Components Pattern - Below main content */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <AnimatePresence>
+          {showElements && mathComponents.map((component, index) => (
+            <motion.div
+              key={index}
+              className="absolute opacity-20 hover:opacity-40 transition-opacity duration-300"
+              style={{
+                left: `calc(50% + ${component.initialX}px)`,
+                top: `calc(50% + ${component.initialY}px)`,
+              }}
+              initial={{ 
+                opacity: 0, 
+                scale: 0,
+                rotate: 0
+              }}
+              animate={hasTriggered ? {
+                // Scatter in random directions when scroll triggers
+                x: Math.random() * 2000 - 1000,
+                y: Math.random() * 1000 - 500,
+                rotate: Math.random() * 720 - 360,
+                scale: 0,
+                opacity: 0,
+                transition: { 
+                  duration: 0.6, 
+                  ease: "easeInOut", 
+                  delay: component.delay * 0.1 
+                }
+              } : {
+                // Normal floating animation
+                opacity: [0, 0.3, 0.2, 0.3],
+                scale: [0, 1, 0.9, 1],
+                x: component.floatX,
+                y: component.floatY,
+                rotate: [0, 15, -10, 0],
+                transition: {
+                  duration: component.duration,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                  delay: component.delay,
+                  opacity: { duration: 2, delay: component.delay },
+                  scale: { duration: 2, delay: component.delay }
+                }
+              }}
+              exit={{
+                x: Math.random() * 2000 - 1000,
+                y: Math.random() * 1000 - 500,
+                rotate: Math.random() * 720 - 360,
+                scale: 0,
+                opacity: 0,
+                transition: { 
+                  duration: 0.6, 
+                  ease: "easeInOut", 
+                  delay: component.delay * 0.1 
+                }
+              }}
+            >
+              <img
+                src={component.src}
+                alt={component.alt}
+                className={`${component.size} object-contain filter drop-shadow-sm`}
+                onError={(e) => {
+                  // Hide component if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </section>
   );
