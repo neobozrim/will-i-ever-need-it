@@ -59,199 +59,290 @@ const Hero: React.FC = () => {
     }
   };
 
-  // Mathematical components data
+  // Mathematical components data with flowing patterns
   const mathComponents = [
+    // Left to Right Flow - Top Row
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2010triangle.svg",
       alt: "Triangle",
       size: "w-8 h-8",
-      initialX: -100,
-      initialY: 50,
-      floatX: [0, 30, -20, 0],
-      floatY: [0, -15, 10, 0],
-      duration: 8,
+      startX: -200,
+      startY: 100,
+      endX: window.innerWidth + 200,
+      endY: 120,
+      duration: 25,
       delay: 0
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2012PYTHAGOR-F.svg",
       alt: "Pythagorean Formula",
-      size: "w-12 h-6",
-      initialX: 80,
-      initialY: 120,
-      floatX: [0, -25, 15, 0],
-      floatY: [0, 20, -10, 0],
-      duration: 10,
-      delay: 1
+      size: "w-16 h-8",
+      startX: -300,
+      startY: 150,
+      endX: window.innerWidth + 300,
+      endY: 180,
+      duration: 30,
+      delay: 5
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2013DISTANCE-F.svg",
       alt: "Distance Formula",
-      size: "w-10 h-5",
-      initialX: -80,
-      initialY: 200,
-      floatX: [0, 20, -30, 0],
-      floatY: [0, -25, 15, 0],
-      duration: 12,
-      delay: 2
+      size: "w-14 h-7",
+      startX: -250,
+      startY: 200,
+      endX: window.innerWidth + 250,
+      endY: 160,
+      duration: 28,
+      delay: 10
     },
+    
+    // Right to Left Flow - Middle Row
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2014QUADRATIC-F.svg",
       alt: "Quadratic Formula",
-      size: "w-14 h-6",
-      initialX: 120,
-      initialY: 80,
-      floatX: [0, -15, 25, 0],
-      floatY: [0, 30, -20, 0],
-      duration: 9,
-      delay: 0.5
+      size: "w-18 h-8",
+      startX: window.innerWidth + 200,
+      startY: 250,
+      endX: -200,
+      endY: 280,
+      duration: 32,
+      delay: 2
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2015PERC-CHANGE-F.svg",
       alt: "Percentage Change",
-      size: "w-12 h-5",
-      initialX: -120,
-      initialY: 150,
-      floatX: [0, 35, -10, 0],
-      floatY: [0, -20, 25, 0],
-      duration: 11,
-      delay: 1.5
+      size: "w-16 h-7",
+      startX: window.innerWidth + 300,
+      startY: 300,
+      endX: -300,
+      endY: 320,
+      duration: 35,
+      delay: 7
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201611.svg",
       alt: "Number 11",
-      size: "w-6 h-8",
-      initialX: 60,
-      initialY: 250,
-      floatX: [0, -20, 40, 0],
-      floatY: [0, 15, -30, 0],
-      duration: 7,
-      delay: 2.5
+      size: "w-8 h-10",
+      startX: window.innerWidth + 150,
+      startY: 350,
+      endX: -150,
+      endY: 370,
+      duration: 26,
+      delay: 12
     },
+    
+    // Diagonal Flow - Top Left to Bottom Right
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201713.svg",
       alt: "Number 13",
-      size: "w-6 h-8",
-      initialX: -60,
-      initialY: 80,
-      floatX: [0, 25, -35, 0],
-      floatY: [0, -10, 20, 0],
-      duration: 8.5,
+      size: "w-8 h-10",
+      startX: -150,
+      startY: 80,
+      endX: window.innerWidth + 150,
+      endY: 400,
+      duration: 40,
       delay: 3
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201817.svg",
       alt: "Number 17",
-      size: "w-6 h-8",
-      initialX: 100,
-      initialY: 180,
-      floatX: [0, -30, 20, 0],
-      floatY: [0, 25, -15, 0],
-      duration: 9.5,
-      delay: 0.8
+      size: "w-8 h-10",
+      startX: -200,
+      startY: 120,
+      endX: window.innerWidth + 200,
+      endY: 450,
+      duration: 38,
+      delay: 8
     },
+    
+    // Diagonal Flow - Top Right to Bottom Left
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201919.svg",
       alt: "Number 19",
-      size: "w-6 h-8",
-      initialX: -40,
-      initialY: 300,
-      floatX: [0, 15, -25, 0],
-      floatY: [0, -35, 10, 0],
-      duration: 10.5,
-      delay: 1.8
+      size: "w-8 h-10",
+      startX: window.innerWidth + 150,
+      startY: 80,
+      endX: -150,
+      endY: 400,
+      duration: 42,
+      delay: 4
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201cube.svg",
       alt: "Cube",
-      size: "w-10 h-10",
-      initialX: 140,
-      initialY: 220,
-      floatX: [0, -40, 30, 0],
-      floatY: [0, 20, -25, 0],
-      duration: 13,
-      delay: 2.2
+      size: "w-12 h-12",
+      startX: window.innerWidth + 200,
+      startY: 120,
+      endX: -200,
+      endY: 450,
+      duration: 36,
+      delay: 9
     },
+    
+    // Left to Right Flow - Bottom Row
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%202cone.svg",
       alt: "Cone",
-      size: "w-8 h-10",
-      initialX: -140,
-      initialY: 100,
-      floatX: [0, 45, -20, 0],
-      floatY: [0, -15, 30, 0],
-      duration: 11.5,
-      delay: 3.5
+      size: "w-10 h-12",
+      startX: -180,
+      startY: 400,
+      endX: window.innerWidth + 180,
+      endY: 420,
+      duration: 33,
+      delay: 6
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%203cylinder.svg",
       alt: "Cylinder",
-      size: "w-8 h-10",
-      initialX: 20,
-      initialY: 350,
-      floatX: [0, -25, 35, 0],
-      floatY: [0, 40, -20, 0],
-      duration: 14,
-      delay: 1.2
+      size: "w-10 h-12",
+      startX: -220,
+      startY: 450,
+      endX: window.innerWidth + 220,
+      endY: 480,
+      duration: 29,
+      delay: 11
     },
+    
+    // Right to Left Flow - Various Heights
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%204sphere.svg",
       alt: "Sphere",
-      size: "w-9 h-9",
-      initialX: -20,
-      initialY: 400,
-      floatX: [0, 30, -40, 0],
-      floatY: [0, -30, 15, 0],
-      duration: 12.5,
-      delay: 4
+      size: "w-11 h-11",
+      startX: window.innerWidth + 180,
+      startY: 180,
+      endX: -180,
+      endY: 200,
+      duration: 31,
+      delay: 1
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%205heart.svg",
       alt: "Heart",
-      size: "w-8 h-8",
-      initialX: 160,
-      initialY: 300,
-      floatX: [0, -35, 25, 0],
-      floatY: [0, 25, -35, 0],
-      duration: 8,
-      delay: 2.8
+      size: "w-10 h-10",
+      startX: window.innerWidth + 160,
+      startY: 380,
+      endX: -160,
+      endY: 400,
+      duration: 27,
+      delay: 13
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%206diamond.svg",
       alt: "Diamond",
-      size: "w-8 h-8",
-      initialX: -160,
-      initialY: 250,
-      floatX: [0, 40, -15, 0],
-      floatY: [0, -20, 35, 0],
-      duration: 9,
-      delay: 3.8
+      size: "w-10 h-10",
+      startX: window.innerWidth + 140,
+      startY: 220,
+      endX: -140,
+      endY: 240,
+      duration: 34,
+      delay: 14
     },
+    
+    // More Diagonal Flows
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%208rectangle.svg",
       alt: "Rectangle",
-      size: "w-10 h-6",
-      initialX: 80,
-      initialY: 380,
-      floatX: [0, -20, 30, 0],
-      floatY: [0, 35, -25, 0],
-      duration: 10,
-      delay: 0.3
+      size: "w-12 h-8",
+      startX: -170,
+      startY: 300,
+      endX: window.innerWidth + 170,
+      endY: 150,
+      duration: 37,
+      delay: 15
     },
     {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%209trappezoid.svg",
       alt: "Trapezoid",
-      size: "w-10 h-6",
-      initialX: -100,
-      initialY: 350,
-      floatX: [0, 25, -30, 0],
-      floatY: [0, -25, 20, 0],
-      duration: 11,
-      delay: 4.5
+      size: "w-12 h-8",
+      startX: window.innerWidth + 170,
+      startY: 300,
+      endX: -170,
+      endY: 150,
+      duration: 39,
+      delay: 16
     }
   ];
 
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden">
+      {/* Flowing Mathematical Components Pattern - Behind everything */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <AnimatePresence>
+          {showElements && mathComponents.map((component, index) => (
+            <motion.div
+              key={index}
+              className="absolute opacity-15 hover:opacity-25 transition-opacity duration-500"
+              initial={{ 
+                x: component.startX,
+                y: component.startY,
+                opacity: 0,
+                scale: 0.8,
+                rotate: 0
+              }}
+              animate={hasTriggered ? {
+                // Scatter in random directions when scroll triggers
+                x: Math.random() * 2000 - 1000,
+                y: Math.random() * 1000 - 500,
+                rotate: Math.random() * 720 - 360,
+                scale: 0,
+                opacity: 0,
+                transition: { 
+                  duration: 0.6, 
+                  ease: "easeInOut", 
+                  delay: index * 0.05 
+                }
+              } : {
+                // Continuous flowing animation
+                x: [component.startX, component.endX],
+                y: [component.startY, component.endY],
+                opacity: [0, 0.15, 0.15, 0],
+                scale: [0.8, 1, 1, 0.8],
+                rotate: [0, 360],
+                transition: {
+                  duration: component.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: component.delay,
+                  opacity: {
+                    duration: component.duration,
+                    times: [0, 0.1, 0.9, 1],
+                    ease: "easeInOut"
+                  },
+                  scale: {
+                    duration: component.duration,
+                    times: [0, 0.1, 0.9, 1],
+                    ease: "easeInOut"
+                  }
+                }
+              }}
+              exit={{
+                x: Math.random() * 2000 - 1000,
+                y: Math.random() * 1000 - 500,
+                rotate: Math.random() * 720 - 360,
+                scale: 0,
+                opacity: 0,
+                transition: { 
+                  duration: 0.6, 
+                  ease: "easeInOut", 
+                  delay: index * 0.05 
+                }
+              }}
+            >
+              <img
+                src={component.src}
+                alt={component.alt}
+                className={`${component.size} object-contain filter drop-shadow-sm`}
+                onError={(e) => {
+                  // Hide component if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
       {/* White Circle in Top Right Corner - Responsive - Links to Bolt.new */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 z-10">
         <a 
@@ -274,7 +365,7 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <div className="text-left">
@@ -506,79 +597,6 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
-      </div>
-
-      {/* Flowing Mathematical Components Pattern - Below main content */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <AnimatePresence>
-          {showElements && mathComponents.map((component, index) => (
-            <motion.div
-              key={index}
-              className="absolute opacity-20 hover:opacity-40 transition-opacity duration-300"
-              style={{
-                left: `calc(50% + ${component.initialX}px)`,
-                top: `calc(50% + ${component.initialY}px)`,
-              }}
-              initial={{ 
-                opacity: 0, 
-                scale: 0,
-                rotate: 0
-              }}
-              animate={hasTriggered ? {
-                // Scatter in random directions when scroll triggers
-                x: Math.random() * 2000 - 1000,
-                y: Math.random() * 1000 - 500,
-                rotate: Math.random() * 720 - 360,
-                scale: 0,
-                opacity: 0,
-                transition: { 
-                  duration: 0.6, 
-                  ease: "easeInOut", 
-                  delay: component.delay * 0.1 
-                }
-              } : {
-                // Normal floating animation
-                opacity: [0, 0.3, 0.2, 0.3],
-                scale: [0, 1, 0.9, 1],
-                x: component.floatX,
-                y: component.floatY,
-                rotate: [0, 15, -10, 0],
-                transition: {
-                  duration: component.duration,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut",
-                  delay: component.delay,
-                  opacity: { duration: 2, delay: component.delay },
-                  scale: { duration: 2, delay: component.delay }
-                }
-              }}
-              exit={{
-                x: Math.random() * 2000 - 1000,
-                y: Math.random() * 1000 - 500,
-                rotate: Math.random() * 720 - 360,
-                scale: 0,
-                opacity: 0,
-                transition: { 
-                  duration: 0.6, 
-                  ease: "easeInOut", 
-                  delay: component.delay * 0.1 
-                }
-              }}
-            >
-              <img
-                src={component.src}
-                alt={component.alt}
-                className={`${component.size} object-contain filter drop-shadow-sm`}
-                onError={(e) => {
-                  // Hide component if image fails to load
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-            </motion.div>
-          ))}
-        </AnimatePresence>
       </div>
     </section>
   );
