@@ -2,7 +2,12 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'ccmeanwhile': ['CC Meanwhile', 'system-ui', 'sans-serif'],
+        'sans': ['CC Meanwhile', 'system-ui', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };

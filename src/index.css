@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import CCMEANWHILE font */
+@import url('https://fonts.googleapis.com/css2?family=CC+Meanwhile:wght@400;700&display=swap');
+
+/* Set CCMEANWHILE as the default font */
+@layer base {
+  html {
+    font-family: 'CC Meanwhile', system-ui, sans-serif;
+  }
+  
+  body {
+    font-family: 'CC Meanwhile', system-ui, sans-serif;
+  }
+}
+
 @keyframes jiggle {
   0%, 100% {
     transform: rotate(0deg) translateX(0px);
