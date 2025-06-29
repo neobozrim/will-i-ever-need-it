@@ -25,11 +25,8 @@ const VideoBlock: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            yes, you will need math and will be loving it!
+            See Math In Action, Then Master It
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            meet jody on her mission to build the ultimate treehouse...
-          </p>
         </div>
         
         <div className="relative max-w-2xl mx-auto">
@@ -37,7 +34,7 @@ const VideoBlock: React.FC = () => {
             <div className="relative aspect-video cursor-pointer group" onClick={handlePlayClick}>
               <img 
                 src={thumbnailUrl} 
-                alt="Jody's Treehouse Adventure - Click to play"
+                alt="Math in Action - Click to play"
                 className="absolute inset-0 w-full h-full object-cover transition-opacity group-hover:opacity-75"
                 onError={(e) => {
                   // Fallback to a different thumbnail size if maxresdefault fails
@@ -57,7 +54,7 @@ const VideoBlock: React.FC = () => {
             <div className="bg-gray-800 px-4 py-3 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-white text-sm font-medium">jody's treehouse adventure</span>
+                <span className="text-white text-sm font-medium">math in action</span>
               </div>
               <div className="text-gray-400 text-xs">click to watch</div>
             </div>
@@ -81,7 +78,7 @@ const VideoBlock: React.FC = () => {
             <div className="relative pt-[56.25%]">
               <iframe
                 src={iframeSrc}
-                title="Jody's Treehouse Adventure - Math in Real Life"
+                title="Math in Action - Real World Applications"
                 className="absolute inset-0 w-full h-full"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
