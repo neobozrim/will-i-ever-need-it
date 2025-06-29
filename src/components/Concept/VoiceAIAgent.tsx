@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { Mic, Bot, Loader2, Play, MicOff } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
@@ -19,7 +18,11 @@ interface ElevenLabsConversation {
   getOutputVolume: () => number;
 }
 
-const VoiceAIAgent: React.FC = () => {
+interface VoiceAIAgentProps {
+  conceptSlug?: string;
+}
+
+const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({ conceptSlug }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [conversationData, setConversationData] = useState<ConversationData | null>(null);
   const [conversation, setConversation] = useState<ElevenLabsConversation | null>(null);
@@ -27,15 +30,11 @@ const VoiceAIAgent: React.FC = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
-  const { slug } = useParams<{ slug: string }>();
 
   // Use dynamic import for ElevenLabs SDK since it's browser-only
   const startTutor = async () => {
-    if (!slug) {
-      setError('Could not determine the current concept');
-      return;
-    }
-
+    const slug = conceptSlug || 'general-math';
+    
     setIsLoading(true);
     setError(null);
     
@@ -178,37 +177,6 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
     }
   };
 
-  const testEdgeFunction = async () => {
-    try {
-      console.log('Testing edge function directly...');
-      
-      const response = await fetch(`https://xjmktjcflmjrqbtofdjq.supabase.co/functions/v1/start-conversation`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbWt0amNmbG1qcnFidG9mZGpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0OTYxODksImV4cCI6MjA2NTA3MjE4OX0.SWyvV0aoi8KmrW8fJGzEzy8cC3qXTy5_OyobTbVanXc`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ concept: slug || 'probability' })
-      });
-
-      console.log('Direct fetch response status:', response.status);
-      console.log('Direct fetch response headers:', Object.fromEntries(response.headers.entries()));
-      
-      const responseText = await response.text();
-      console.log('Direct fetch response text:', responseText);
-      
-      try {
-        const responseJson = JSON.parse(responseText);
-        console.log('Direct fetch response JSON:', responseJson);
-      } catch (parseError) {
-        console.error('Failed to parse response as JSON:', parseError);
-      }
-      
-    } catch (fetchError) {
-      console.error('Direct fetch error:', fetchError);
-    }
-  };
-
   const formatConceptName = (slug: string): string => {
     return slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ');
   };
@@ -247,7 +215,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           <div>
             <h3 className="text-lg font-semibold text-gray-900">Voice AI Tutor</h3>
             <p className="text-sm text-gray-500">
-              {slug ? `Ready to discuss ${formatConceptName(slug)}` : 'Click to start talking'}
+              {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Click to start talking'}
             </p>
           </div>
         </div>
@@ -258,27 +226,6 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           </span>
         </div>
       </div>
-      
-      {/* Debug section - only show in development */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-xs text-gray-600 mb-2">Debug Tools:</p>
-          <div className="space-x-2">
-            <button
-              onClick={testEdgeFunction}
-              className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-            >
-              Test Edge Function
-            </button>
-            <button
-              onClick={() => console.log('Current state:', { conversationData, conversation: !!conversation, error, isConnected, connectionStatus, slug })}
-              className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
-            >
-              Log State
-            </button>
-          </div>
-        </div>
-      )}
       
       {/* Voice controls */}
       <div className="text-center space-y-4">
@@ -292,7 +239,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-gradient-to-br from-blue-500 to-purple-600 hover:shadow-xl hover:scale-105 active:scale-95'
             }`}
-            aria-label={`Start ${slug ? formatConceptName(slug) : ''} tutor`}
+            aria-label={`Start ${conceptSlug ? formatConceptName(conceptSlug) : ''} tutor`}
           >
             {isLoading ? (
               <Loader2 className="h-8 w-8 text-white mx-auto animate-spin" />
@@ -334,8 +281,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           {isLoading 
             ? 'Starting tutor...' 
             : !conversation
-            ? slug 
-              ? `Tap to start ${formatConceptName(slug)} tutor`
+            ? conceptSlug 
+              ? `Tap to start ${formatConceptName(conceptSlug)} tutor`
               : 'Tap to start tutor'
             : connectionStatus === 'connecting'
             ? 'Connecting to voice service...'
@@ -383,10 +330,10 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
         <span>Voice Powered</span>
         <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
         <span>AI Tutor</span>
-        {slug && (
+        {conceptSlug && (
           <>
             <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-            <span>{formatConceptName(slug)}</span>
+            <span>{formatConceptName(conceptSlug)}</span>
           </>
         )}
       </div>
