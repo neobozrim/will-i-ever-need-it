@@ -275,54 +275,6 @@ const Hero: React.FC = () => {
             willChange: 'auto' // CRITICAL: Disable will-change
           }}
         />
-
-        {/* RESTORED: Floating Particles for Extra Magic */}
-        <motion.div
-          className="absolute top-1/3 right-1/4 w-3 h-3 bg-pink-300 rounded-full opacity-40"
-          animate={{
-            y: [0, -30, 0],
-            x: [0, 10, 0],
-            scale: [1, 1.5, 1],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div
-          className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-blue-300 rounded-full opacity-50"
-          animate={{
-            y: [0, 25, 0],
-            x: [0, -15, 0],
-            scale: [1, 1.3, 1],
-            opacity: [0.5, 0.9, 0.5],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-
-        <motion.div
-          className="absolute top-2/3 right-1/2 w-4 h-4 bg-yellow-300 rounded-full opacity-30"
-          animate={{
-            y: [0, -20, 0],
-            x: [0, 20, 0],
-            scale: [1, 1.4, 1],
-            opacity: [0.3, 0.7, 0.3],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3,
-          }}
-        />
       </div>
 
       {/* Content positioned lower with proper spacing */}
