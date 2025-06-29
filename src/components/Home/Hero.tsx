@@ -143,52 +143,35 @@ const Hero: React.FC = () => {
     }
   };
 
-  // JINGLE ANIMATION VARIANTS - Playful wiggle and bounce effects
-  const jingleVariants = {
+  // JIGGLE ANIMATION VARIANTS - Playful wiggle and bounce effects
+  const headingJiggleVariants = {
     idle: {
-      x: [0, -2, 2, -1, 1, 0],
-      y: [0, -1, 1, -0.5, 0.5, 0],
+      x: [0, -3, 3, -2, 2, 0],
+      y: [0, -2, 2, -1, 1, 0],
       rotate: [0, -1, 1, -0.5, 0.5, 0],
       scale: [1, 1.02, 0.98, 1.01, 0.99, 1],
-      transition: {
-        duration: 2.5,
-        repeat: Infinity,
-        repeatType: "loop",
-        ease: "easeInOut",
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-      }
-    }
-  };
-
-  const buttonJingleVariants = {
-    idle: {
-      x: [0, -1, 1, -0.5, 0.5, 0],
-      y: [0, -2, 1, -1, 0.5, 0],
-      rotate: [0, -0.5, 0.5, -0.3, 0.3, 0],
-      scale: [1, 1.05, 0.95, 1.03, 0.97, 1],
       transition: {
         duration: 3,
         repeat: Infinity,
         repeatType: "loop",
         ease: "easeInOut",
-        delay: 0.5, // Offset from heading
         times: [0, 0.2, 0.4, 0.6, 0.8, 1]
       }
     }
   };
 
-  const imageJingleVariants = {
+  const imageJiggleVariants = {
     idle: {
-      x: [0, 1, -1, 0.5, -0.5, 0],
+      x: [0, 2, -2, 1, -1, 0],
       y: [0, -1, 2, -1.5, 1, 0],
-      rotate: [0, 0.5, -0.5, 0.3, -0.3, 0],
+      rotate: [0, 0.8, -0.8, 0.5, -0.5, 0],
       scale: [1, 1.03, 0.97, 1.02, 0.98, 1],
       transition: {
         duration: 3.5,
         repeat: Infinity,
         repeatType: "loop",
         ease: "easeInOut",
-        delay: 1, // Offset from other elements
+        delay: 1, // Offset from heading
         times: [0, 0.2, 0.4, 0.6, 0.8, 1]
       }
     }
@@ -334,9 +317,8 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
-            {/* Heading with DROP IN animation + JINGLE - ALWAYS RENDERED */}
-            <motion.h1 
-              className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
+            {/* FIXED: Heading with proper Barriecito font + DROP IN animation + JIGGLE */}
+            <motion.div
               variants={dropInVariants}
               initial="hidden"
               animate={getAnimationState('heading')}
@@ -347,13 +329,17 @@ const Hero: React.FC = () => {
                 willChange: 'transform'
               }}
             >
-              <motion.span
-                variants={jingleVariants}
+              <motion.h1 
+                className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
+                variants={headingJiggleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
+                style={{
+                  fontFamily: "'Barriecito', cursive !important"
+                }}
               >
                 Math could be boring!
-              </motion.span>
-            </motion.h1>
+              </motion.h1>
+            </motion.div>
             
             {/* FIXED: Description with SLIDE IN FROM LEFT animation - stays below heading */}
             <motion.p 
@@ -371,7 +357,7 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* FASTER: Button with BOUNCE IN animation + JINGLE - SPEEDED UP RETURN */}
+            {/* FASTER: Button with BOUNCE IN animation - SPEEDED UP RETURN */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
@@ -388,17 +374,12 @@ const Hero: React.FC = () => {
                   willChange: 'transform'
                 }}
               >
-                <motion.span
-                  variants={buttonJingleVariants}
-                  animate={hasLoaded && !hasTriggered ? "idle" : ""}
-                >
-                  WATCH THIS
-                </motion.span>
+                WATCH THIS
               </motion.button>
             </div>
           </div>
 
-          {/* FIXED: Right side - BoredOppo and Maya characters - CLEAN DIRECT RETURN PATH */}
+          {/* FIXED: Right side - BoredOppo and Maya characters with JIGGLE + CLEAN DIRECT RETURN PATH */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
@@ -416,7 +397,7 @@ const Hero: React.FC = () => {
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
-                variants={imageJingleVariants}
+                variants={imageJiggleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 onError={(e) => {
                   console.error('Failed to load BoredOppoAndMaya.png image');
