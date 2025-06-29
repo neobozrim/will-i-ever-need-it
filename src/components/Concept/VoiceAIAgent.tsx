@@ -277,7 +277,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          {/* Maya's Avatar */}
+          {/* Maya's Avatar - only one avatar next to the main heading */}
           <div className="flex-shrink-0">
             <img 
               src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
@@ -292,20 +292,9 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           </div>
           <div>
             <h3 className="font-barriecito text-2xl text-gray-900 mb-1">Discuss with Maya</h3>
-            <div className="flex items-center space-x-2">
-              <img 
-                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
-                alt="Maya"
-                className="w-4 h-4 rounded-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-              <p className="font-nunito text-gray-600">
-                {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Ready to start conversation'}
-              </p>
-            </div>
+            <p className="font-nunito text-gray-600">
+              {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Ready to start conversation'}
+            </p>
           </div>
         </div>
         <div className="flex items-center space-x-3">
