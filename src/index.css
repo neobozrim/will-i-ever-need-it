@@ -2,22 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CCMEANWHILE font from Adobe Fonts */
+/* CCMEANWHILE font from Adobe Fonts - Multiple loading methods */
 @import url('https://use.typekit.net/fuf8ojy.css');
 
-/* Set CCMEANWHILE as the default font */
+/* Force font application with highest specificity */
 @layer base {
+  * {
+    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+  }
+  
   html {
-    font-family: 'cc-meanwhile', 'CC Meanwhile', system-ui, sans-serif;
+    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
   }
   
   body {
-    font-family: 'cc-meanwhile', 'CC Meanwhile', system-ui, sans-serif;
+    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
   }
   
-  * {
-    font-family: 'cc-meanwhile', 'CC Meanwhile', system-ui, sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
   }
+  
+  p, span, div, button, input, textarea, label {
+    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+  }
+}
+
+/* Additional font loading attempt */
+@font-face {
+  font-family: 'CCMEANWHILE';
+  src: url('https://use.typekit.net/af/8b8da1/00000000000000007735c1b4/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff2'),
+       url('https://use.typekit.net/af/8b8da1/00000000000000007735c1b4/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @keyframes jiggle {
