@@ -15,10 +15,6 @@ const Hero: React.FC = () => {
               Use that "boring" math to build an epic treehouse, run a slime empire, crush gaming rivals, and become the smartest kid who actually gets stuff done... while the rest are still clueless!
             </p>
             
-            <p className="text-xl text-gray-600 mb-8">
-              don't believe us? Well, stay ignorant, or join the cool kids and WATCH THIS:
-            </p>
-            
             <div className="flex justify-start">
               <button className="group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
                 <span>WATCH THIS</span>
