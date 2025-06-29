@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const VideoBlock: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -11,19 +11,6 @@ const VideoBlock: React.FC = () => {
     `&rel=0` +
     `&showinfo=0` +
     `&modestbranding=1`;
-
-  // Listen for the custom playVideo event from Hero component
-  useEffect(() => {
-    const handlePlayVideo = () => {
-      setShowVideo(true);
-    };
-
-    window.addEventListener('playVideo', handlePlayVideo);
-    
-    return () => {
-      window.removeEventListener('playVideo', handlePlayVideo);
-    };
-  }, []);
 
   const handlePlayClick = () => {
     setShowVideo(true);

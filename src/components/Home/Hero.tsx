@@ -50,22 +50,16 @@ const Hero: React.FC = () => {
     return () => unsubscribe();
   }, [scrollYProgress, hasTriggered]);
 
-  // Handle "WATCH THIS" button click
+  // Handle "WATCH THIS" button click - FIXED: No auto-scroll, just smooth scroll
   const handleWatchClick = () => {
-    // Find the video section and scroll to it
+    // Find the video section and scroll to it smoothly
     const videoSection = document.querySelector('[data-video-section]');
     if (videoSection) {
       videoSection.scrollIntoView({ 
         behavior: 'smooth',
-        block: 'center'
+        block: 'start' // Changed from 'center' to 'start' for better positioning
       });
-      
-      // Wait for scroll to complete, then trigger video play
-      setTimeout(() => {
-        // Dispatch custom event to trigger video play
-        const playVideoEvent = new CustomEvent('playVideo');
-        window.dispatchEvent(playVideoEvent);
-      }, 1000); // Wait 1 second for smooth scroll to complete
+      // REMOVED: Auto video play - let user click to play
     }
   };
 
@@ -176,29 +170,19 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      {/* NEW LARGER Animated Banner Background - FULL IMAGE WITHOUT CROPPING */}
+      {/* FIXED: Static Background - No scaling animations that cause glitches */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Main banner with pulsing scale animation - SHOW FULL 1900x1600 IMAGE */}
-        <motion.div
-          className="absolute inset-0 w-full h-full flex items-center justify-center"
-          animate={{
-            scale: [0.9, 0.95, 0.9, 0.88, 0.9], // Adjusted scale to ensure full image is visible
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
+        {/* FIXED: Static banner background - removed scaling animation */}
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center">
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
-            className="max-w-none h-full w-auto opacity-20"
+            className="w-full h-full opacity-20 object-cover"
             style={{
-              minWidth: '100vw', // Ensure it covers full viewport width
-              minHeight: '100vh', // Ensure it covers full viewport height
-              objectFit: 'contain', // Show the entire image without cropping
-              objectPosition: 'center center' // Center the image
+              minWidth: '100vw',
+              minHeight: '100vh',
+              objectFit: 'cover', // Changed from 'contain' to 'cover' for consistent sizing
+              objectPosition: 'center center'
             }}
             onError={(e) => {
               console.error('Failed to load Asset 23banner2.svg');
@@ -206,145 +190,40 @@ const Hero: React.FC = () => {
               target.style.display = 'none';
             }}
           />
-        </motion.div>
+        </div>
 
-        {/* Flowing color overlays with MORE PROMINENT colors */}
+        {/* SIMPLIFIED: Gentle color overlays - reduced complexity to prevent glitches */}
         <motion.div
           className="absolute inset-0 w-full h-full"
           animate={{
             background: [
-              'radial-gradient(circle at 20% 30%, rgba(255, 173, 173, 0.35) 0%, transparent 60%)',
-              'radial-gradient(circle at 80% 70%, rgba(255, 214, 165, 0.35) 0%, transparent 60%)',
-              'radial-gradient(circle at 60% 20%, rgba(222, 218, 244, 0.35) 0%, transparent 60%)',
-              'radial-gradient(circle at 30% 80%, rgba(217, 233, 248, 0.35) 0%, transparent 60%)',
-              'radial-gradient(circle at 70% 50%, rgba(228, 241, 238, 0.35) 0%, transparent 60%)',
-              'radial-gradient(circle at 20% 30%, rgba(255, 173, 173, 0.35) 0%, transparent 60%)',
-            ],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Secondary flowing color layer - MORE PROMINENT */}
-        <motion.div
-          className="absolute inset-0 w-full h-full"
-          animate={{
-            background: [
-              'linear-gradient(45deg, rgba(255, 173, 173, 0.25) 0%, rgba(255, 214, 165, 0.25) 25%, rgba(222, 218, 244, 0.25) 50%, rgba(217, 233, 248, 0.25) 75%, rgba(228, 241, 238, 0.25) 100%)',
-              'linear-gradient(135deg, rgba(228, 241, 238, 0.25) 0%, rgba(217, 233, 248, 0.25) 25%, rgba(222, 218, 244, 0.25) 50%, rgba(255, 214, 165, 0.25) 75%, rgba(255, 173, 173, 0.25) 100%)',
-              'linear-gradient(225deg, rgba(255, 214, 165, 0.25) 0%, rgba(228, 241, 238, 0.25) 25%, rgba(255, 173, 173, 0.25) 50%, rgba(217, 233, 248, 0.25) 75%, rgba(222, 218, 244, 0.25) 100%)',
-              'linear-gradient(315deg, rgba(222, 218, 244, 0.25) 0%, rgba(255, 173, 173, 0.25) 25%, rgba(228, 241, 238, 0.25) 50%, rgba(255, 214, 165, 0.25) 75%, rgba(217, 233, 248, 0.25) 100%)',
-              'linear-gradient(45deg, rgba(255, 173, 173, 0.25) 0%, rgba(255, 214, 165, 0.25) 25%, rgba(222, 218, 244, 0.25) 50%, rgba(217, 233, 248, 0.25) 75%, rgba(228, 241, 238, 0.25) 100%)',
-            ],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Pulsing color spots - LARGER AND MORE PROMINENT */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full blur-xl"
-          animate={{
-            scale: [0.8, 1.4, 0.8],
-            opacity: [0.3, 0.6, 0.3],
-            background: [
-              'rgba(255, 173, 173, 0.5)',
-              'rgba(255, 214, 165, 0.5)',
-              'rgba(222, 218, 244, 0.5)',
-              'rgba(255, 173, 173, 0.5)',
-            ],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        <motion.div
-          className="absolute top-3/4 right-1/4 w-36 h-36 rounded-full blur-lg"
-          animate={{
-            scale: [1, 0.7, 1.5, 1],
-            opacity: [0.4, 0.2, 0.7, 0.4],
-            background: [
-              'rgba(217, 233, 248, 0.5)',
-              'rgba(228, 241, 238, 0.5)',
-              'rgba(222, 218, 244, 0.5)',
-              'rgba(217, 233, 248, 0.5)',
+              'radial-gradient(circle at 30% 40%, rgba(255, 173, 173, 0.15) 0%, transparent 70%)',
+              'radial-gradient(circle at 70% 60%, rgba(255, 214, 165, 0.15) 0%, transparent 70%)',
+              'radial-gradient(circle at 50% 30%, rgba(222, 218, 244, 0.15) 0%, transparent 70%)',
+              'radial-gradient(circle at 30% 40%, rgba(255, 173, 173, 0.15) 0%, transparent 70%)',
             ],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 2,
           }}
         />
 
+        {/* SIMPLIFIED: Single gentle pulsing spot */}
         <motion.div
-          className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full blur-lg"
+          className="absolute top-1/3 left-1/3 w-32 h-32 rounded-full blur-xl"
           animate={{
-            scale: [0.9, 1.6, 0.6, 0.9],
-            opacity: [0.35, 0.8, 0.15, 0.35],
-            background: [
-              'rgba(255, 214, 165, 0.5)',
-              'rgba(228, 241, 238, 0.5)',
-              'rgba(255, 173, 173, 0.5)',
-              'rgba(255, 214, 165, 0.5)',
-            ],
+            scale: [0.8, 1.2, 0.8],
+            opacity: [0.1, 0.3, 0.1],
           }}
           transition={{
-            duration: 10,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 4,
           }}
-        />
-
-        {/* Additional floating color elements for more vibrancy */}
-        <motion.div
-          className="absolute top-1/3 left-2/3 w-28 h-28 rounded-full blur-md"
-          animate={{
-            scale: [1.2, 0.8, 1.2],
-            opacity: [0.25, 0.5, 0.25],
-            background: [
-              'rgba(222, 218, 244, 0.4)',
-              'rgba(255, 173, 173, 0.4)',
-              'rgba(217, 233, 248, 0.4)',
-              'rgba(222, 218, 244, 0.4)',
-            ],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-
-        <motion.div
-          className="absolute bottom-1/4 left-1/3 w-40 h-40 rounded-full blur-xl"
-          animate={{
-            scale: [0.7, 1.3, 0.7],
-            opacity: [0.2, 0.6, 0.2],
-            background: [
-              'rgba(228, 241, 238, 0.4)',
-              'rgba(255, 214, 165, 0.4)',
-              'rgba(222, 218, 244, 0.4)',
-              'rgba(228, 241, 238, 0.4)',
-            ],
-          }}
-          transition={{
-            duration: 9,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3,
+          style={{
+            background: 'rgba(255, 173, 173, 0.3)',
           }}
         />
       </div>
