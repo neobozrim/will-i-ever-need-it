@@ -139,8 +139,8 @@ const ConceptPage: React.FC = () => {
           </Link>
         </div>
 
-        {/* Main content - starts below header with proper spacing */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pt-24 sm:pt-28">
+        {/* Main content - starts below header with proper spacing and padding for sticky overlay */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pt-24 sm:pt-28 pb-24">
           <div className="space-y-8 sm:space-y-12">
             {/* Header section - centered */}
             <div className="text-center">
@@ -167,11 +167,6 @@ const ConceptPage: React.FC = () => {
                 />
               </div>
             </div>
-
-            {/* Voice AI Agent - centered */}
-            <div className="w-full">
-              <VoiceAIAgent conceptSlug={slug} />
-            </div>
             
             {/* Blog content - centered */}
             <div className="w-full">
@@ -179,6 +174,9 @@ const ConceptPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Sticky Voice AI Agent - Always visible in bottom right */}
+        <VoiceAIAgent conceptSlug={slug} />
       </div>
 
       {/* Full-screen image overlay */}
