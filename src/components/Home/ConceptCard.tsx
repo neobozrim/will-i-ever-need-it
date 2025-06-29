@@ -34,10 +34,10 @@ const ConceptCard: React.FC<ConceptCardProps> = ({ concept }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative h-full flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-2xl hover:border-transparent transition-all duration-500 transform hover:-translate-y-2">
-        {/* Stronger Glow Effect - visible on hover with increased intensity */}
+        {/* Purple and Orange Glow Effect - visible on hover with increased intensity */}
         {isHovered && (
           <GlowEffect
-            colors={['#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B']}
+            colors={['#8B5CF6', '#A855F7', '#C084FC', '#FF8C00', '#FF7F50', '#FF6347']}
             mode="rotate"
             blur="stronger"
             duration={2}
