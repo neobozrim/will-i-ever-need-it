@@ -369,7 +369,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right side - Characters image with SLIDE IN FROM RIGHT animation + JINGLE - ALWAYS RENDERED */}
+          {/* Right side - BoredOppo and Maya characters with SLIDE IN FROM RIGHT animation + JINGLE - ALWAYS RENDERED */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
@@ -394,13 +394,13 @@ const Hero: React.FC = () => {
               }}
             >
               <motion.img 
-                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2021characters.png" 
-                alt="Math characters illustration"
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
+                alt="BoredOppo and Maya - Math learning characters"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
                 variants={imageJingleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 onError={(e) => {
-                  console.error('Failed to load characters.png image');
+                  console.error('Failed to load BoredOppoAndMaya.png image');
                   const target = e.target as HTMLImageElement;
                   target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
                 }}
