@@ -482,7 +482,7 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Right side - Bored character with idle animation and fly-away trigger - FOURTH TO GO */}
+          {/* Right side - New Characters SVG with idle animation and fly-away trigger - FOURTH TO GO */}
           <div className="flex justify-center lg:justify-end">
             <AnimatePresence>
               {showElements && (
@@ -519,11 +519,11 @@ const Hero: React.FC = () => {
                   }}
                 >
                   <img 
-                    src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//bored.png" 
-                    alt="Bored character illustration"
+                    src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2020characters.svg" 
+                    alt="Math characters illustration"
                     className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
-                      console.error('Failed to load bored.png image');
+                      console.error('Failed to load characters.svg image');
                       // Fallback to a placeholder if image fails to load
                       const target = e.target as HTMLImageElement;
                       target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
