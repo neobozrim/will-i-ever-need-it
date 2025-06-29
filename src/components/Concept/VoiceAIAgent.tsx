@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Bot, Loader2, Play, MicOff, Settings, Volume2, VolumeX } from 'lucide-react';
+import { Mic, Loader2, Play, MicOff, Settings, Volume2, VolumeX } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 // Type for our conversation data
@@ -133,11 +133,11 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       setConnectionStatus('connecting');
 
       // Build conversation prompt - use custom prompt if provided
-      const prompt = customPrompt || `You are a helpful math tutor assistant. The user is learning about ${data.concept}.
+      const prompt = customPrompt || `You are Maya, a helpful and friendly math tutor. The user is learning about ${data.concept}.
 
 Look in your knowledge base for the document about "${data.concept}" and focus only on that topic.
 
-You should IMMEDIATELY start the conversation by greeting the user and asking how you can help with ${data.concept}. Do not wait for the user to speak first.
+You should IMMEDIATELY start the conversation by greeting the user warmly and asking how you can help with ${data.concept}. Do not wait for the user to speak first.
 
 Only discuss ${data.concept} - ignore other math topics in your knowledge base.`;
 
@@ -147,7 +147,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           prompt: {
             prompt: prompt
           },
-          firstMessage: `Hey! I see you're learning about ${data.concept.replace(/-/g, ' ')}. How can I assist you with this topic today?`,
+          firstMessage: `Hi there! I'm Maya, your math tutor. I see you're learning about ${data.concept.replace(/-/g, ' ')}. How can I help you with this topic today?`,
           language: "en" as const // Explicitly set language with const assertion
         }
       };
@@ -273,36 +273,19 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
     }
   };
 
-  // Theme-based styling
-  const getThemeClasses = () => {
-    switch (theme) {
-      case 'minimal':
-        return 'bg-gray-50 border border-gray-200 p-4 rounded-lg';
-      case 'compact':
-        return 'bg-white border border-gray-200 p-3 rounded-lg shadow-sm';
-      default:
-        return 'bg-white rounded-xl shadow-sm border border-gray-200 p-6';
-    }
-  };
-
   return (
-    <div className={getThemeClasses()}>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <div className={`p-2 bg-gradient-to-br from-${primaryColor}-500 to-purple-600 rounded-lg`}>
-            <Bot className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <h3 className="font-barriecito text-lg text-gray-900">Voice AI Tutor</h3>
-            <p className="font-nunito text-sm text-gray-500">
-              {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Click to start talking'}
-            </p>
-          </div>
+        <div>
+          <h3 className="font-barriecito text-2xl text-gray-900 mb-2">Discuss with Maya</h3>
+          <p className="font-nunito text-gray-600">
+            {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Click to start talking'}
+          </p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3">
           {showStatusIndicator && (
             <>
-              <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
+              <div className={`w-3 h-3 rounded-full transition-colors ${getStatusIcon()}`}></div>
               <span className={`font-nunito text-sm font-medium transition-colors ${getStatusColor()}`}>
                 {getStatusText()}
               </span>
@@ -311,9 +294,9 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           {showVolumeControls && conversation && (
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-50"
             >
-              <Settings className="h-4 w-4" />
+              <Settings className="h-5 w-5" />
             </button>
           )}
         </div>
@@ -321,13 +304,13 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
 
       {/* Volume Controls */}
       {showSettings && showVolumeControls && conversation && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-lg border">
+        <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
           <div className="flex items-center space-x-3">
             <button
               onClick={toggleMute}
-              className="p-1 text-gray-600 hover:text-gray-800 transition-colors"
+              className="p-2 text-gray-600 hover:text-gray-800 transition-colors rounded-lg hover:bg-gray-100"
             >
-              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+              {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
             </button>
             <input
               type="range"
@@ -339,7 +322,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
               disabled={isMuted}
             />
-            <span className="font-nunito text-xs text-gray-500 w-8">
+            <span className="font-nunito text-sm text-gray-500 w-12 text-center">
               {Math.round(volume * 100)}%
             </span>
           </div>
@@ -347,18 +330,18 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       )}
       
       {/* Voice controls */}
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-6">
         {/* Start conversation button */}
         {!conversation && (
           <button
             onClick={startTutor}
             disabled={isLoading}
-            className={`${getButtonSize()} rounded-full transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-${primaryColor}-300 ${
+            className={`${getButtonSize()} rounded-xl transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-${primaryColor}-300 ${
               isLoading
                 ? 'bg-gray-400 cursor-not-allowed'
                 : `bg-gradient-to-br from-${primaryColor}-500 to-purple-600 hover:shadow-xl hover:scale-105 active:scale-95`
             }`}
-            aria-label={`Start ${conceptSlug ? formatConceptName(conceptSlug) : ''} tutor`}
+            aria-label={`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
           >
             {isLoading ? (
               <Loader2 className={`${getIconSize()} text-white mx-auto animate-spin`} />
@@ -370,8 +353,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
 
         {/* Voice interaction controls */}
         {conversation && (
-          <div className="flex items-center justify-center space-x-4">
-            <div className={`${getButtonSize()} rounded-full flex items-center justify-center transition-all duration-300 ${
+          <div className="flex items-center justify-center space-x-6">
+            <div className={`${getButtonSize()} rounded-xl flex items-center justify-center transition-all duration-300 ${
               isListening
                 ? 'bg-green-500 animate-pulse shadow-lg'
                 : isConnected
@@ -389,24 +372,22 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             
             <button
               onClick={endConversation}
-              className="font-barriecito px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="font-barriecito px-6 py-3 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
             >
               End Session
             </button>
           </div>
         )}
         
-        <p className="font-nunito text-sm text-gray-600 max-w-xs mx-auto">
+        <p className="font-nunito text-gray-600 max-w-md mx-auto leading-relaxed">
           {isLoading 
-            ? 'Starting tutor...' 
+            ? 'Starting conversation with Maya...' 
             : !conversation
-            ? conceptSlug 
-              ? `Tap to start ${formatConceptName(conceptSlug)} tutor`
-              : 'Tap to start tutor'
+            ? 'Tap to start conversation'
             : connectionStatus === 'connecting'
-            ? 'Connecting to voice service...'
+            ? 'Connecting to Maya...'
             : isListening
-            ? 'Listening... Speak now!'
+            ? 'Maya is listening... Speak now!'
             : isConnected
             ? 'Connected - waiting for you to speak'
             : 'Reconnecting...'
@@ -416,8 +397,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       
       {/* Status messages */}
       {conversationData && isConnected && !error && (
-        <div className="mt-4 p-3 bg-green-50 rounded-lg text-center border border-green-200">
-          <p className="font-nunito text-sm text-green-700 font-medium">✅ Voice tutor is active!</p>
+        <div className="mt-6 p-4 bg-green-50 rounded-lg text-center border border-green-200">
+          <p className="font-nunito text-sm text-green-700 font-medium">✅ Maya is ready to chat!</p>
           <p className="font-nunito text-xs text-green-600 mt-1">
             Discussing {conversationData.concept ? formatConceptName(conversationData.concept) : 'mathematics'}
           </p>
@@ -425,37 +406,25 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       )}
       
       {error && (
-        <div className="mt-4 p-3 bg-red-50 rounded-lg text-center border border-red-200">
+        <div className="mt-6 p-4 bg-red-50 rounded-lg text-center border border-red-200">
           <p className="font-nunito text-sm text-red-700 font-medium">❌ Error</p>
-          <p className="font-nunito text-xs text-red-600 mt-1 break-words">{error}</p>
-          <div className="mt-3 space-x-2">
+          <p className="font-nunito text-xs text-red-600 mt-2 break-words">{error}</p>
+          <div className="mt-4 space-x-3">
             <button 
               onClick={() => setError(null)}
-              className="font-barriecito text-xs text-red-600 hover:text-red-800 underline transition-colors"
+              className="font-barriecito text-sm text-red-600 hover:text-red-800 underline transition-colors"
             >
               Dismiss
             </button>
             <button 
               onClick={startTutor}
-              className="font-barriecito text-xs text-red-600 hover:text-red-800 underline transition-colors"
+              className="font-barriecito text-sm text-red-600 hover:text-red-800 underline transition-colors"
             >
               Retry
             </button>
           </div>
         </div>
       )}
-      
-      <div className="mt-6 flex items-center justify-center space-x-4 text-sm text-gray-500">
-        <span className="font-nunito">Voice Powered</span>
-        <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-        <span className="font-nunito">AI Tutor</span>
-        {conceptSlug && (
-          <>
-            <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-            <span className="font-nunito">{formatConceptName(conceptSlug)}</span>
-          </>
-        )}
-      </div>
     </div>
   );
 };
