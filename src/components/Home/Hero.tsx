@@ -169,20 +169,20 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FIXED: Hero image jiggle animation - MORE PRONOUNCED for the characters
-  const heroImageJiggleVariants = {
+  // ENHANCED: Hero image JITTER animation - More pronounced, erratic movement
+  const heroImageJitterVariants = {
     idle: {
-      x: [0, 4, -4, 3, -2, 0],
-      y: [0, -3, 4, -2, 2, 0],
-      rotate: [0, 1.2, -1.2, 0.8, -0.6, 0],
-      scale: [1, 1.04, 0.96, 1.03, 0.97, 1],
+      x: [0, 6, -5, 8, -3, 4, -6, 2, -4, 7, -2, 0],
+      y: [0, -4, 6, -2, 5, -7, 3, -5, 4, -3, 2, 0],
+      rotate: [0, 2, -1.5, 2.5, -2, 1.8, -2.2, 1.2, -1.8, 2.3, -1, 0],
+      scale: [1, 1.05, 0.95, 1.08, 0.92, 1.06, 0.94, 1.04, 0.96, 1.07, 0.98, 1],
       transition: {
-        duration: 4, // Slightly longer for more character
+        duration: 2.5, // Faster, more jittery
         repeat: Infinity,
         repeatType: "loop",
-        ease: "easeInOut",
-        delay: 1.5, // Different delay from heading
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+        ease: "linear", // Linear for more mechanical jitter feel
+        delay: 1.5,
+        times: [0, 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.9, 1]
       }
     }
   };
@@ -389,7 +389,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* FIXED: Right side - BoredOppo and Maya characters with ENHANCED JIGGLE + CLEAN DIRECT RETURN PATH */}
+          {/* ENHANCED: Right side - BoredOppo and Maya characters with JITTER ANIMATION */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
@@ -403,12 +403,12 @@ const Hero: React.FC = () => {
                 willChange: 'transform'
               }}
             >
-              {/* FIXED: Hero image with ENHANCED JIGGLE animation */}
+              {/* ENHANCED: Hero image with JITTER animation - More erratic, mechanical movement */}
               <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
-                variants={heroImageJiggleVariants}
+                variants={heroImageJitterVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 style={{
                   willChange: 'transform'
