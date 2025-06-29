@@ -122,7 +122,7 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FASTER: Image return animation - reduced spring damping and mass for quicker return
+  // FIXED: Image return animation - MUCH SIMPLER and FASTER with direct path
   const slideInFromRightVariants = {
     hidden: { 
       x: 300, 
@@ -136,10 +136,9 @@ const Hero: React.FC = () => {
       scale: 1,
       rotate: 0,
       transition: {
-        type: "spring",
-        damping: 8, // REDUCED from 10 for faster return
-        stiffness: 140, // INCREASED from 100 for snappier return
-        mass: 0.8 // REDUCED from 1.2 for lighter, faster movement
+        type: "tween", // CHANGED: Using tween instead of spring for more predictable path
+        duration: 0.6, // FIXED: Direct duration control instead of spring physics
+        ease: "easeOut" // SMOOTH: Ease out for natural deceleration
       }
     }
   };
@@ -195,7 +194,7 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FIXED: Animation states for consistent paths
+  // FIXED: Animation states with DIRECT PATHS - no complex spring physics on return
   const getAnimationState = (element: 'heading' | 'description' | 'button' | 'image') => {
     if (!hasLoaded) return "hidden";
     
@@ -243,7 +242,7 @@ const Hero: React.FC = () => {
       }
     }
     
-    // FIXED: Return to normal position - description returns to its proper place below heading
+    // FIXED: Return to normal position - clean, direct path
     return "visible";
   };
 
@@ -399,7 +398,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* FASTER: Right side - BoredOppo and Maya characters - SPEEDED UP RETURN */}
+          {/* FIXED: Right side - BoredOppo and Maya characters - CLEAN DIRECT RETURN PATH */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
