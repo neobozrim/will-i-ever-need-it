@@ -6,7 +6,7 @@ const Layout: React.FC = () => {
   return (
     <div className="min-h-screen dotted-background">
       <Header />
-      <main>
+      <main className="pt-0"> {/* Removed padding-top since header is now absolute */}
         <Outlet />
       </main>
     </div>

@@ -369,7 +369,7 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Right side - New Characters PNG with idle animation and fly-away trigger - FOURTH TO GO */}
+          {/* Right side - New Characters PNG with idle animation and fly-away trigger - NO DECORATIVE DOTS */}
           <div className="flex justify-center lg:justify-end">
             <AnimatePresence>
               {showElements && (
@@ -417,66 +417,7 @@ const Hero: React.FC = () => {
                     }}
                   />
                   
-                  {/* Decorative elements with idle animations and fly-away triggers - FIFTH & SIXTH TO GO */}
-                  <motion.div 
-                    className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full"
-                    initial={{ scale: 1, rotate: 0, opacity: 1 }}
-                    animate={hasTriggered ? {
-                      x: 800,
-                      y: -300,
-                      rotate: 720,
-                      scale: 0,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.08 } // Tiny delay
-                    } : { 
-                      scale: [1, 1.2, 1],
-                      rotate: [0, 10, 0],
-                      transition: { 
-                        duration: 2, 
-                        repeat: Infinity, 
-                        repeatType: "reverse",
-                        ease: "easeInOut"
-                      }
-                    }}
-                    exit={{
-                      x: 800,
-                      y: -300,
-                      rotate: 720,
-                      scale: 0,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.08 }
-                    }}
-                  />
-                  <motion.div 
-                    className="absolute -bottom-6 -left-6 w-6 h-6 bg-pink-400 rounded-full"
-                    initial={{ scale: 1, rotate: 0, opacity: 1 }}
-                    animate={hasTriggered ? {
-                      x: 600,
-                      y: 800,
-                      rotate: -540,
-                      scale: 0,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.1 } // Tiny delay
-                    } : { 
-                      scale: [1, 1.3, 1],
-                      rotate: [0, -15, 0],
-                      transition: { 
-                        duration: 1.5, 
-                        repeat: Infinity, 
-                        repeatType: "reverse",
-                        ease: "easeInOut",
-                        delay: 0.5
-                      }
-                    }}
-                    exit={{
-                      x: 600,
-                      y: 800,
-                      rotate: -540,
-                      scale: 0,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.1 }
-                    }}
-                  />
+                  {/* REMOVED: Pink and yellow decorative dots */}
                 </motion.div>
               )}
             </AnimatePresence>
