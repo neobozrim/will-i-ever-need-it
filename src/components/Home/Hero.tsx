@@ -162,27 +162,35 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      {/* RESTORED: Beautiful Animated Background with Fixed Positioning */}
+      {/* BEAUTIFUL PULSING BACKGROUND IMAGE */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* FIXED: Static banner background - NO transform animations to prevent glitches */}
-        <div 
+        {/* PULSING BACKGROUND IMAGE - Beautiful breathing effect */}
+        <motion.div 
           className="absolute inset-0 w-full h-full flex items-center justify-center"
+          animate={{
+            scale: [1, 1.05, 1],
+            opacity: [0.15, 0.25, 0.15],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            repeatType: "loop"
+          }}
           style={{
-            transform: 'none', // CRITICAL: No transforms that cause scroll glitches
-            willChange: 'auto' // CRITICAL: Disable will-change to prevent GPU layer issues
+            transform: 'none', // Base transform - animation will override
+            willChange: 'transform, opacity' // Only animate what we need
           }}
         >
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
-            className="w-full h-full opacity-20 object-cover"
+            className="w-full h-full object-cover"
             style={{
-              minWidth: '100vw',
-              minHeight: '100vh',
+              minWidth: '120vw', // Slightly larger to accommodate scaling
+              minHeight: '120vh',
               objectFit: 'cover',
               objectPosition: 'center center',
-              transform: 'none', // CRITICAL: No transforms
-              willChange: 'auto' // CRITICAL: Disable will-change
             }}
             onError={(e) => {
               console.error('Failed to load Asset 23banner2.svg');
@@ -190,9 +198,47 @@ const Hero: React.FC = () => {
               target.style.display = 'none';
             }}
           />
-        </div>
+        </motion.div>
 
-        {/* RESTORED: Beautiful Animated Color Overlays - Multiple layers for depth */}
+        {/* SECONDARY PULSING LAYER - Different timing for depth */}
+        <motion.div 
+          className="absolute inset-0 w-full h-full flex items-center justify-center"
+          animate={{
+            scale: [1.02, 0.98, 1.02],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            repeatType: "loop",
+            delay: 2 // Offset timing for layered effect
+          }}
+          style={{
+            transform: 'none',
+            willChange: 'transform, opacity'
+          }}
+        >
+          <img 
+            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
+            alt="Mathematical background pattern layer 2"
+            className="w-full h-full object-cover"
+            style={{
+              minWidth: '125vw',
+              minHeight: '125vh',
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              filter: 'blur(1px)', // Slight blur for depth
+            }}
+            onError={(e) => {
+              console.error('Failed to load Asset 23banner2.svg layer 2');
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        </motion.div>
+
+        {/* BEAUTIFUL ANIMATED COLOR OVERLAYS - Multiple layers for depth */}
         <motion.div
           className="absolute inset-0 w-full h-full"
           animate={{
@@ -206,24 +252,24 @@ const Hero: React.FC = () => {
             ],
           }}
           transition={{
-            duration: 12,
+            duration: 16,
             repeat: Infinity,
             ease: "easeInOut",
           }}
           style={{
-            transform: 'none', // CRITICAL: No transforms
-            willChange: 'auto' // CRITICAL: Disable will-change
+            transform: 'none',
+            willChange: 'background'
           }}
         />
 
-        {/* RESTORED: Multiple Pulsing Spots for Beautiful Effect */}
+        {/* PULSING COLOR SPOTS - Synchronized with background pulse */}
         <motion.div
           className="absolute top-1/4 left-1/4 w-40 h-40 rounded-full blur-2xl"
           animate={{
-            scale: [0.8, 1.4, 0.8],
-            opacity: [0.15, 0.35, 0.15],
-            x: [0, 20, 0],
-            y: [0, -10, 0],
+            scale: [0.8, 1.6, 0.8],
+            opacity: [0.15, 0.4, 0.15],
+            x: [0, 30, 0],
+            y: [0, -15, 0],
           }}
           transition={{
             duration: 8,
@@ -231,18 +277,18 @@ const Hero: React.FC = () => {
             ease: "easeInOut",
           }}
           style={{
-            background: 'rgba(255, 173, 173, 0.4)',
-            willChange: 'auto' // CRITICAL: Disable will-change
+            background: 'rgba(255, 173, 173, 0.5)',
+            willChange: 'transform, opacity'
           }}
         />
 
         <motion.div
           className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full blur-xl"
           animate={{
-            scale: [1.2, 0.6, 1.2],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, -15, 0],
-            y: [0, 15, 0],
+            scale: [1.4, 0.6, 1.4],
+            opacity: [0.2, 0.5, 0.2],
+            x: [0, -25, 0],
+            y: [0, 20, 0],
           }}
           transition={{
             duration: 10,
@@ -251,28 +297,69 @@ const Hero: React.FC = () => {
             delay: 2,
           }}
           style={{
-            background: 'rgba(255, 214, 165, 0.4)',
-            willChange: 'auto' // CRITICAL: Disable will-change
+            background: 'rgba(255, 214, 165, 0.5)',
+            willChange: 'transform, opacity'
           }}
         />
 
         <motion.div
           className="absolute bottom-1/3 left-1/2 w-36 h-36 rounded-full blur-2xl"
           animate={{
-            scale: [0.9, 1.3, 0.9],
-            opacity: [0.1, 0.3, 0.1],
-            x: [0, 10, 0],
-            y: [0, -20, 0],
+            scale: [0.9, 1.5, 0.9],
+            opacity: [0.1, 0.35, 0.1],
+            x: [0, 15, 0],
+            y: [0, -30, 0],
           }}
           transition={{
-            duration: 14,
+            duration: 12,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 4,
           }}
           style={{
-            background: 'rgba(222, 218, 244, 0.4)',
-            willChange: 'auto' // CRITICAL: Disable will-change
+            background: 'rgba(222, 218, 244, 0.5)',
+            willChange: 'transform, opacity'
+          }}
+        />
+
+        {/* ADDITIONAL PULSING SPOTS FOR RICHER EFFECT */}
+        <motion.div
+          className="absolute top-3/4 right-1/4 w-28 h-28 rounded-full blur-xl"
+          animate={{
+            scale: [1.1, 0.7, 1.1],
+            opacity: [0.18, 0.45, 0.18],
+            x: [0, -20, 0],
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 6,
+          }}
+          style={{
+            background: 'rgba(173, 216, 230, 0.5)',
+            willChange: 'transform, opacity'
+          }}
+        />
+
+        <motion.div
+          className="absolute top-1/6 right-1/2 w-24 h-24 rounded-full blur-lg"
+          animate={{
+            scale: [0.6, 1.3, 0.6],
+            opacity: [0.12, 0.38, 0.12],
+            x: [0, 18, 0],
+            y: [0, -12, 0],
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+          style={{
+            background: 'rgba(255, 182, 193, 0.5)',
+            willChange: 'transform, opacity'
           }}
         />
       </div>
