@@ -236,7 +236,7 @@ const Hero: React.FC = () => {
         }}
       />
 
-      {/* CLEAN PULSING BACKGROUND IMAGE - No opacity changes, just scale */}
+      {/* CLEAN PULSING BACKGROUND IMAGE - Using new Hero-underlying-banner.svg */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
         <motion.div 
           className="absolute inset-0 w-full h-full flex items-center justify-center"
@@ -255,7 +255,7 @@ const Hero: React.FC = () => {
           }}
         >
           <img 
-            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
+            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Hero-underlying-banner.svg"
             alt="Mathematical background pattern"
             className="w-full h-full object-cover opacity-20" // Fixed opacity, no animation
             style={{
@@ -265,7 +265,7 @@ const Hero: React.FC = () => {
               objectPosition: 'center center',
             }}
             onError={(e) => {
-              console.error('Failed to load Asset 23banner2.svg');
+              console.error('Failed to load Hero-underlying-banner.svg');
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
             }}
