@@ -256,34 +256,27 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex items-center">
+      {/* MOVED CONTENT LOWER - Added more top padding and flex positioning */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex items-end pb-20 pt-32 lg:pt-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
             <AnimatePresence>
               {showElements && (
                 <>
-                  {/* Heading with idle animation and fly-away trigger - FIRST TO GO */}
+                  {/* Heading - REMOVED JIGGLING ANIMATION */}
                   <motion.h1 
                     className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
-                    initial={{ x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }}
+                    initial={{ opacity: 1 }}
                     animate={hasTriggered ? {
                       x: -1200,
                       y: -600,
                       rotate: -45,
                       scale: 0.3,
                       opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut" } // NO DELAY - starts immediately
-                    } : { 
-                      x: [0, -5, 0], 
-                      y: [0, -2, 0],
-                      rotate: [0, 1, 0],
-                      transition: { 
-                        duration: 0.6, 
-                        repeat: Infinity, 
-                        repeatType: "reverse",
-                        ease: "easeInOut"
-                      }
+                      transition: { duration: 0.5, ease: "easeInOut" }
+                    } : {
+                      opacity: 1
                     }}
                     exit={{
                       x: -1200,
@@ -297,28 +290,19 @@ const Hero: React.FC = () => {
                     Math could be boring!
                   </motion.h1>
                   
-                  {/* Description with idle animation and fly-away trigger - SECOND TO GO */}
+                  {/* Description - REMOVED JIGGLING ANIMATION */}
                   <motion.p 
                     className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
-                    initial={{ x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }}
+                    initial={{ opacity: 1 }}
                     animate={hasTriggered ? {
                       x: -1000,
                       y: -200,
                       rotate: -25,
                       scale: 0.4,
                       opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 } // Tiny delay
-                    } : { 
-                      x: [0, -3, 0], 
-                      y: [0, 1, 0],
-                      rotate: [0, -0.5, 0],
-                      transition: { 
-                        duration: 0.8, 
-                        repeat: Infinity, 
-                        repeatType: "reverse",
-                        ease: "easeInOut",
-                        delay: 0.1
-                      }
+                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
+                    } : {
+                      opacity: 1
                     }}
                     exit={{
                       x: -1000,
@@ -332,31 +316,21 @@ const Hero: React.FC = () => {
                     Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
                   </motion.p>
                   
-                  {/* Button with idle animation and fly-away trigger - THIRD TO GO */}
+                  {/* Button - REMOVED JIGGLING ANIMATION */}
                   <div className="flex justify-start">
                     <motion.button 
                       onClick={handleWatchClick}
                       className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
-                      initial={{ x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }}
+                      initial={{ opacity: 1 }}
                       animate={hasTriggered ? {
                         x: -800,
                         y: 500,
                         rotate: -180,
                         scale: 0.2,
                         opacity: 0,
-                        transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 } // Tiny delay
-                      } : { 
-                        x: [0, -2, 0], 
-                        y: [0, 2, 0],
-                        rotate: [0, 0.5, 0],
-                        scale: [1, 1.02, 1],
-                        transition: { 
-                          duration: 1, 
-                          repeat: Infinity, 
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                          delay: 0.2
-                        }
+                        transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
+                      } : {
+                        opacity: 1
                       }}
                       exit={{
                         x: -800,
@@ -366,6 +340,8 @@ const Hero: React.FC = () => {
                         opacity: 0,
                         transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
                       }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <span>WATCH THIS</span>
                     </motion.button>
@@ -375,32 +351,22 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Right side - New Characters PNG with idle animation and fly-away trigger - NO DECORATIVE DOTS */}
+          {/* Right side - Characters image - REMOVED JIGGLING ANIMATION */}
           <div className="flex justify-center lg:justify-end">
             <AnimatePresence>
               {showElements && (
                 <motion.div 
                   className="relative"
-                  initial={{ x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }}
+                  initial={{ opacity: 1 }}
                   animate={hasTriggered ? {
                     x: 1000,
                     y: 600,
                     rotate: 360,
                     scale: 0.1,
                     opacity: 0,
-                    transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 } // Tiny delay
-                  } : { 
-                    x: [0, 3, 0], 
-                    y: [0, -2, 0],
-                    rotate: [0, -1, 0],
-                    scale: [1, 1.01, 1],
-                    transition: { 
-                      duration: 1.2, 
-                      repeat: Infinity, 
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                      delay: 0.3
-                    }
+                    transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
+                  } : {
+                    opacity: 1
                   }}
                   exit={{
                     x: 1000,
@@ -422,8 +388,6 @@ const Hero: React.FC = () => {
                       target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
                     }}
                   />
-                  
-                  {/* REMOVED: Pink and yellow decorative dots */}
                 </motion.div>
               )}
             </AnimatePresence>
