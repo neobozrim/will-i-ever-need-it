@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'ccmeanwhile': ['CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', 'system-ui', 'sans-serif'],
-        'sans': ['CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', 'system-ui', 'sans-serif'],
+        'fredoka': ['Fredoka', 'Nunito', 'system-ui', 'sans-serif'],
+        'sans': ['Fredoka', 'Nunito', 'system-ui', 'sans-serif'],
       },
     },
   },

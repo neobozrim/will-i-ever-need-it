@@ -2,40 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CCMEANWHILE font from Adobe Fonts - Multiple loading methods */
-@import url('https://use.typekit.net/fuf8ojy.css');
+/* Google Fonts - Bold, distinctive fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
 
 /* Force font application with highest specificity */
 @layer base {
   * {
-    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
   }
   
   html {
-    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
   }
   
   body {
-    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
+    font-weight: 700 !important;
   }
   
   p, span, div, button, input, textarea, label {
-    font-family: 'CCMEANWHILE', 'cc-meanwhile', 'CC Meanwhile', 'Arial Black', system-ui, sans-serif !important;
+    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
   }
-}
-
-/* Additional font loading attempt */
-@font-face {
-  font-family: 'CCMEANWHILE';
-  src: url('https://use.typekit.net/af/8b8da1/00000000000000007735c1b4/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff2'),
-       url('https://use.typekit.net/af/8b8da1/00000000000000007735c1b4/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
 }
 
 @keyframes jiggle {
