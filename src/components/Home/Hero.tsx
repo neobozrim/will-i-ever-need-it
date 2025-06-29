@@ -50,16 +50,15 @@ const Hero: React.FC = () => {
     return () => unsubscribe();
   }, [scrollYProgress, hasTriggered]);
 
-  // Handle "WATCH THIS" button click - FIXED: No auto-scroll, just smooth scroll
+  // Handle "WATCH THIS" button click - FIXED: Smooth scroll without auto-play
   const handleWatchClick = () => {
     // Find the video section and scroll to it smoothly
     const videoSection = document.querySelector('[data-video-section]');
     if (videoSection) {
       videoSection.scrollIntoView({ 
         behavior: 'smooth',
-        block: 'start' // Changed from 'center' to 'start' for better positioning
+        block: 'start'
       });
-      // REMOVED: Auto video play - let user click to play
     }
   };
 
@@ -162,7 +161,6 @@ const Hero: React.FC = () => {
             className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
             onError={(e) => {
               console.error('Failed to load white circle image');
-              // Hide the image if it fails to load
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
             }}
@@ -170,10 +168,16 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      {/* FIXED: Static Background - No scaling animations that cause glitches */}
+      {/* RESTORED: Beautiful Animated Background with Fixed Positioning */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* FIXED: Static banner background - removed scaling animation */}
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+        {/* FIXED: Static banner background - NO transform animations to prevent glitches */}
+        <div 
+          className="absolute inset-0 w-full h-full flex items-center justify-center"
+          style={{
+            transform: 'none', // CRITICAL: No transforms that cause scroll glitches
+            willChange: 'auto' // CRITICAL: Disable will-change to prevent GPU layer issues
+          }}
+        >
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
@@ -181,8 +185,10 @@ const Hero: React.FC = () => {
             style={{
               minWidth: '100vw',
               minHeight: '100vh',
-              objectFit: 'cover', // Changed from 'contain' to 'cover' for consistent sizing
-              objectPosition: 'center center'
+              objectFit: 'cover',
+              objectPosition: 'center center',
+              transform: 'none', // CRITICAL: No transforms
+              willChange: 'auto' // CRITICAL: Disable will-change
             }}
             onError={(e) => {
               console.error('Failed to load Asset 23banner2.svg');
@@ -192,43 +198,140 @@ const Hero: React.FC = () => {
           />
         </div>
 
-        {/* SIMPLIFIED: Gentle color overlays - reduced complexity to prevent glitches */}
+        {/* RESTORED: Beautiful Animated Color Overlays - Multiple layers for depth */}
         <motion.div
           className="absolute inset-0 w-full h-full"
           animate={{
             background: [
-              'radial-gradient(circle at 30% 40%, rgba(255, 173, 173, 0.15) 0%, transparent 70%)',
-              'radial-gradient(circle at 70% 60%, rgba(255, 214, 165, 0.15) 0%, transparent 70%)',
-              'radial-gradient(circle at 50% 30%, rgba(222, 218, 244, 0.15) 0%, transparent 70%)',
-              'radial-gradient(circle at 30% 40%, rgba(255, 173, 173, 0.15) 0%, transparent 70%)',
+              'radial-gradient(circle at 30% 40%, rgba(255, 173, 173, 0.25) 0%, transparent 70%)',
+              'radial-gradient(circle at 70% 60%, rgba(255, 214, 165, 0.25) 0%, transparent 70%)',
+              'radial-gradient(circle at 50% 30%, rgba(222, 218, 244, 0.25) 0%, transparent 70%)',
+              'radial-gradient(circle at 20% 70%, rgba(173, 216, 230, 0.25) 0%, transparent 70%)',
+              'radial-gradient(circle at 80% 20%, rgba(255, 182, 193, 0.25) 0%, transparent 70%)',
+              'radial-gradient(circle at 30% 40%, rgba(255, 173, 173, 0.25) 0%, transparent 70%)',
             ],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{
+            transform: 'none', // CRITICAL: No transforms
+            willChange: 'auto' // CRITICAL: Disable will-change
+          }}
+        />
+
+        {/* RESTORED: Multiple Pulsing Spots for Beautiful Effect */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-40 h-40 rounded-full blur-2xl"
+          animate={{
+            scale: [0.8, 1.4, 0.8],
+            opacity: [0.15, 0.35, 0.15],
+            x: [0, 20, 0],
+            y: [0, -10, 0],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
+          style={{
+            background: 'rgba(255, 173, 173, 0.4)',
+            willChange: 'auto' // CRITICAL: Disable will-change
+          }}
         />
 
-        {/* SIMPLIFIED: Single gentle pulsing spot */}
         <motion.div
-          className="absolute top-1/3 left-1/3 w-32 h-32 rounded-full blur-xl"
+          className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full blur-xl"
           animate={{
-            scale: [0.8, 1.2, 0.8],
+            scale: [1.2, 0.6, 1.2],
+            opacity: [0.2, 0.4, 0.2],
+            x: [0, -15, 0],
+            y: [0, 15, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+          style={{
+            background: 'rgba(255, 214, 165, 0.4)',
+            willChange: 'auto' // CRITICAL: Disable will-change
+          }}
+        />
+
+        <motion.div
+          className="absolute bottom-1/3 left-1/2 w-36 h-36 rounded-full blur-2xl"
+          animate={{
+            scale: [0.9, 1.3, 0.9],
             opacity: [0.1, 0.3, 0.1],
+            x: [0, 10, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4,
+          }}
+          style={{
+            background: 'rgba(222, 218, 244, 0.4)',
+            willChange: 'auto' // CRITICAL: Disable will-change
+          }}
+        />
+
+        {/* RESTORED: Floating Particles for Extra Magic */}
+        <motion.div
+          className="absolute top-1/3 right-1/4 w-3 h-3 bg-pink-300 rounded-full opacity-40"
+          animate={{
+            y: [0, -30, 0],
+            x: [0, 10, 0],
+            scale: [1, 1.5, 1],
+            opacity: [0.4, 0.8, 0.4],
           }}
           transition={{
             duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          style={{
-            background: 'rgba(255, 173, 173, 0.3)',
+        />
+
+        <motion.div
+          className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-blue-300 rounded-full opacity-50"
+          animate={{
+            y: [0, 25, 0],
+            x: [0, -15, 0],
+            scale: [1, 1.3, 1],
+            opacity: [0.5, 0.9, 0.5],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1,
+          }}
+        />
+
+        <motion.div
+          className="absolute top-2/3 right-1/2 w-4 h-4 bg-yellow-300 rounded-full opacity-30"
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 20, 0],
+            scale: [1, 1.4, 1],
+            opacity: [0.3, 0.7, 0.3],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3,
           }}
         />
       </div>
 
-      {/* MOVED CONTENT LOWER - Added more top padding and flex positioning */}
+      {/* Content positioned lower with proper spacing */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex items-end pb-20 pt-32 lg:pt-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
@@ -258,7 +361,7 @@ const Hero: React.FC = () => {
                       transition: { duration: 0.5, ease: "easeInOut" }
                     }}
                     transition={{
-                      delay: 0.2 // First element to appear
+                      delay: 0.2
                     }}
                   >
                     Math could be boring!
@@ -286,7 +389,7 @@ const Hero: React.FC = () => {
                       transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
                     }}
                     transition={{
-                      delay: 0.5 // Second element to appear
+                      delay: 0.5
                     }}
                   >
                     Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
@@ -318,7 +421,7 @@ const Hero: React.FC = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       transition={{
-                        delay: 0.8 // Third element to appear
+                        delay: 0.8
                       }}
                     >
                       <span>WATCH THIS</span>
@@ -354,7 +457,7 @@ const Hero: React.FC = () => {
                     transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
                   }}
                   transition={{
-                    delay: 1.1 // Last element to appear
+                    delay: 1.1
                   }}
                 >
                   <img 
@@ -363,7 +466,6 @@ const Hero: React.FC = () => {
                     className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
                     onError={(e) => {
                       console.error('Failed to load characters.png image');
-                      // Fallback to a placeholder if image fails to load
                       const target = e.target as HTMLImageElement;
                       target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
                     }}
