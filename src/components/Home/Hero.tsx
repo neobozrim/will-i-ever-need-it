@@ -190,6 +190,62 @@ const Hero: React.FC = () => {
     }
   };
 
+  // FIXED: Animation states for consistent paths
+  const getAnimationState = (element: 'heading' | 'description' | 'button' | 'image') => {
+    if (!hasLoaded) return "hidden";
+    
+    if (hasTriggered) {
+      // Exit animations - each element flies out in different directions
+      switch (element) {
+        case 'heading':
+          return {
+            x: -1200,
+            y: -600,
+            rotate: -45,
+            scale: 0.3,
+            opacity: 0,
+            transition: { duration: 0.5, ease: "easeInOut" }
+          };
+        case 'description':
+          return {
+            x: -1000,
+            y: -200,
+            rotate: -25,
+            scale: 0.4,
+            opacity: 0,
+            transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
+          };
+        case 'button':
+          return {
+            x: -800,
+            y: 500,
+            rotate: -180,
+            scale: 0.2,
+            opacity: 0,
+            transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
+          };
+        case 'image':
+          return {
+            x: 1000,
+            y: 600,
+            rotate: 360,
+            scale: 0.1,
+            opacity: 0,
+            transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
+          };
+        default:
+          return "visible";
+      }
+    }
+    
+    // Return to normal position with jingle for heading, button, and image
+    if (element === 'heading' || element === 'button' || element === 'image') {
+      return ["visible", "idle"];
+    }
+    
+    return "visible";
+  };
+
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden min-h-screen">
       {/* Bolt Banner - MOVED TO TOP WITH HIGHEST Z-INDEX */}
@@ -283,17 +339,7 @@ const Hero: React.FC = () => {
               className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
               variants={dropInVariants}
               initial="hidden"
-              animate={
-                !hasLoaded ? "hidden" :
-                hasTriggered ? {
-                  x: -1200,
-                  y: -600,
-                  rotate: -45,
-                  scale: 0.3,
-                  opacity: 0,
-                  transition: { duration: 0.5, ease: "easeInOut" }
-                } : ["visible", "idle"]
-              }
+              animate={getAnimationState('heading')}
               transition={{
                 delay: 0.2
               }}
@@ -314,17 +360,7 @@ const Hero: React.FC = () => {
               className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
               variants={slideInFromLeftVariants}
               initial="hidden"
-              animate={
-                !hasLoaded ? "hidden" :
-                hasTriggered ? {
-                  x: -1000,
-                  y: -200,
-                  rotate: -25,
-                  scale: 0.4,
-                  opacity: 0,
-                  transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
-                } : "visible"
-              }
+              animate={getAnimationState('description')}
               transition={{
                 delay: 0.5
               }}
@@ -339,17 +375,7 @@ const Hero: React.FC = () => {
                 className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
                 variants={bounceInVariants}
                 initial="hidden"
-                animate={
-                  !hasLoaded ? "hidden" :
-                  hasTriggered ? {
-                    x: -800,
-                    y: 500,
-                    rotate: -180,
-                    scale: 0.2,
-                    opacity: 0,
-                    transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
-                  } : ["visible", "idle"]
-                }
+                animate={getAnimationState('button')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{
@@ -375,17 +401,7 @@ const Hero: React.FC = () => {
               className="relative"
               variants={slideInFromRightVariants}
               initial="hidden"
-              animate={
-                !hasLoaded ? "hidden" :
-                hasTriggered ? {
-                  x: 1000,
-                  y: 600,
-                  rotate: 360,
-                  scale: 0.1,
-                  opacity: 0,
-                  transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-                } : ["visible", "idle"]
-              }
+              animate={getAnimationState('image')}
               transition={{
                 delay: 1.1
               }}
