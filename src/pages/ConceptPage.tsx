@@ -55,18 +55,16 @@ const ConceptPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        {/* Back button */}
-        <div className="bg-white border-b border-gray-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link 
-              to="/" 
-              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="font-barriecito">Back to Concepts</span>
-            </Link>
-          </div>
+      <div className="min-h-screen dotted-background">
+        {/* Floating Back Button */}
+        <div className="fixed top-20 left-4 sm:left-6 lg:left-8 z-20">
+          <Link 
+            to="/" 
+            className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200/50"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="font-barriecito">Back</span>
+          </Link>
         </div>
 
         <div className="flex items-center justify-center py-20">
@@ -81,18 +79,16 @@ const ConceptPage: React.FC = () => {
 
   if (error || !concept) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        {/* Back button */}
-        <div className="bg-white border-b border-gray-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link 
-              to="/" 
-              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="font-barriecito">Back to Concepts</span>
-            </Link>
-          </div>
+      <div className="min-h-screen dotted-background">
+        {/* Floating Back Button */}
+        <div className="fixed top-20 left-4 sm:left-6 lg:left-8 z-20">
+          <Link 
+            to="/" 
+            className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200/50"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="font-barriecito">Back</span>
+          </Link>
         </div>
 
         <div className="flex items-center justify-center py-20">
@@ -131,18 +127,16 @@ const ConceptPage: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
-        {/* Back button */}
-        <div className="bg-white border-b border-gray-200">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <Link 
-              to="/" 
-              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span className="font-barriecito">Back to Concepts</span>
-            </Link>
-          </div>
+      <div className="min-h-screen dotted-background">
+        {/* Floating Back Button - Overlays on content */}
+        <div className="fixed top-20 left-4 sm:left-6 lg:left-8 z-20">
+          <Link 
+            to="/" 
+            className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-200/50 hover:bg-white/95"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span className="font-barriecito">Back</span>
+          </Link>
         </div>
 
         {/* Main content - centered single column layout */}
