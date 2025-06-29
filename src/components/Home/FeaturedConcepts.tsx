@@ -21,15 +21,12 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
 
   if (loading) {
     return (
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Featured Math Concepts
+              Featured Epic Math
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Master these essential concepts and see how they power everything from architecture to video games
-            </p>
           </div>
           
           <div className="flex justify-center items-center py-12">
@@ -45,8 +42,8 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
 
   if (error || featuredConcepts.length === 0) {
     return (
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-red-100 rounded-xl">
@@ -55,11 +52,11 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Featured concepts coming soon
+              Featured Epic Math
             </h2>
             
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're working on highlighting the best math concepts for you.
+              Featured concepts coming soon!
             </p>
           </div>
         </div>
@@ -68,20 +65,17 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header - same styling as ConceptLibrary */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Featured Math Concepts
+            Featured Epic Math
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Master these essential concepts and see how they power everything from architecture to video games
-          </p>
         </div>
 
-        {/* Featured cards grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        {/* Featured cards grid - using same 3-column layout as library */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredConcepts.map((concept) => (
             <ConceptCard 
               key={concept.id} 
@@ -89,6 +83,11 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
               onOpenOverlay={onOpenOverlay}
             />
           ))}
+          
+          {/* Add empty div to maintain grid alignment if only 2 cards */}
+          {featuredConcepts.length === 2 && (
+            <div className="hidden lg:block"></div>
+          )}
         </div>
 
         {/* Bottom transition text */}
