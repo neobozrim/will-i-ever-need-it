@@ -188,9 +188,9 @@ const ConceptPage: React.FC = () => {
 
           {/* Large tablet and desktop: two column layout */}
           <div className="hidden lg:grid lg:grid-cols-2 lg:gap-12">
-            {/* Left column - Hero image aligned with right column content */}
-            <div>
-              {/* Hero image at the very top - clickable */}
+            {/* Left column - Hero image at the very top */}
+            <div className="space-y-8">
+              {/* Hero image - positioned at the very top of left column - clickable */}
               <div 
                 className="w-full aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
                 onClick={handleImageClick}
@@ -204,9 +204,9 @@ const ConceptPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right column - Content */}
+            {/* Right column - Content starting with header */}
             <div className="space-y-8">
-              {/* Header section */}
+              {/* Header section - this is what the image should align with */}
               <div>
                 <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6">
                   {concept.title}
