@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasTriggered, setHasTriggered] = useState(false);
-  const [showElements, setShowElements] = useState(true);
   const [hasLoaded, setHasLoaded] = useState(false);
   
   // Track scroll progress of the hero section
@@ -28,10 +27,6 @@ const Hero: React.FC = () => {
       // Trigger at just 0.2% scroll - even more sensitive!
       if (latest > 0.002 && !hasTriggered) {
         setHasTriggered(true);
-        // Hide elements after animation completes
-        setTimeout(() => {
-          setShowElements(false);
-        }, 500); // Faster completion
       }
     });
 
@@ -43,7 +38,6 @@ const Hero: React.FC = () => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
       if (latest < 0.001 && hasTriggered) {
         setHasTriggered(false);
-        setShowElements(true);
       }
     });
 
@@ -336,143 +330,113 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
-            <AnimatePresence>
-              {showElements && (
-                <>
-                  {/* Heading with DROP IN animation */}
-                  <motion.h1 
-                    className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
-                    variants={dropInVariants}
-                    initial="hidden"
-                    animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
-                      x: -1200,
-                      y: -600,
-                      rotate: -45,
-                      scale: 0.3,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut" }
-                    } : "hidden"}
-                    exit={{
-                      x: -1200,
-                      y: -600,
-                      rotate: -45,
-                      scale: 0.3,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut" }
-                    }}
-                    transition={{
-                      delay: 0.2
-                    }}
-                  >
-                    Math could be boring!
-                  </motion.h1>
-                  
-                  {/* Description with SLIDE IN FROM LEFT animation */}
-                  <motion.p 
-                    className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
-                    variants={slideInFromLeftVariants}
-                    initial="hidden"
-                    animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
-                      x: -1000,
-                      y: -200,
-                      rotate: -25,
-                      scale: 0.4,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
-                    } : "hidden"}
-                    exit={{
-                      x: -1000,
-                      y: -200,
-                      rotate: -25,
-                      scale: 0.4,
-                      opacity: 0,
-                      transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
-                    }}
-                    transition={{
-                      delay: 0.5
-                    }}
-                  >
-                    Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
-                  </motion.p>
-                  
-                  {/* Button with BOUNCE IN animation */}
-                  <div className="flex justify-start">
-                    <motion.button 
-                      onClick={handleWatchClick}
-                      className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
-                      variants={bounceInVariants}
-                      initial="hidden"
-                      animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
-                        x: -800,
-                        y: 500,
-                        rotate: -180,
-                        scale: 0.2,
-                        opacity: 0,
-                        transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
-                      } : "hidden"}
-                      exit={{
-                        x: -800,
-                        y: 500,
-                        rotate: -180,
-                        scale: 0.2,
-                        opacity: 0,
-                        transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{
-                        delay: 0.8
-                      }}
-                    >
-                      <span>WATCH THIS</span>
-                    </motion.button>
-                  </div>
-                </>
-              )}
-            </AnimatePresence>
+            {/* Heading with DROP IN animation - ALWAYS RENDERED */}
+            <motion.h1 
+              className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
+              variants={dropInVariants}
+              initial="hidden"
+              animate={
+                !hasLoaded ? "hidden" :
+                hasTriggered ? {
+                  x: -1200,
+                  y: -600,
+                  rotate: -45,
+                  scale: 0.3,
+                  opacity: 0,
+                  transition: { duration: 0.5, ease: "easeInOut" }
+                } : "visible"
+              }
+              transition={{
+                delay: 0.2
+              }}
+            >
+              Math could be boring!
+            </motion.h1>
+            
+            {/* Description with SLIDE IN FROM LEFT animation - ALWAYS RENDERED */}
+            <motion.p 
+              className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
+              variants={slideInFromLeftVariants}
+              initial="hidden"
+              animate={
+                !hasLoaded ? "hidden" :
+                hasTriggered ? {
+                  x: -1000,
+                  y: -200,
+                  rotate: -25,
+                  scale: 0.4,
+                  opacity: 0,
+                  transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
+                } : "visible"
+              }
+              transition={{
+                delay: 0.5
+              }}
+            >
+              Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
+            </motion.p>
+            
+            {/* Button with BOUNCE IN animation - ALWAYS RENDERED */}
+            <div className="flex justify-start">
+              <motion.button 
+                onClick={handleWatchClick}
+                className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
+                variants={bounceInVariants}
+                initial="hidden"
+                animate={
+                  !hasLoaded ? "hidden" :
+                  hasTriggered ? {
+                    x: -800,
+                    y: 500,
+                    rotate: -180,
+                    scale: 0.2,
+                    opacity: 0,
+                    transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
+                  } : "visible"
+                }
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{
+                  delay: 0.8
+                }}
+              >
+                <span>WATCH THIS</span>
+              </motion.button>
+            </div>
           </div>
 
-          {/* Right side - Characters image with SLIDE IN FROM RIGHT animation */}
+          {/* Right side - Characters image with SLIDE IN FROM RIGHT animation - ALWAYS RENDERED */}
           <div className="flex justify-center lg:justify-end">
-            <AnimatePresence>
-              {showElements && (
-                <motion.div 
-                  className="relative"
-                  variants={slideInFromRightVariants}
-                  initial="hidden"
-                  animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
-                    x: 1000,
-                    y: 600,
-                    rotate: 360,
-                    scale: 0.1,
-                    opacity: 0,
-                    transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-                  } : "hidden"}
-                  exit={{
-                    x: 1000,
-                    y: 600,
-                    rotate: 360,
-                    scale: 0.1,
-                    opacity: 0,
-                    transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-                  }}
-                  transition={{
-                    delay: 1.1
-                  }}
-                >
-                  <img 
-                    src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2021characters.png" 
-                    alt="Math characters illustration"
-                    className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
-                    onError={(e) => {
-                      console.error('Failed to load characters.png image');
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <motion.div 
+              className="relative"
+              variants={slideInFromRightVariants}
+              initial="hidden"
+              animate={
+                !hasLoaded ? "hidden" :
+                hasTriggered ? {
+                  x: 1000,
+                  y: 600,
+                  rotate: 360,
+                  scale: 0.1,
+                  opacity: 0,
+                  transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
+                } : "visible"
+              }
+              transition={{
+                delay: 1.1
+              }}
+            >
+              <img 
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2021characters.png" 
+                alt="Math characters illustration"
+                className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
+                onError={(e) => {
+                  console.error('Failed to load characters.png image');
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
+                }}
+              />
+            </motion.div>
           </div>
         </div>
       </div>
