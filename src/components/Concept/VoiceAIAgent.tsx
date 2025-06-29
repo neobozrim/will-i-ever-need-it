@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Loader2, Play, MicOff, Settings, Volume2, VolumeX } from 'lucide-react';
+import { Mic, Loader2, MicOff, Settings, Volume2, VolumeX } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 // Type for our conversation data
@@ -72,7 +72,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       const response = await fetch(`https://xjmktjcflmjrqbtofdjq.supabase.co/functions/v1/start-conversation`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbWt0amNmbG1qcnFidG9mZGpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0OTYxODksImV4cCI6MjA2NTA3MjE4OX0.SWyvV0aoi8KmrW8fJGzEzy8cC3qXTy5_OyobTbVanXc`,
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqbWt0amNmbG1qcnFidG9mZGpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk0OTYxODksImV4cCI6MjA2NTA3MjE4OX0.SWyvV0aoi8KmrW8fJGzEzy8cC3qXTy5_OyobTbVanXc',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ concept: slug })
@@ -257,10 +257,10 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
 
   const getButtonSize = () => {
     switch (buttonSize) {
-      case 'small': return 'w-16 h-16';
-      case 'medium': return 'w-20 h-20';
-      case 'large': return 'w-24 h-24';
-      default: return 'w-24 h-24';
+      case 'small': return 'w-20 h-20';
+      case 'medium': return 'w-24 h-24';
+      case 'large': return 'w-32 h-32';
+      default: return 'w-32 h-32';
     }
   };
 
@@ -276,11 +276,37 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
       <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="font-barriecito text-2xl text-gray-900 mb-2">Discuss with Maya</h3>
-          <p className="font-nunito text-gray-600">
-            {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Click to start talking'}
-          </p>
+        <div className="flex items-center space-x-3">
+          {/* Maya's Avatar */}
+          <div className="flex-shrink-0">
+            <img 
+              src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
+              alt="Maya - AI Math Tutor"
+              className="w-12 h-12 rounded-full object-cover border-2 border-purple-200"
+              onError={(e) => {
+                console.error('Failed to load Maya avatar');
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
+          </div>
+          <div>
+            <h3 className="font-barriecito text-2xl text-gray-900 mb-1">Discuss with Maya</h3>
+            <div className="flex items-center space-x-2">
+              <img 
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
+                alt="Maya"
+                className="w-4 h-4 rounded-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+              <p className="font-nunito text-gray-600">
+                {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Ready to start conversation'}
+              </p>
+            </div>
+          </div>
         </div>
         <div className="flex items-center space-x-3">
           {showStatusIndicator && (
@@ -331,22 +357,39 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       
       {/* Voice controls */}
       <div className="text-center space-y-6">
-        {/* Start conversation button */}
+        {/* Start conversation button - Using custom SVG */}
         {!conversation && (
           <button
             onClick={startTutor}
             disabled={isLoading}
-            className={`${getButtonSize()} rounded-xl transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-${primaryColor}-300 ${
+            className={`${getButtonSize()} relative transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-purple-300 ${
               isLoading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : `bg-gradient-to-br from-${primaryColor}-500 to-purple-600 hover:shadow-xl hover:scale-105 active:scale-95`
+                ? 'cursor-not-allowed opacity-50'
+                : 'hover:scale-105 active:scale-95'
             }`}
             aria-label={`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
           >
             {isLoading ? (
-              <Loader2 className={`${getIconSize()} text-white mx-auto animate-spin`} />
+              <div className="absolute inset-0 flex items-center justify-center bg-white rounded-full">
+                <Loader2 className="h-8 w-8 text-purple-600 animate-spin" />
+              </div>
             ) : (
-              <Play className={`${getIconSize()} text-white mx-auto ml-1`} />
+              <img 
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-button.svg"
+                alt="Start conversation with Maya"
+                className="w-full h-full object-contain hover:drop-shadow-lg transition-all duration-300"
+                onError={(e) => {
+                  console.error('Failed to load voice AI button');
+                  // Fallback to a simple gradient button
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.className += ' bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center';
+                    parent.innerHTML = '<svg class="h-8 w-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.84L16.5 10 6.3 17.16V2.84z" /></svg>';
+                  }
+                }}
+              />
             )}
           </button>
         )}
@@ -354,7 +397,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
         {/* Voice interaction controls */}
         {conversation && (
           <div className="flex items-center justify-center space-x-6">
-            <div className={`${getButtonSize()} rounded-xl flex items-center justify-center transition-all duration-300 ${
+            <div className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 ${
               isListening
                 ? 'bg-green-500 animate-pulse shadow-lg'
                 : isConnected
@@ -362,11 +405,11 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
                 : 'bg-gray-400'
             }`}>
               {isListening ? (
-                <Mic className={`${getIconSize()} text-white`} />
+                <Mic className="h-8 w-8 text-white" />
               ) : isConnected ? (
-                <MicOff className={`${getIconSize()} text-white`} />
+                <MicOff className="h-8 w-8 text-white" />
               ) : (
-                <Loader2 className={`${getIconSize()} text-white animate-spin`} />
+                <Loader2 className="h-8 w-8 text-white animate-spin" />
               )}
             </div>
             
