@@ -139,6 +139,57 @@ const Hero: React.FC = () => {
     }
   };
 
+  // JINGLE ANIMATION VARIANTS - Playful wiggle and bounce effects
+  const jingleVariants = {
+    idle: {
+      x: [0, -2, 2, -1, 1, 0],
+      y: [0, -1, 1, -0.5, 0.5, 0],
+      rotate: [0, -1, 1, -0.5, 0.5, 0],
+      scale: [1, 1.02, 0.98, 1.01, 0.99, 1],
+      transition: {
+        duration: 2.5,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+      }
+    }
+  };
+
+  const buttonJingleVariants = {
+    idle: {
+      x: [0, -1, 1, -0.5, 0.5, 0],
+      y: [0, -2, 1, -1, 0.5, 0],
+      rotate: [0, -0.5, 0.5, -0.3, 0.3, 0],
+      scale: [1, 1.05, 0.95, 1.03, 0.97, 1],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        delay: 0.5, // Offset from heading
+        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+      }
+    }
+  };
+
+  const imageJingleVariants = {
+    idle: {
+      x: [0, 1, -1, 0.5, -0.5, 0],
+      y: [0, -1, 2, -1.5, 1, 0],
+      rotate: [0, 0.5, -0.5, 0.3, -0.3, 0],
+      scale: [1, 1.03, 0.97, 1.02, 0.98, 1],
+      transition: {
+        duration: 3.5,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        delay: 1, // Offset from other elements
+        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+      }
+    }
+  };
+
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden min-h-screen">
       {/* Bolt Banner - MOVED TO TOP WITH HIGHEST Z-INDEX */}
@@ -227,7 +278,7 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
-            {/* Heading with DROP IN animation - ALWAYS RENDERED */}
+            {/* Heading with DROP IN animation + JINGLE - ALWAYS RENDERED */}
             <motion.h1 
               className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
               variants={dropInVariants}
@@ -241,13 +292,21 @@ const Hero: React.FC = () => {
                   scale: 0.3,
                   opacity: 0,
                   transition: { duration: 0.5, ease: "easeInOut" }
-                } : "visible"
+                } : ["visible", "idle"]
               }
               transition={{
                 delay: 0.2
               }}
+              style={{
+                willChange: 'transform'
+              }}
             >
-              Math could be boring!
+              <motion.span
+                variants={jingleVariants}
+                animate={hasLoaded && !hasTriggered ? "idle" : ""}
+              >
+                Math could be boring!
+              </motion.span>
             </motion.h1>
             
             {/* Description with SLIDE IN FROM LEFT animation - ALWAYS RENDERED */}
@@ -273,7 +332,7 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* Button with BOUNCE IN animation - ALWAYS RENDERED */}
+            {/* Button with BOUNCE IN animation + JINGLE - ALWAYS RENDERED */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
@@ -289,20 +348,28 @@ const Hero: React.FC = () => {
                     scale: 0.2,
                     opacity: 0,
                     transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
-                  } : "visible"
+                  } : ["visible", "idle"]
                 }
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{
                   delay: 0.8
                 }}
+                style={{
+                  willChange: 'transform'
+                }}
               >
-                <span>WATCH THIS</span>
+                <motion.span
+                  variants={buttonJingleVariants}
+                  animate={hasLoaded && !hasTriggered ? "idle" : ""}
+                >
+                  WATCH THIS
+                </motion.span>
               </motion.button>
             </div>
           </div>
 
-          {/* Right side - Characters image with SLIDE IN FROM RIGHT animation - ALWAYS RENDERED */}
+          {/* Right side - Characters image with SLIDE IN FROM RIGHT animation + JINGLE - ALWAYS RENDERED */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
@@ -317,16 +384,21 @@ const Hero: React.FC = () => {
                   scale: 0.1,
                   opacity: 0,
                   transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-                } : "visible"
+                } : ["visible", "idle"]
               }
               transition={{
                 delay: 1.1
               }}
+              style={{
+                willChange: 'transform'
+              }}
             >
-              <img 
+              <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2021characters.png" 
                 alt="Math characters illustration"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
+                variants={imageJingleVariants}
+                animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 onError={(e) => {
                   console.error('Failed to load characters.png image');
                   const target = e.target as HTMLImageElement;
