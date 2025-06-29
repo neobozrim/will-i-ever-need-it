@@ -77,17 +77,17 @@ const ConceptCard: React.FC<ConceptCardProps> = ({ concept, onOpenOverlay }) => 
           
           {/* Content */}
           <div className="p-6 flex-1 bg-white rounded-b-xl">
-            <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+            <h3 className="font-barriecito text-xl text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
               {concept.title}
             </h3>
             
-            <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+            <p className="font-nunito text-gray-600 mb-4 line-clamp-3 leading-relaxed">
               {concept.description}
             </p>
             
             {/* CTA */}
             <div className="flex items-center justify-between">
-              <span className="text-blue-600 font-medium group-hover:text-blue-700 transition-colors duration-300">
+              <span className="font-barriecito text-blue-600 group-hover:text-blue-700 transition-colors duration-300">
                 learn more
               </span>
               <ArrowRight className="h-4 w-4 text-blue-600 group-hover:translate-x-2 transition-transform duration-300" />

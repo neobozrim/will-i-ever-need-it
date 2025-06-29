@@ -74,11 +74,11 @@ const ConceptOverlay: React.FC<ConceptOverlayProps> = ({ concept, isOpen, onClos
             {/* Back button */}
             <button
               onClick={onClose}
-              className="absolute top-4 left-4 z-20 flex items-center space-x-2 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors duration-200 backdrop-blur-sm"
+              className="font-barriecito absolute top-4 left-4 z-20 flex items-center space-x-2 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors duration-200 backdrop-blur-sm"
               aria-label="Go back"
             >
               <ArrowLeft className="h-5 w-5" />
-              <span className="text-sm font-medium pr-2">Back</span>
+              <span className="text-sm pr-2">Back</span>
             </button>
 
             {/* Scrollable content */}
@@ -100,10 +100,10 @@ const ConceptOverlay: React.FC<ConceptOverlayProps> = ({ concept, isOpen, onClos
                 <div className="p-8 flex flex-col space-y-8">
                   {/* Header */}
                   <div>
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <h1 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
                       {concept.title}
                     </h1>
-                    <p className="text-lg text-gray-600 leading-relaxed">
+                    <p className="font-nunito text-lg text-gray-600 leading-relaxed">
                       {concept.description}
                     </p>
                   </div>

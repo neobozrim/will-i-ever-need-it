@@ -2,30 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Google Fonts - Bold, distinctive fonts */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
+/* Google Fonts - Barriecito for headings and buttons, Nunito for body text */
+@import url('https://fonts.googleapis.com/css2?family=Barriecito&family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
 
-/* Force font application with highest specificity */
+/* Font application with highest specificity */
 @layer base {
-  * {
-    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
-  }
-  
-  html {
-    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
-  }
-  
   body {
-    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
+    font-family: 'Nunito', system-ui, sans-serif !important;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
-    font-weight: 700 !important;
+    font-family: 'Barriecito', cursive !important;
+    font-weight: 400 !important; /* Barriecito is naturally bold */
   }
   
-  p, span, div, button, input, textarea, label {
-    font-family: 'Fredoka', 'Nunito', system-ui, sans-serif !important;
+  button {
+    font-family: 'Barriecito', cursive !important;
+  }
+  
+  .logo-text {
+    font-family: 'Barriecito', cursive !important;
+  }
+  
+  p, span, div, input, textarea, label {
+    font-family: 'Nunito', system-ui, sans-serif !important;
   }
 }
 

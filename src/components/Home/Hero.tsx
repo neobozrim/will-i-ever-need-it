@@ -7,16 +7,16 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <div className="text-left">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+            <h1 className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight">
               Bored? Opposite!
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
+            <p className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
               Use that "boring" math to build epic stuff, crush rivals, and become a legend, while the rest remain bored and... clueless!
             </p>
             
             <div className="flex justify-start">
-              <button className="group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
+              <button className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2">
                 <span>WATCH THIS</span>
               </button>
             </div>

@@ -24,7 +24,7 @@ const VideoBlock: React.FC = () => {
     <section className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
             See Math In Action, Then Master It
           </h2>
         </div>
@@ -54,9 +54,9 @@ const VideoBlock: React.FC = () => {
             <div className="bg-gray-800 px-4 py-3 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                <span className="text-white text-sm font-medium">math in action</span>
+                <span className="font-nunito text-white text-sm font-medium">math in action</span>
               </div>
-              <div className="text-gray-400 text-xs">click to watch</div>
+              <div className="font-nunito text-gray-400 text-xs">click to watch</div>
             </div>
           </div>
         </div>

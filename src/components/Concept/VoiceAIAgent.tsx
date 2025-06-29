@@ -213,15 +213,15 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             <Bot className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">Voice AI Tutor</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="font-barriecito text-lg text-gray-900">Voice AI Tutor</h3>
+            <p className="font-nunito text-sm text-gray-500">
               {conceptSlug ? `Ready to discuss ${formatConceptName(conceptSlug)}` : 'Click to start talking'}
             </p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
           <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
-          <span className={`text-sm font-medium transition-colors ${getStatusColor()}`}>
+          <span className={`font-nunito text-sm font-medium transition-colors ${getStatusColor()}`}>
             {getStatusText()}
           </span>
         </div>
@@ -270,14 +270,14 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             
             <button
               onClick={endConversation}
-              className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="font-barriecito px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
             >
               End Session
             </button>
           </div>
         )}
         
-        <p className="text-sm text-gray-600 max-w-xs mx-auto">
+        <p className="font-nunito text-sm text-gray-600 max-w-xs mx-auto">
           {isLoading 
             ? 'Starting tutor...' 
             : !conversation
@@ -298,8 +298,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       {/* Status messages */}
       {conversationData && isConnected && !error && (
         <div className="mt-4 p-3 bg-green-50 rounded-lg text-center border border-green-200">
-          <p className="text-sm text-green-700 font-medium">✅ Voice tutor is active!</p>
-          <p className="text-xs text-green-600 mt-1">
+          <p className="font-nunito text-sm text-green-700 font-medium">✅ Voice tutor is active!</p>
+          <p className="font-nunito text-xs text-green-600 mt-1">
             Discussing {conversationData.concept ? formatConceptName(conversationData.concept) : 'mathematics'}
           </p>
         </div>
@@ -307,18 +307,18 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       
       {error && (
         <div className="mt-4 p-3 bg-red-50 rounded-lg text-center border border-red-200">
-          <p className="text-sm text-red-700 font-medium">❌ Error</p>
-          <p className="text-xs text-red-600 mt-1 break-words">{error}</p>
+          <p className="font-nunito text-sm text-red-700 font-medium">❌ Error</p>
+          <p className="font-nunito text-xs text-red-600 mt-1 break-words">{error}</p>
           <div className="mt-3 space-x-2">
             <button 
               onClick={() => setError(null)}
-              className="text-xs text-red-600 hover:text-red-800 underline transition-colors"
+              className="font-barriecito text-xs text-red-600 hover:text-red-800 underline transition-colors"
             >
               Dismiss
             </button>
             <button 
               onClick={startTutor}
-              className="text-xs text-red-600 hover:text-red-800 underline transition-colors"
+              className="font-barriecito text-xs text-red-600 hover:text-red-800 underline transition-colors"
             >
               Retry
             </button>
@@ -327,13 +327,13 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       )}
       
       <div className="mt-6 flex items-center justify-center space-x-4 text-sm text-gray-500">
-        <span>Voice Powered</span>
+        <span className="font-nunito">Voice Powered</span>
         <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-        <span>AI Tutor</span>
+        <span className="font-nunito">AI Tutor</span>
         {conceptSlug && (
           <>
             <div className="w-1 h-1 bg-gray-300 rounded-full"></div>
-            <span>{formatConceptName(conceptSlug)}</span>
+            <span className="font-nunito">{formatConceptName(conceptSlug)}</span>
           </>
         )}
       </div>

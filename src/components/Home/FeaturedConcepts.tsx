@@ -24,7 +24,7 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
               Featured Epic Math
             </h2>
           </div>
@@ -32,7 +32,7 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
           <div className="flex justify-center items-center py-12">
             <div className="flex items-center space-x-3 text-gray-600">
               <Loader2 className="h-6 w-6 animate-spin" />
-              <span className="text-lg">Loading featured concepts...</span>
+              <span className="font-nunito text-lg">Loading featured concepts...</span>
             </div>
           </div>
         </div>
@@ -51,11 +51,11 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
               </div>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
               Featured Epic Math
             </h2>
             
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="font-nunito text-xl text-gray-600 max-w-3xl mx-auto">
               Featured concepts coming soon!
             </p>
           </div>
@@ -69,7 +69,7 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header - same styling as ConceptLibrary */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
             Featured Epic Math
           </h2>
         </div>
@@ -93,9 +93,9 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
         {/* Bottom transition text */}
         <div className="text-center mt-16">
           <div className="inline-flex items-center space-x-2 text-gray-600">
-            <span className="text-lg font-medium">Ready to dive deeper?</span>
+            <span className="font-nunito text-lg font-medium">Ready to dive deeper?</span>
           </div>
-          <p className="text-gray-500 mt-2">Explore our full library of interactive math concepts below</p>
+          <p className="font-nunito text-gray-500 mt-2">Explore our full library of interactive math concepts below</p>
         </div>
       </div>
     </section>

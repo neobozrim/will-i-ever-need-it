@@ -34,7 +34,7 @@ const ConceptPage: React.FC = () => {
               className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span className="font-medium">Back to Concepts</span>
+              <span className="font-barriecito">Back to Concepts</span>
             </Link>
           </div>
         </div>
@@ -42,7 +42,7 @@ const ConceptPage: React.FC = () => {
         <div className="flex items-center justify-center py-20">
           <div className="flex items-center space-x-3 text-gray-600">
             <Loader2 className="h-8 w-8 animate-spin" />
-            <span className="text-xl">Loading concept...</span>
+            <span className="font-nunito text-xl">Loading concept...</span>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ const ConceptPage: React.FC = () => {
               className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
             >
               <ArrowLeft className="h-4 w-4" />
-              <span className="font-medium">Back to Concepts</span>
+              <span className="font-barriecito">Back to Concepts</span>
             </Link>
           </div>
         </div>
@@ -72,10 +72,10 @@ const ConceptPage: React.FC = () => {
                 <AlertCircle className="h-8 w-8 text-red-600" />
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            <h1 className="font-barriecito text-2xl text-gray-900 mb-4">
               {error === 'Concept not found' ? 'Concept Not Found' : 'Error Loading Concept'}
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="font-nunito text-gray-600 mb-6">
               {error === 'Concept not found' 
                 ? 'The concept you\'re looking for doesn\'t exist or has been moved.'
                 : error || 'Something went wrong while loading this concept.'
@@ -83,7 +83,7 @@ const ConceptPage: React.FC = () => {
             </p>
             <Link 
               to="/" 
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              className="font-barriecito text-blue-600 hover:text-blue-700"
             >
               Return to Home
             </Link>
@@ -109,7 +109,7 @@ const ConceptPage: React.FC = () => {
             className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="font-medium">Back to Concepts</span>
+            <span className="font-barriecito">Back to Concepts</span>
           </Link>
         </div>
       </div>
@@ -120,11 +120,11 @@ const ConceptPage: React.FC = () => {
         <div className="block lg:hidden space-y-8 sm:space-y-12">
           {/* Header section */}
           <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            <h1 className="font-barriecito text-3xl sm:text-4xl md:text-5xl text-gray-900 mb-4 sm:mb-6">
               {concept.title}
             </h1>
             
-            <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+            <p className="font-nunito text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
               {concept.description}
             </p>
           </div>
@@ -170,11 +170,11 @@ const ConceptPage: React.FC = () => {
           <div className="space-y-8">
             {/* Header section */}
             <div>
-              <h1 className="text-4xl xl:text-5xl font-bold text-gray-900 mb-6">
+              <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6">
                 {concept.title}
               </h1>
               
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="font-nunito text-xl text-gray-600 leading-relaxed">
                 {concept.description}
               </p>
             </div>
