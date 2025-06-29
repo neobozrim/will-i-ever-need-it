@@ -40,6 +40,25 @@ const Hero: React.FC = () => {
     return () => unsubscribe();
   }, [scrollYProgress, hasTriggered]);
 
+  // Handle "WATCH THIS" button click
+  const handleWatchClick = () => {
+    // Find the video section and scroll to it
+    const videoSection = document.querySelector('[data-video-section]');
+    if (videoSection) {
+      videoSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'center'
+      });
+      
+      // Wait for scroll to complete, then trigger video play
+      setTimeout(() => {
+        // Dispatch custom event to trigger video play
+        const playVideoEvent = new CustomEvent('playVideo');
+        window.dispatchEvent(playVideoEvent);
+      }, 1000); // Wait 1 second for smooth scroll to complete
+    }
+  };
+
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden">
       {/* White Circle in Top Right Corner - Responsive - Links to Bolt.new */}
@@ -143,7 +162,8 @@ const Hero: React.FC = () => {
                   {/* Button with idle animation and fly-away trigger - THIRD TO GO */}
                   <div className="flex justify-start">
                     <motion.button 
-                      className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2"
+                      onClick={handleWatchClick}
+                      className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
                       initial={{ x: 0, y: 0, rotate: 0, scale: 1, opacity: 1 }}
                       animate={hasTriggered ? {
                         x: -800,

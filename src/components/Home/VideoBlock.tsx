@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const VideoBlock: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
@@ -12,6 +12,19 @@ const VideoBlock: React.FC = () => {
     `&showinfo=0` +
     `&modestbranding=1`;
 
+  // Listen for the custom playVideo event from Hero component
+  useEffect(() => {
+    const handlePlayVideo = () => {
+      setShowVideo(true);
+    };
+
+    window.addEventListener('playVideo', handlePlayVideo);
+    
+    return () => {
+      window.removeEventListener('playVideo', handlePlayVideo);
+    };
+  }, []);
+
   const handlePlayClick = () => {
     setShowVideo(true);
   };
@@ -21,7 +34,7 @@ const VideoBlock: React.FC = () => {
   };
 
   return (
-    <section className="py-20 dotted-background-light">
+    <section className="py-20 dotted-background-light" data-video-section>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
