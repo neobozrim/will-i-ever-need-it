@@ -134,7 +134,7 @@ const ConceptPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50">
         {/* Back button */}
         <div className="bg-white border-b border-gray-200">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Link 
               to="/" 
               className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
@@ -145,11 +145,10 @@ const ConceptPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Main content - responsive layout */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          {/* Mobile and small tablet: single column */}
-          <div className="block lg:hidden space-y-8 sm:space-y-12">
-            {/* Header section */}
+        {/* Main content - centered single column layout */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <div className="space-y-8 sm:space-y-12">
+            {/* Header section - centered */}
             <div className="text-center">
               <h1 className="font-barriecito text-3xl sm:text-4xl md:text-5xl text-gray-900 mb-4 sm:mb-6">
                 {concept.title}
@@ -160,7 +159,7 @@ const ConceptPage: React.FC = () => {
               </p>
             </div>
             
-            {/* Hero image - 9:16 aspect ratio for mobile portrait viewing - clickable */}
+            {/* Hero image - centered, 9:16 aspect ratio, clickable */}
             <div className="w-full flex justify-center">
               <div 
                 className="w-full max-w-md aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
@@ -175,56 +174,14 @@ const ConceptPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Voice AI Agent */}
+            {/* Voice AI Agent - centered */}
             <div className="w-full">
               <VoiceAIAgent conceptSlug={slug} />
             </div>
             
-            {/* Blog content */}
+            {/* Blog content - centered */}
             <div className="w-full">
               <BlogContent content={blogContent} />
-            </div>
-          </div>
-
-          {/* Large tablet and desktop: two column layout */}
-          <div className="hidden lg:grid lg:grid-cols-2 lg:gap-12 lg:items-start">
-            {/* Left column - Hero image at the very top */}
-            <div>
-              <div 
-                className="w-full aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
-                onClick={handleImageClick}
-              >
-                <img 
-                  src={heroImageUrl} 
-                  alt={concept.title}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  onError={handleImageError}
-                />
-              </div>
-            </div>
-
-            {/* Right column - Content starting with header */}
-            <div className="space-y-8">
-              {/* Header section - this is what the image should align with */}
-              <div>
-                <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6 mt-0">
-                  {concept.title}
-                </h1>
-                
-                <p className="font-nunito text-xl text-gray-600 leading-relaxed">
-                  {concept.description}
-                </p>
-              </div>
-
-              {/* Voice AI Agent */}
-              <div className="w-full">
-                <VoiceAIAgent conceptSlug={slug} />
-              </div>
-              
-              {/* Blog content */}
-              <div className="w-full">
-                <BlogContent content={blogContent} />
-              </div>
             </div>
           </div>
         </div>
