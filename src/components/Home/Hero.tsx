@@ -22,13 +22,13 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right side - Bored character (smaller to show full monster) */}
+          {/* Right side - Bored character (bigger size) */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
               <img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//bored.png" 
                 alt="Bored character illustration"
-                className="w-64 h-80 lg:w-72 lg:h-96 object-contain transform hover:scale-105 transition-transform duration-300 animate-jiggle"
+                className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300 animate-jiggle"
                 onError={(e) => {
                   console.error('Failed to load bored.png image');
                   // Fallback to a placeholder if image fails to load
