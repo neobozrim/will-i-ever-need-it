@@ -100,7 +100,7 @@ const Hero: React.FC = () => {
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
-            className="max-w-none h-full w-auto opacity-25" // Changed to show full height, auto width to maintain aspect ratio
+            className="max-w-none h-full w-auto opacity-20" // Changed from opacity-25 to opacity-20
             style={{
               minWidth: '100vw', // Ensure it covers full viewport width
               minHeight: '100vh', // Ensure it covers full viewport height
