@@ -162,8 +162,31 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
+      {/* ANIMATED COLOR MIXING BACKGROUND - Starts immediately on page load */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none overflow-hidden z-0"
+        animate={{
+          background: [
+            'linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15), rgba(251, 146, 60, 0.15))',
+            'linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15), rgba(251, 146, 60, 0.15), rgba(34, 197, 94, 0.15))',
+            'linear-gradient(225deg, rgba(236, 72, 153, 0.15), rgba(251, 146, 60, 0.15), rgba(34, 197, 94, 0.15), rgba(59, 130, 246, 0.15))',
+            'linear-gradient(315deg, rgba(251, 146, 60, 0.15), rgba(34, 197, 94, 0.15), rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15))',
+            'linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.15), rgba(251, 146, 60, 0.15))'
+          ]
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          repeatType: "loop"
+        }}
+        style={{
+          willChange: 'background'
+        }}
+      />
+
       {/* CLEAN PULSING BACKGROUND IMAGE - No opacity changes, just scale */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
         <motion.div 
           className="absolute inset-0 w-full h-full flex items-center justify-center"
           animate={{
