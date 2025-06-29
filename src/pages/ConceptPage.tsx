@@ -207,7 +207,7 @@ const ConceptPage: React.FC = () => {
             <div className="space-y-8">
               {/* Header section - this is what the image should align with */}
               <div>
-                <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6">
+                <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6 mt-0">
                   {concept.title}
                 </h1>
                 
