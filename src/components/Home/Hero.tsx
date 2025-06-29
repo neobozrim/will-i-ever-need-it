@@ -102,6 +102,7 @@ const Hero: React.FC = () => {
     }
   };
 
+  // FASTER: Button return animation - reduced spring damping and mass for quicker return
   const bounceInVariants = {
     hidden: { 
       y: 50, 
@@ -114,13 +115,14 @@ const Hero: React.FC = () => {
       scale: 1,
       transition: {
         type: "spring",
-        damping: 8,
-        stiffness: 150,
-        mass: 0.6
+        damping: 6, // REDUCED from 8 for faster return
+        stiffness: 180, // INCREASED from 150 for snappier return
+        mass: 0.4 // REDUCED from 0.6 for lighter, faster movement
       }
     }
   };
 
+  // FASTER: Image return animation - reduced spring damping and mass for quicker return
   const slideInFromRightVariants = {
     hidden: { 
       x: 300, 
@@ -135,9 +137,9 @@ const Hero: React.FC = () => {
       rotate: 0,
       transition: {
         type: "spring",
-        damping: 10,
-        stiffness: 100,
-        mass: 1.2
+        damping: 8, // REDUCED from 10 for faster return
+        stiffness: 140, // INCREASED from 100 for snappier return
+        mass: 0.8 // REDUCED from 1.2 for lighter, faster movement
       }
     }
   };
@@ -370,7 +372,7 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* Button with BOUNCE IN animation + JINGLE - ALWAYS RENDERED */}
+            {/* FASTER: Button with BOUNCE IN animation + JINGLE - SPEEDED UP RETURN */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
@@ -397,7 +399,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right side - BoredOppo and Maya characters with SLIDE IN FROM RIGHT animation + JINGLE - ALWAYS RENDERED */}
+          {/* FASTER: Right side - BoredOppo and Maya characters - SPEEDED UP RETURN */}
           <div className="flex justify-center lg:justify-end">
             <motion.div 
               className="relative"
