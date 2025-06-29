@@ -61,6 +61,132 @@ const Hero: React.FC = () => {
 
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden">
+      {/* Animated Banner Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Main banner with pulsing scale animation */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          animate={{
+            scale: [1, 1.05, 1, 0.98, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <img 
+            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//banner.svg"
+            alt="Mathematical background pattern"
+            className="w-full h-full object-cover opacity-15"
+            onError={(e) => {
+              console.error('Failed to load banner.svg');
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        </motion.div>
+
+        {/* Flowing color overlays with pulsing animations */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          animate={{
+            background: [
+              'radial-gradient(circle at 20% 30%, rgba(255, 173, 173, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 80% 70%, rgba(255, 214, 165, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 60% 20%, rgba(222, 218, 244, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 30% 80%, rgba(217, 233, 248, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 70% 50%, rgba(228, 241, 238, 0.15) 0%, transparent 50%)',
+              'radial-gradient(circle at 20% 30%, rgba(255, 173, 173, 0.15) 0%, transparent 50%)',
+            ],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* Secondary flowing color layer */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          animate={{
+            background: [
+              'linear-gradient(45deg, rgba(255, 173, 173, 0.08) 0%, rgba(255, 214, 165, 0.08) 25%, rgba(222, 218, 244, 0.08) 50%, rgba(217, 233, 248, 0.08) 75%, rgba(228, 241, 238, 0.08) 100%)',
+              'linear-gradient(135deg, rgba(228, 241, 238, 0.08) 0%, rgba(217, 233, 248, 0.08) 25%, rgba(222, 218, 244, 0.08) 50%, rgba(255, 214, 165, 0.08) 75%, rgba(255, 173, 173, 0.08) 100%)',
+              'linear-gradient(225deg, rgba(255, 214, 165, 0.08) 0%, rgba(228, 241, 238, 0.08) 25%, rgba(255, 173, 173, 0.08) 50%, rgba(217, 233, 248, 0.08) 75%, rgba(222, 218, 244, 0.08) 100%)',
+              'linear-gradient(315deg, rgba(222, 218, 244, 0.08) 0%, rgba(255, 173, 173, 0.08) 25%, rgba(228, 241, 238, 0.08) 50%, rgba(255, 214, 165, 0.08) 75%, rgba(217, 233, 248, 0.08) 100%)',
+              'linear-gradient(45deg, rgba(255, 173, 173, 0.08) 0%, rgba(255, 214, 165, 0.08) 25%, rgba(222, 218, 244, 0.08) 50%, rgba(217, 233, 248, 0.08) 75%, rgba(228, 241, 238, 0.08) 100%)',
+            ],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        {/* Pulsing color spots */}
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full"
+          animate={{
+            scale: [0.8, 1.2, 0.8],
+            opacity: [0.1, 0.2, 0.1],
+            background: [
+              'rgba(255, 173, 173, 0.2)',
+              'rgba(255, 214, 165, 0.2)',
+              'rgba(222, 218, 244, 0.2)',
+              'rgba(255, 173, 173, 0.2)',
+            ],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        <motion.div
+          className="absolute top-3/4 right-1/4 w-24 h-24 rounded-full"
+          animate={{
+            scale: [1, 0.7, 1.3, 1],
+            opacity: [0.15, 0.05, 0.25, 0.15],
+            background: [
+              'rgba(217, 233, 248, 0.2)',
+              'rgba(228, 241, 238, 0.2)',
+              'rgba(222, 218, 244, 0.2)',
+              'rgba(217, 233, 248, 0.2)',
+            ],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+        />
+
+        <motion.div
+          className="absolute top-1/2 right-1/3 w-20 h-20 rounded-full"
+          animate={{
+            scale: [0.9, 1.4, 0.6, 0.9],
+            opacity: [0.12, 0.3, 0.08, 0.12],
+            background: [
+              'rgba(255, 214, 165, 0.2)',
+              'rgba(228, 241, 238, 0.2)',
+              'rgba(255, 173, 173, 0.2)',
+              'rgba(255, 214, 165, 0.2)',
+            ],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4,
+          }}
+        />
+      </div>
+
       {/* White Circle in Top Right Corner - Responsive - Links to Bolt.new */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 z-10">
         <a 
