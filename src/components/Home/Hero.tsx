@@ -5,12 +5,22 @@ const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hasTriggered, setHasTriggered] = useState(false);
   const [showElements, setShowElements] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
   
   // Track scroll progress of the hero section
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   });
+
+  // Trigger entry animations on component mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasLoaded(true);
+    }, 100); // Small delay to ensure smooth mounting
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Trigger fly-away animation when user starts scrolling - ultra sensitive
   useEffect(() => {
@@ -59,6 +69,89 @@ const Hero: React.FC = () => {
     }
   };
 
+  // Entry animation variants
+  const dropInVariants = {
+    hidden: { 
+      y: -100, 
+      opacity: 0, 
+      scale: 0.8,
+      rotate: -10
+    },
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      scale: 1,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100,
+        mass: 0.8
+      }
+    }
+  };
+
+  const slideInFromLeftVariants = {
+    hidden: { 
+      x: -200, 
+      opacity: 0, 
+      scale: 0.9,
+      rotate: -5
+    },
+    visible: { 
+      x: 0, 
+      opacity: 1, 
+      scale: 1,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        damping: 15,
+        stiffness: 120,
+        mass: 1
+      }
+    }
+  };
+
+  const bounceInVariants = {
+    hidden: { 
+      y: 50, 
+      opacity: 0, 
+      scale: 0.7
+    },
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      scale: 1,
+      transition: {
+        type: "spring",
+        damping: 8,
+        stiffness: 150,
+        mass: 0.6
+      }
+    }
+  };
+
+  const slideInFromRightVariants = {
+    hidden: { 
+      x: 300, 
+      opacity: 0, 
+      scale: 0.8,
+      rotate: 15
+    },
+    visible: { 
+      x: 0, 
+      opacity: 1, 
+      scale: 1,
+      rotate: 0,
+      transition: {
+        type: "spring",
+        damping: 10,
+        stiffness: 100,
+        mass: 1.2
+      }
+    }
+  };
+
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden min-h-screen">
       {/* Bolt Banner - MOVED TO TOP WITH HIGHEST Z-INDEX */}
@@ -100,7 +193,7 @@ const Hero: React.FC = () => {
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
-            className="max-w-none h-full w-auto opacity-20" // Changed from opacity-25 to opacity-20
+            className="max-w-none h-full w-auto opacity-20"
             style={{
               minWidth: '100vw', // Ensure it covers full viewport width
               minHeight: '100vh', // Ensure it covers full viewport height
@@ -264,20 +357,19 @@ const Hero: React.FC = () => {
             <AnimatePresence>
               {showElements && (
                 <>
-                  {/* Heading - REMOVED JIGGLING ANIMATION */}
+                  {/* Heading with DROP IN animation */}
                   <motion.h1 
                     className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
-                    initial={{ opacity: 1 }}
-                    animate={hasTriggered ? {
+                    variants={dropInVariants}
+                    initial="hidden"
+                    animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
                       x: -1200,
                       y: -600,
                       rotate: -45,
                       scale: 0.3,
                       opacity: 0,
                       transition: { duration: 0.5, ease: "easeInOut" }
-                    } : {
-                      opacity: 1
-                    }}
+                    } : "hidden"}
                     exit={{
                       x: -1200,
                       y: -600,
@@ -285,25 +377,27 @@ const Hero: React.FC = () => {
                       scale: 0.3,
                       opacity: 0,
                       transition: { duration: 0.5, ease: "easeInOut" }
+                    }}
+                    transition={{
+                      delay: 0.2 // First element to appear
                     }}
                   >
                     Math could be boring!
                   </motion.h1>
                   
-                  {/* Description - REMOVED JIGGLING ANIMATION */}
+                  {/* Description with SLIDE IN FROM LEFT animation */}
                   <motion.p 
                     className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
-                    initial={{ opacity: 1 }}
-                    animate={hasTriggered ? {
+                    variants={slideInFromLeftVariants}
+                    initial="hidden"
+                    animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
                       x: -1000,
                       y: -200,
                       rotate: -25,
                       scale: 0.4,
                       opacity: 0,
                       transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
-                    } : {
-                      opacity: 1
-                    }}
+                    } : "hidden"}
                     exit={{
                       x: -1000,
                       y: -200,
@@ -312,26 +406,28 @@ const Hero: React.FC = () => {
                       opacity: 0,
                       transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
                     }}
+                    transition={{
+                      delay: 0.5 // Second element to appear
+                    }}
                   >
                     Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
                   </motion.p>
                   
-                  {/* Button - REMOVED JIGGLING ANIMATION */}
+                  {/* Button with BOUNCE IN animation */}
                   <div className="flex justify-start">
                     <motion.button 
                       onClick={handleWatchClick}
                       className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
-                      initial={{ opacity: 1 }}
-                      animate={hasTriggered ? {
+                      variants={bounceInVariants}
+                      initial="hidden"
+                      animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
                         x: -800,
                         y: 500,
                         rotate: -180,
                         scale: 0.2,
                         opacity: 0,
                         transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
-                      } : {
-                        opacity: 1
-                      }}
+                      } : "hidden"}
                       exit={{
                         x: -800,
                         y: 500,
@@ -342,6 +438,9 @@ const Hero: React.FC = () => {
                       }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      transition={{
+                        delay: 0.8 // Third element to appear
+                      }}
                     >
                       <span>WATCH THIS</span>
                     </motion.button>
@@ -351,23 +450,22 @@ const Hero: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Right side - Characters image - REMOVED JIGGLING ANIMATION */}
+          {/* Right side - Characters image with SLIDE IN FROM RIGHT animation */}
           <div className="flex justify-center lg:justify-end">
             <AnimatePresence>
               {showElements && (
                 <motion.div 
                   className="relative"
-                  initial={{ opacity: 1 }}
-                  animate={hasTriggered ? {
+                  variants={slideInFromRightVariants}
+                  initial="hidden"
+                  animate={hasLoaded && !hasTriggered ? "visible" : hasTriggered ? {
                     x: 1000,
                     y: 600,
                     rotate: 360,
                     scale: 0.1,
                     opacity: 0,
                     transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-                  } : {
-                    opacity: 1
-                  }}
+                  } : "hidden"}
                   exit={{
                     x: 1000,
                     y: 600,
@@ -375,6 +473,9 @@ const Hero: React.FC = () => {
                     scale: 0.1,
                     opacity: 0,
                     transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
+                  }}
+                  transition={{
+                    delay: 1.1 // Last element to appear
                   }}
                 >
                   <img 
