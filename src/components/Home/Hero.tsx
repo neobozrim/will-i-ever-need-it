@@ -83,13 +83,13 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      {/* NEW LARGER Animated Banner Background - Full Height Coverage */}
+      {/* NEW LARGER Animated Banner Background - FULL IMAGE WITHOUT CROPPING */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Main banner with pulsing scale animation - FULL HEIGHT COVERAGE */}
+        {/* Main banner with pulsing scale animation - SHOW FULL 1900x1600 IMAGE */}
         <motion.div
           className="absolute inset-0 w-full h-full flex items-center justify-center"
           animate={{
-            scale: [0.8, 0.85, 0.8, 0.78, 0.8], // Adjusted scale for larger image
+            scale: [0.9, 0.95, 0.9, 0.88, 0.9], // Adjusted scale to ensure full image is visible
           }}
           transition={{
             duration: 8,
@@ -100,7 +100,13 @@ const Hero: React.FC = () => {
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
-            className="w-full h-full object-cover opacity-25" // Changed to object-cover for full height coverage
+            className="max-w-none h-full w-auto opacity-25" // Changed to show full height, auto width to maintain aspect ratio
+            style={{
+              minWidth: '100vw', // Ensure it covers full viewport width
+              minHeight: '100vh', // Ensure it covers full viewport height
+              objectFit: 'contain', // Show the entire image without cropping
+              objectPosition: 'center center' // Center the image
+            }}
             onError={(e) => {
               console.error('Failed to load Asset 23banner2.svg');
               const target = e.target as HTMLImageElement;
