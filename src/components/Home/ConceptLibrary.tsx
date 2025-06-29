@@ -13,7 +13,7 @@ const ConceptLibrary: React.FC = () => {
 
   if (loading) {
     return (
-      <section id="concepts" className="py-20 bg-gray-50">
+      <section id="concepts" className="py-20 dotted-background-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
@@ -34,7 +34,7 @@ const ConceptLibrary: React.FC = () => {
 
   if (error) {
     return (
-      <section id="concepts" className="py-20 bg-gray-50">
+      <section id="concepts" className="py-20 dotted-background-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="flex justify-center mb-4">
@@ -62,7 +62,7 @@ const ConceptLibrary: React.FC = () => {
 
   if (concepts.length === 0) {
     return (
-      <section id="concepts" className="py-20 bg-gray-50">
+      <section id="concepts" className="py-20 dotted-background-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
@@ -82,7 +82,7 @@ const ConceptLibrary: React.FC = () => {
   const hasMoreConcepts = concepts.length > displayCount;
 
   return (
-    <section id="concepts" className="py-20 bg-gray-50">
+    <section id="concepts" className="py-20 dotted-background-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">

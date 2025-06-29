@@ -42,6 +42,21 @@ const Hero: React.FC = () => {
 
   return (
     <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden">
+      {/* White Circle in Top Right Corner - Responsive */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 z-10">
+        <img 
+          src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//white_circle_360x360%20(2).png"
+          alt="Decorative white circle"
+          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+          onError={(e) => {
+            console.error('Failed to load white circle image');
+            // Hide the image if it fails to load
+            const target = e.target as HTMLImageElement;
+            target.style.display = 'none';
+          }}
+        />
+      </div>
+
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
