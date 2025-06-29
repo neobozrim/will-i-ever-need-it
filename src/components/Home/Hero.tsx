@@ -25,19 +25,17 @@ const Hero: React.FC = () => {
           {/* Right side - Bored character */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
-              <div className="w-80 h-96 lg:w-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300 animate-jiggle">
-                <img 
-                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//bored.png" 
-                  alt="Bored character illustration"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    console.error('Failed to load bored.png image');
-                    // Fallback to a placeholder if image fails to load
-                    const target = e.target as HTMLImageElement;
-                    target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
-                  }}
-                />
-              </div>
+              <img 
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//bored.png" 
+                alt="Bored character illustration"
+                className="w-80 h-96 lg:w-96 lg:h-[500px] object-cover transform hover:scale-105 transition-transform duration-300 animate-jiggle"
+                onError={(e) => {
+                  console.error('Failed to load bored.png image');
+                  // Fallback to a placeholder if image fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
+                }}
+              />
               
               {/* Decorative elements */}
               <div className="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-bounce delay-1000"></div>
