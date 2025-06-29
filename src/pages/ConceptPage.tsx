@@ -128,9 +128,9 @@ const ConceptPage: React.FC = () => {
             </p>
           </div>
           
-          {/* Hero image */}
-          <div className="w-full">
-            <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg">
+          {/* Hero image - 9:16 aspect ratio for mobile portrait viewing */}
+          <div className="w-full flex justify-center">
+            <div className="w-full max-w-md aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg">
               <img 
                 src={heroImageUrl} 
                 alt={concept.title}

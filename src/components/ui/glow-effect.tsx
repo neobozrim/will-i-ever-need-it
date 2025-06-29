@@ -122,7 +122,7 @@ export function GlowEffect({
       medium: 'blur-md',
       strong: 'blur-lg',
       stronger: 'blur-xl',
-      strongest: 'blur-xl',
+      strongest: 'blur-2xl',
       none: 'blur-none',
     };
 
