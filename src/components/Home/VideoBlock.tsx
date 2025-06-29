@@ -42,8 +42,9 @@ const VideoBlock: React.FC = () => {
                   target.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
                 }}
               />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center transform transition-transform group-hover:scale-110 shadow-lg">
+              {/* Play button positioned lower and with transparency */}
+              <div className="absolute inset-0 flex items-end justify-center pb-16">
+                <div className="w-16 h-16 bg-red-600/80 backdrop-blur-sm rounded-full flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600/90 shadow-lg">
                   <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M6.3 2.84L16.5 10 6.3 17.16V2.84z" />
                   </svg>

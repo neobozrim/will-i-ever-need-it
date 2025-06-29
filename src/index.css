@@ -29,18 +29,18 @@
   }
 }
 
-/* Dark grey dotted math paper background with 15% opacity */
+/* Dark grey dotted math paper background with 10% opacity */
 .dotted-background {
   background-color: #f8fafc;
-  background-image: radial-gradient(circle, rgba(55, 65, 81, 0.15) 2px, transparent 2px);
+  background-image: radial-gradient(circle, rgba(55, 65, 81, 0.10) 2px, transparent 2px);
   background-size: 20px 20px;
   background-position: 0 0;
 }
 
-/* Alternative dotted background for sections that need more visibility with 15% opacity */
+/* Alternative dotted background for sections that need more visibility with 10% opacity */
 .dotted-background-light {
   background-color: #ffffff;
-  background-image: radial-gradient(circle, rgba(107, 114, 128, 0.15) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgba(107, 114, 128, 0.10) 1.5px, transparent 1.5px);
   background-size: 18px 18px;
   background-position: 0 0;
 }

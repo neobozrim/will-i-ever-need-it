@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Bot, Loader2, Play, MicOff } from 'lucide-react';
+import { Mic, Bot, Loader2, Play, MicOff, Settings, Volume2, VolumeX } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 // Type for our conversation data
@@ -20,9 +20,26 @@ interface ElevenLabsConversation {
 
 interface VoiceAIAgentProps {
   conceptSlug?: string;
+  // Customization props
+  theme?: 'default' | 'minimal' | 'compact';
+  primaryColor?: string;
+  showVolumeControls?: boolean;
+  showStatusIndicator?: boolean;
+  customPrompt?: string;
+  autoStart?: boolean;
+  buttonSize?: 'small' | 'medium' | 'large';
 }
 
-const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({ conceptSlug }) => {
+const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({ 
+  conceptSlug,
+  theme = 'default',
+  primaryColor = 'blue',
+  showVolumeControls = true,
+  showStatusIndicator = true,
+  customPrompt,
+  autoStart = false,
+  buttonSize = 'large'
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [conversationData, setConversationData] = useState<ConversationData | null>(null);
   const [conversation, setConversation] = useState<ElevenLabsConversation | null>(null);
@@ -30,6 +47,16 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({ conceptSlug }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
+  const [volume, setVolume] = useState(0.8);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+
+  // Auto-start functionality
+  useEffect(() => {
+    if (autoStart && !conversation && !isLoading) {
+      startTutor();
+    }
+  }, [autoStart]);
 
   // Use dynamic import for ElevenLabs SDK since it's browser-only
   const startTutor = async () => {
@@ -105,17 +132,20 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({ conceptSlug }) => {
       console.log('Starting ElevenLabs session with options:', sessionOptions);
       setConnectionStatus('connecting');
 
-      // Add conversation overrides with concept-specific prompt
-      const conversationOverride = {
-        agent: {
-          prompt: {
-            prompt: `You are a helpful math tutor assistant. The user is learning about ${data.concept}.
+      // Build conversation prompt - use custom prompt if provided
+      const prompt = customPrompt || `You are a helpful math tutor assistant. The user is learning about ${data.concept}.
 
 Look in your knowledge base for the document about "${data.concept}" and focus only on that topic.
 
 You should IMMEDIATELY start the conversation by greeting the user and asking how you can help with ${data.concept}. Do not wait for the user to speak first.
 
-Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
+Only discuss ${data.concept} - ignore other math topics in your knowledge base.`;
+
+      // Add conversation overrides with concept-specific prompt
+      const conversationOverride = {
+        agent: {
+          prompt: {
+            prompt: prompt
           },
           firstMessage: `Hey! I see you're learning about ${data.concept.replace(/-/g, ' ')}. How can I assist you with this topic today?`,
           language: "en" as const // Explicitly set language with const assertion
@@ -154,6 +184,11 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       
       setConversation(conv);
       
+      // Set initial volume
+      if (conv.setVolume) {
+        conv.setVolume({ volume: isMuted ? 0 : volume });
+      }
+      
     } catch (err) {
       console.error('Error starting ElevenLabs conversation:', err);
       setError(`Failed to connect to voice service: ${err instanceof Error ? err.message : 'Unknown error'}`);
@@ -177,6 +212,21 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
     }
   };
 
+  const handleVolumeChange = (newVolume: number) => {
+    setVolume(newVolume);
+    if (conversation && conversation.setVolume) {
+      conversation.setVolume({ volume: isMuted ? 0 : newVolume });
+    }
+  };
+
+  const toggleMute = () => {
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+    if (conversation && conversation.setVolume) {
+      conversation.setVolume({ volume: newMutedState ? 0 : volume });
+    }
+  };
+
   const formatConceptName = (slug: string): string => {
     return slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' ');
   };
@@ -184,7 +234,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   const getStatusColor = () => {
     if (error) return 'text-red-600';
     if (isConnected && isListening) return 'text-green-600';
-    if (isConnected) return 'text-blue-600';
+    if (isConnected) return `text-${primaryColor}-600`;
     if (connectionStatus === 'connecting') return 'text-yellow-600';
     return 'text-gray-600';
   };
@@ -200,16 +250,46 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   const getStatusIcon = () => {
     if (error) return 'bg-red-500';
     if (isConnected && isListening) return 'bg-green-500 animate-pulse';
-    if (isConnected) return 'bg-blue-500';
+    if (isConnected) return `bg-${primaryColor}-500`;
     if (connectionStatus === 'connecting') return 'bg-yellow-500 animate-pulse';
     return 'bg-gray-500';
   };
 
+  const getButtonSize = () => {
+    switch (buttonSize) {
+      case 'small': return 'w-16 h-16';
+      case 'medium': return 'w-20 h-20';
+      case 'large': return 'w-24 h-24';
+      default: return 'w-24 h-24';
+    }
+  };
+
+  const getIconSize = () => {
+    switch (buttonSize) {
+      case 'small': return 'h-6 w-6';
+      case 'medium': return 'h-7 w-7';
+      case 'large': return 'h-8 w-8';
+      default: return 'h-8 w-8';
+    }
+  };
+
+  // Theme-based styling
+  const getThemeClasses = () => {
+    switch (theme) {
+      case 'minimal':
+        return 'bg-gray-50 border border-gray-200 p-4 rounded-lg';
+      case 'compact':
+        return 'bg-white border border-gray-200 p-3 rounded-lg shadow-sm';
+      default:
+        return 'bg-white rounded-xl shadow-sm border border-gray-200 p-6';
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className={getThemeClasses()}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg">
+          <div className={`p-2 bg-gradient-to-br from-${primaryColor}-500 to-purple-600 rounded-lg`}>
             <Bot className="h-5 w-5 text-white" />
           </div>
           <div>
@@ -220,12 +300,51 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           </div>
         </div>
         <div className="flex items-center space-x-2">
-          <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
-          <span className={`font-nunito text-sm font-medium transition-colors ${getStatusColor()}`}>
-            {getStatusText()}
-          </span>
+          {showStatusIndicator && (
+            <>
+              <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
+              <span className={`font-nunito text-sm font-medium transition-colors ${getStatusColor()}`}>
+                {getStatusText()}
+              </span>
+            </>
+          )}
+          {showVolumeControls && conversation && (
+            <button
+              onClick={() => setShowSettings(!showSettings)}
+              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <Settings className="h-4 w-4" />
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Volume Controls */}
+      {showSettings && showVolumeControls && conversation && (
+        <div className="mb-4 p-3 bg-gray-50 rounded-lg border">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={toggleMute}
+              className="p-1 text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              value={volume}
+              onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+              className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+              disabled={isMuted}
+            />
+            <span className="font-nunito text-xs text-gray-500 w-8">
+              {Math.round(volume * 100)}%
+            </span>
+          </div>
+        </div>
+      )}
       
       {/* Voice controls */}
       <div className="text-center space-y-4">
@@ -234,17 +353,17 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           <button
             onClick={startTutor}
             disabled={isLoading}
-            className={`w-24 h-24 rounded-full transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-blue-300 ${
+            className={`${getButtonSize()} rounded-full transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-${primaryColor}-300 ${
               isLoading
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-br from-blue-500 to-purple-600 hover:shadow-xl hover:scale-105 active:scale-95'
+                : `bg-gradient-to-br from-${primaryColor}-500 to-purple-600 hover:shadow-xl hover:scale-105 active:scale-95`
             }`}
             aria-label={`Start ${conceptSlug ? formatConceptName(conceptSlug) : ''} tutor`}
           >
             {isLoading ? (
-              <Loader2 className="h-8 w-8 text-white mx-auto animate-spin" />
+              <Loader2 className={`${getIconSize()} text-white mx-auto animate-spin`} />
             ) : (
-              <Play className="h-8 w-8 text-white mx-auto ml-1" />
+              <Play className={`${getIconSize()} text-white mx-auto ml-1`} />
             )}
           </button>
         )}
@@ -252,19 +371,19 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
         {/* Voice interaction controls */}
         {conversation && (
           <div className="flex items-center justify-center space-x-4">
-            <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
+            <div className={`${getButtonSize()} rounded-full flex items-center justify-center transition-all duration-300 ${
               isListening
                 ? 'bg-green-500 animate-pulse shadow-lg'
                 : isConnected
-                ? 'bg-blue-500'
+                ? `bg-${primaryColor}-500`
                 : 'bg-gray-400'
             }`}>
               {isListening ? (
-                <Mic className="h-6 w-6 text-white" />
+                <Mic className={`${getIconSize()} text-white`} />
               ) : isConnected ? (
-                <MicOff className="h-6 w-6 text-white" />
+                <MicOff className={`${getIconSize()} text-white`} />
               ) : (
-                <Loader2 className="h-6 w-6 text-white animate-spin" />
+                <Loader2 className={`${getIconSize()} text-white animate-spin`} />
               )}
             </div>
             
