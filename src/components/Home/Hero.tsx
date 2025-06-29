@@ -68,7 +68,7 @@ const Hero: React.FC = () => {
       size: "w-8 h-8",
       startX: -200,
       startY: 100,
-      endX: window.innerWidth + 200,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 200 : 1400,
       endY: 120,
       duration: 25,
       delay: 0
@@ -79,7 +79,7 @@ const Hero: React.FC = () => {
       size: "w-16 h-8",
       startX: -300,
       startY: 150,
-      endX: window.innerWidth + 300,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 300 : 1500,
       endY: 180,
       duration: 30,
       delay: 5
@@ -90,7 +90,7 @@ const Hero: React.FC = () => {
       size: "w-14 h-7",
       startX: -250,
       startY: 200,
-      endX: window.innerWidth + 250,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 250 : 1450,
       endY: 160,
       duration: 28,
       delay: 10
@@ -101,7 +101,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2014QUADRATIC-F.svg",
       alt: "Quadratic Formula",
       size: "w-18 h-8",
-      startX: window.innerWidth + 200,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 200 : 1400,
       startY: 250,
       endX: -200,
       endY: 280,
@@ -112,7 +112,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2015PERC-CHANGE-F.svg",
       alt: "Percentage Change",
       size: "w-16 h-7",
-      startX: window.innerWidth + 300,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 300 : 1500,
       startY: 300,
       endX: -300,
       endY: 320,
@@ -123,7 +123,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201611.svg",
       alt: "Number 11",
       size: "w-8 h-10",
-      startX: window.innerWidth + 150,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 150 : 1350,
       startY: 350,
       endX: -150,
       endY: 370,
@@ -138,7 +138,7 @@ const Hero: React.FC = () => {
       size: "w-8 h-10",
       startX: -150,
       startY: 80,
-      endX: window.innerWidth + 150,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 150 : 1350,
       endY: 400,
       duration: 40,
       delay: 3
@@ -149,7 +149,7 @@ const Hero: React.FC = () => {
       size: "w-8 h-10",
       startX: -200,
       startY: 120,
-      endX: window.innerWidth + 200,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 200 : 1400,
       endY: 450,
       duration: 38,
       delay: 8
@@ -160,7 +160,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201919.svg",
       alt: "Number 19",
       size: "w-8 h-10",
-      startX: window.innerWidth + 150,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 150 : 1350,
       startY: 80,
       endX: -150,
       endY: 400,
@@ -171,7 +171,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%201cube.svg",
       alt: "Cube",
       size: "w-12 h-12",
-      startX: window.innerWidth + 200,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 200 : 1400,
       startY: 120,
       endX: -200,
       endY: 450,
@@ -186,7 +186,7 @@ const Hero: React.FC = () => {
       size: "w-10 h-12",
       startX: -180,
       startY: 400,
-      endX: window.innerWidth + 180,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 180 : 1380,
       endY: 420,
       duration: 33,
       delay: 6
@@ -197,7 +197,7 @@ const Hero: React.FC = () => {
       size: "w-10 h-12",
       startX: -220,
       startY: 450,
-      endX: window.innerWidth + 220,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 220 : 1420,
       endY: 480,
       duration: 29,
       delay: 11
@@ -208,7 +208,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%204sphere.svg",
       alt: "Sphere",
       size: "w-11 h-11",
-      startX: window.innerWidth + 180,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 180 : 1380,
       startY: 180,
       endX: -180,
       endY: 200,
@@ -219,7 +219,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%205heart.svg",
       alt: "Heart",
       size: "w-10 h-10",
-      startX: window.innerWidth + 160,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 160 : 1360,
       startY: 380,
       endX: -160,
       endY: 400,
@@ -230,7 +230,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%206diamond.svg",
       alt: "Diamond",
       size: "w-10 h-10",
-      startX: window.innerWidth + 140,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 140 : 1340,
       startY: 220,
       endX: -140,
       endY: 240,
@@ -245,7 +245,7 @@ const Hero: React.FC = () => {
       size: "w-12 h-8",
       startX: -170,
       startY: 300,
-      endX: window.innerWidth + 170,
+      endX: typeof window !== 'undefined' ? window.innerWidth + 170 : 1370,
       endY: 150,
       duration: 37,
       delay: 15
@@ -254,7 +254,7 @@ const Hero: React.FC = () => {
       src: "https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%209trappezoid.svg",
       alt: "Trapezoid",
       size: "w-12 h-8",
-      startX: window.innerWidth + 170,
+      startX: typeof window !== 'undefined' ? window.innerWidth + 170 : 1370,
       startY: 300,
       endX: -170,
       endY: 150,
@@ -276,8 +276,7 @@ const Hero: React.FC = () => {
                 x: component.startX,
                 y: component.startY,
                 opacity: 0,
-                scale: 0.8,
-                rotate: 0
+                scale: 0.8
               }}
               animate={hasTriggered ? {
                 // Scatter in random directions when scroll triggers
@@ -292,12 +291,11 @@ const Hero: React.FC = () => {
                   delay: index * 0.05 
                 }
               } : {
-                // Continuous flowing animation
+                // Continuous flowing animation - NO ROTATION
                 x: [component.startX, component.endX],
                 y: [component.startY, component.endY],
                 opacity: [0, 0.15, 0.15, 0],
                 scale: [0.8, 1, 1, 0.8],
-                rotate: [0, 360],
                 transition: {
                   duration: component.duration,
                   repeat: Infinity,
