@@ -67,35 +67,24 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header - same styling as ConceptLibrary */}
+        {/* Section header - centered */}
         <div className="text-center mb-16">
           <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
             Featured Epic Math
           </h2>
         </div>
 
-        {/* Featured cards grid - using same 3-column layout as library */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredConcepts.map((concept) => (
-            <ConceptCard 
-              key={concept.id} 
-              concept={concept} 
-              onOpenOverlay={onOpenOverlay}
-            />
-          ))}
-          
-          {/* Add empty div to maintain grid alignment if only 2 cards */}
-          {featuredConcepts.length === 2 && (
-            <div className="hidden lg:block"></div>
-          )}
-        </div>
-
-        {/* Bottom transition text */}
-        <div className="text-center mt-16">
-          <div className="inline-flex items-center space-x-2 text-gray-600">
-            <span className="font-nunito text-lg font-medium">Ready to dive deeper?</span>
+        {/* Featured cards - centered layout */}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+            {featuredConcepts.map((concept) => (
+              <ConceptCard 
+                key={concept.id} 
+                concept={concept} 
+                onOpenOverlay={onOpenOverlay}
+              />
+            ))}
           </div>
-          <p className="font-nunito text-gray-500 mt-2">Explore our full library of interactive math concepts below</p>
         </div>
       </div>
     </section>

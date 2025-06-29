@@ -33,12 +33,6 @@ const ConceptLibrary: React.FC = () => {
             <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
               Discover More Math Superpowers
             </h2>
-            
-            <p className="font-nunito text-xl text-gray-600 max-w-3xl mx-auto">
-              that are not boring and give you a{' '}
-              <span className="font-bold text-blue-600">clear answer to</span>{' '}
-              "when will i ever need it?"
-            </p>
           </div>
           
           <div className="flex justify-center items-center py-12">
@@ -109,12 +103,6 @@ const ConceptLibrary: React.FC = () => {
             <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
               Discover More Math Superpowers
             </h2>
-            
-            <p className="font-nunito text-xl text-gray-600 max-w-3xl mx-auto">
-              that are not boring and give you a{' '}
-              <span className="font-bold text-blue-600">clear answer to</span>{' '}
-              "when will i ever need it?"
-            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
