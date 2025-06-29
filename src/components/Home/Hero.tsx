@@ -131,8 +131,8 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FIXED: Combined image variants - includes both entry animation AND jiggle
-  const imageVariants = {
+  // FIXED: Image return animation - MUCH SIMPLER and FASTER with direct path
+  const slideInFromRightVariants = {
     hidden: { 
       x: 300, 
       opacity: 0, 
@@ -145,28 +145,14 @@ const Hero: React.FC = () => {
       scale: 1,
       rotate: 0,
       transition: {
-        type: "tween",
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    },
-    // JIGGLE ANIMATION STATE - same as heading
-    idle: {
-      x: [0, -3, 3, -2, 2, 0],
-      y: [0, -2, 2, -1, 1, 0],
-      rotate: [0, -1, 1, -0.5, 0.5, 0],
-      scale: [1, 1.02, 0.98, 1.01, 0.99, 1],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        repeatType: "loop",
-        ease: "easeInOut",
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+        type: "tween", // CHANGED: Using tween instead of spring for more predictable path
+        duration: 0.6, // FIXED: Direct duration control instead of spring physics
+        ease: "easeOut" // SMOOTH: Ease out for natural deceleration
       }
     }
   };
 
-  // JIGGLE ANIMATION VARIANTS - for heading only now
+  // JIGGLE ANIMATION VARIANTS - SAME FOR BOTH HEADING AND HERO IMAGE
   const jiggleVariants = {
     idle: {
       x: [0, -3, 3, -2, 2, 0],
@@ -183,7 +169,7 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FIXED: Animation states with proper image handling
+  // FIXED: Animation states with DIRECT PATHS - no complex spring physics on return
   const getAnimationState = (element: 'heading' | 'description' | 'button' | 'image') => {
     if (!hasLoaded) return "hidden";
     
@@ -202,7 +188,7 @@ const Hero: React.FC = () => {
         case 'description':
           return {
             x: -1000,
-            y: -200,
+            y: -200, // Flies out to upper left
             rotate: -25,
             scale: 0.4,
             opacity: 0,
@@ -231,26 +217,8 @@ const Hero: React.FC = () => {
       }
     }
     
+    // FIXED: Return to normal position - clean, direct path
     return "visible";
-  };
-
-  // FIXED: Get image animation state - handles both entry and jiggle
-  const getImageAnimationState = () => {
-    if (!hasLoaded) return "hidden";
-    
-    if (hasTriggered) {
-      return {
-        x: 1000,
-        y: 600,
-        rotate: 360,
-        scale: 0.1,
-        opacity: 0,
-        transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-      };
-    }
-    
-    // FIXED: Return array of states - first "visible" for entry, then "idle" for jiggle
-    return hasLoaded ? ["visible", "idle"] : "visible";
   };
 
   return (
@@ -403,20 +371,27 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* FIXED: Right side - Hero image with COMBINED entry + jiggle animation */}
+          {/* MATCHED: Right side - BoredOppo and Maya characters with SAME JIGGLE ANIMATION as heading */}
           <div className="flex justify-center lg:justify-end">
-            <div className="relative">
-              {/* FIXED: Single motion.img with combined variants for both entry and jiggle */}
+            <motion.div 
+              className="relative"
+              variants={slideInFromRightVariants}
+              initial="hidden"
+              animate={getAnimationState('image')}
+              transition={{
+                delay: 1.1
+              }}
+              style={{
+                willChange: 'transform'
+              }}
+            >
+              {/* MATCHED: Hero image with EXACT SAME JIGGLE animation as the heading */}
               <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
-                variants={imageVariants}
-                initial="hidden"
-                animate={getImageAnimationState()}
-                transition={{
-                  delay: 1.1
-                }}
+                variants={jiggleVariants}
+                animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 style={{
                   willChange: 'transform'
                 }}
@@ -426,7 +401,7 @@ const Hero: React.FC = () => {
                   target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
                 }}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
