@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, AlertCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, AlertCircle, Loader2, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useMathConcept } from '../hooks/useMathConcepts';
 import VoiceAIAgent from '../components/Concept/VoiceAIAgent';
 import BlogContent from '../components/Concept/BlogContent';
@@ -9,6 +10,7 @@ const ConceptPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { concept, loading, error } = useMathConcept(slug || '');
   const [heroImageError, setHeroImageError] = useState(false);
+  const [showImageOverlay, setShowImageOverlay] = useState(false);
   const defaultHeroImage = 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
 
   // Force scroll to top when component mounts or slug changes
@@ -22,6 +24,34 @@ const ConceptPage: React.FC = () => {
     const target = e.target as HTMLImageElement;
     target.src = defaultHeroImage;
   };
+
+  // Handle image overlay
+  const handleImageClick = () => {
+    setShowImageOverlay(true);
+  };
+
+  const handleCloseImageOverlay = () => {
+    setShowImageOverlay(false);
+  };
+
+  // Handle escape key for image overlay
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showImageOverlay) {
+        setShowImageOverlay(false);
+      }
+    };
+
+    if (showImageOverlay) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showImageOverlay]);
 
   if (loading) {
     return (
@@ -100,83 +130,49 @@ const ConceptPage: React.FC = () => {
   const blogContent = concept?.blog_post_content || `# ${concept?.title || 'Concept'}\n\n${concept?.description || 'No description available'}`;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Back button */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link 
-            to="/" 
-            className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="font-barriecito">Back to Concepts</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Main content - responsive layout */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Mobile and small tablet: single column */}
-        <div className="block lg:hidden space-y-8 sm:space-y-12">
-          {/* Header section */}
-          <div className="text-center">
-            <h1 className="font-barriecito text-3xl sm:text-4xl md:text-5xl text-gray-900 mb-4 sm:mb-6">
-              {concept.title}
-            </h1>
-            
-            <p className="font-nunito text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              {concept.description}
-            </p>
-          </div>
-          
-          {/* Hero image - 9:16 aspect ratio for mobile portrait viewing */}
-          <div className="w-full flex justify-center">
-            <div className="w-full max-w-md aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg">
-              <img 
-                src={heroImageUrl} 
-                alt={concept.title}
-                className="w-full h-full object-cover"
-                onError={handleImageError}
-              />
-            </div>
-          </div>
-
-          {/* Voice AI Agent */}
-          <div className="w-full">
-            <VoiceAIAgent conceptSlug={slug} />
-          </div>
-          
-          {/* Blog content */}
-          <div className="w-full">
-            <BlogContent content={blogContent} />
+    <>
+      <div className="min-h-screen bg-gray-50">
+        {/* Back button */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <Link 
+              to="/" 
+              className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="font-barriecito">Back to Concepts</span>
+            </Link>
           </div>
         </div>
 
-        {/* Large tablet and desktop: two column layout */}
-        <div className="hidden lg:grid lg:grid-cols-2 lg:gap-12 lg:items-start">
-          {/* Left column - Hero image positioned at top */}
-          <div className="sticky top-8">
-            <div className="w-full aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg">
-              <img 
-                src={heroImageUrl} 
-                alt={concept.title}
-                className="w-full h-full object-cover"
-                onError={handleImageError}
-              />
-            </div>
-          </div>
-
-          {/* Right column - Content */}
-          <div className="space-y-8">
+        {/* Main content - responsive layout */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          {/* Mobile and small tablet: single column */}
+          <div className="block lg:hidden space-y-8 sm:space-y-12">
             {/* Header section */}
-            <div>
-              <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6">
+            <div className="text-center">
+              <h1 className="font-barriecito text-3xl sm:text-4xl md:text-5xl text-gray-900 mb-4 sm:mb-6">
                 {concept.title}
               </h1>
               
-              <p className="font-nunito text-xl text-gray-600 leading-relaxed">
+              <p className="font-nunito text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
                 {concept.description}
               </p>
+            </div>
+            
+            {/* Hero image - 9:16 aspect ratio for mobile portrait viewing - clickable */}
+            <div className="w-full flex justify-center">
+              <div 
+                className="w-full max-w-md aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
+                onClick={handleImageClick}
+              >
+                <img 
+                  src={heroImageUrl} 
+                  alt={concept.title}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  onError={handleImageError}
+                />
+              </div>
             </div>
 
             {/* Voice AI Agent */}
@@ -189,9 +185,97 @@ const ConceptPage: React.FC = () => {
               <BlogContent content={blogContent} />
             </div>
           </div>
+
+          {/* Large tablet and desktop: two column layout */}
+          <div className="hidden lg:grid lg:grid-cols-2 lg:gap-12 lg:items-start">
+            {/* Left column - Hero image positioned at top - clickable */}
+            <div className="sticky top-8">
+              <div 
+                className="w-full aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
+                onClick={handleImageClick}
+              >
+                <img 
+                  src={heroImageUrl} 
+                  alt={concept.title}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  onError={handleImageError}
+                />
+              </div>
+            </div>
+
+            {/* Right column - Content */}
+            <div className="space-y-8">
+              {/* Header section */}
+              <div>
+                <h1 className="font-barriecito text-4xl xl:text-5xl text-gray-900 mb-6">
+                  {concept.title}
+                </h1>
+                
+                <p className="font-nunito text-xl text-gray-600 leading-relaxed">
+                  {concept.description}
+                </p>
+              </div>
+
+              {/* Voice AI Agent */}
+              <div className="w-full">
+                <VoiceAIAgent conceptSlug={slug} />
+              </div>
+              
+              {/* Blog content */}
+              <div className="w-full">
+                <BlogContent content={blogContent} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Full-screen image overlay */}
+      <AnimatePresence>
+        {showImageOverlay && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
+            onClick={handleCloseImageOverlay}
+          >
+            {/* Close button */}
+            <button
+              onClick={handleCloseImageOverlay}
+              className="absolute top-4 right-4 z-20 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-200 backdrop-blur-sm"
+              aria-label="Close image overlay"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            {/* Full-screen image */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3, type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img 
+                src={heroImageUrl} 
+                alt={concept.title}
+                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                onError={handleImageError}
+              />
+            </motion.div>
+
+            {/* Image title */}
+            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
+              <h2 className="font-barriecito text-2xl text-white mb-2">{concept.title}</h2>
+              <p className="font-nunito text-gray-300 text-sm">Click anywhere to close</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
