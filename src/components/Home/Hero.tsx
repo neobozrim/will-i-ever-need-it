@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden">
+    <section ref={containerRef} className="relative bg-white py-20 lg:py-32 overflow-hidden min-h-screen">
       {/* Bolt Banner - MOVED TO TOP WITH HIGHEST Z-INDEX */}
       <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8 z-[100]">
         <a 
@@ -83,13 +83,13 @@ const Hero: React.FC = () => {
         </a>
       </div>
 
-      {/* Animated Banner Background - Smaller and More Prominent Colors - LOWER Z-INDEX */}
+      {/* NEW LARGER Animated Banner Background - Full Height Coverage */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Main banner with pulsing scale animation - SMALLER SIZE */}
+        {/* Main banner with pulsing scale animation - FULL HEIGHT COVERAGE */}
         <motion.div
           className="absolute inset-0 w-full h-full flex items-center justify-center"
           animate={{
-            scale: [0.6, 0.65, 0.6, 0.58, 0.6], // Much smaller scale values
+            scale: [0.8, 0.85, 0.8, 0.78, 0.8], // Adjusted scale for larger image
           }}
           transition={{
             duration: 8,
@@ -98,11 +98,11 @@ const Hero: React.FC = () => {
           }}
         >
           <img 
-            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//banner.svg"
+            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Asset%2023banner2.svg"
             alt="Mathematical background pattern"
-            className="w-full h-full object-contain opacity-20" // Changed to object-contain and increased opacity
+            className="w-full h-full object-cover opacity-25" // Changed to object-cover for full height coverage
             onError={(e) => {
-              console.error('Failed to load banner.svg');
+              console.error('Failed to load Asset 23banner2.svg');
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
             }}
@@ -250,8 +250,8 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
             <AnimatePresence>
