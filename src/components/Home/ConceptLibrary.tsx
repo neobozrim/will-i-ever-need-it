@@ -1,28 +1,14 @@
 import React, { useState } from 'react';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import ConceptCard from './ConceptCard';
-import ConceptOverlay from './ConceptOverlay';
 import { useMathConcepts } from '../../hooks/useMathConcepts';
-import { MathConcept } from '../../types';
 
 const ConceptLibrary: React.FC = () => {
   const { concepts, loading, error } = useMathConcepts();
   const [displayCount, setDisplayCount] = useState(15);
-  const [selectedConcept, setSelectedConcept] = useState<MathConcept | null>(null);
-  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
   const handleLoadMore = () => {
     setDisplayCount(prev => prev + 15);
-  };
-
-  const handleOpenOverlay = (concept: MathConcept) => {
-    setSelectedConcept(concept);
-    setIsOverlayOpen(true);
-  };
-
-  const handleCloseOverlay = () => {
-    setIsOverlayOpen(false);
-    setSelectedConcept(null);
   };
 
   if (loading) {
@@ -96,45 +82,35 @@ const ConceptLibrary: React.FC = () => {
   const hasMoreConcepts = concepts.length > displayCount;
 
   return (
-    <>
-      <section id="concepts" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
-              Discover More Math Superpowers
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayedConcepts.map((concept) => (
-              <ConceptCard 
-                key={concept.id} 
-                concept={concept} 
-                onOpenOverlay={handleOpenOverlay}
-              />
-            ))}
-          </div>
-          
-          {hasMoreConcepts && (
-            <div className="text-center mt-12">
-              <button 
-                onClick={handleLoadMore}
-                className="font-barriecito bg-white text-gray-700 px-8 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-              >
-                load more
-              </button>
-            </div>
-          )}
+    <section id="concepts" className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="font-barriecito text-3xl md:text-4xl text-gray-900 mb-4">
+            Discover More Math Superpowers
+          </h2>
         </div>
-      </section>
-
-      {/* Concept Overlay */}
-      <ConceptOverlay
-        concept={selectedConcept}
-        isOpen={isOverlayOpen}
-        onClose={handleCloseOverlay}
-      />
-    </>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayedConcepts.map((concept) => (
+            <ConceptCard 
+              key={concept.id} 
+              concept={concept} 
+            />
+          ))}
+        </div>
+        
+        {hasMoreConcepts && (
+          <div className="text-center mt-12">
+            <button 
+              onClick={handleLoadMore}
+              className="font-barriecito bg-white text-gray-700 px-8 py-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+            >
+              load more
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 

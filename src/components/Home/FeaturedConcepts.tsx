@@ -2,13 +2,8 @@ import React from 'react';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import ConceptCard from './ConceptCard';
 import { useMathConcepts } from '../../hooks/useMathConcepts';
-import { MathConcept } from '../../types';
 
-interface FeaturedConceptsProps {
-  onOpenOverlay: (concept: MathConcept) => void;
-}
-
-const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) => {
+const FeaturedConcepts: React.FC = () => {
   const { concepts, loading, error } = useMathConcepts();
 
   // Filter for AREA and PYTHAGOREAN concepts
@@ -81,7 +76,6 @@ const FeaturedConcepts: React.FC<FeaturedConceptsProps> = ({ onOpenOverlay }) =>
               <ConceptCard 
                 key={concept.id} 
                 concept={concept} 
-                onOpenOverlay={onOpenOverlay}
               />
             ))}
           </div>
