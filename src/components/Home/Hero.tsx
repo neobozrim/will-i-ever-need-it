@@ -22,16 +22,16 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* Right side - Animated monster */}
+          {/* Right side - Bored character */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
               <div className="w-80 h-96 lg:w-96 lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300 animate-jiggle">
                 <img 
-                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//monster.png" 
-                  alt="Friendly monster character"
+                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//bored.svg" 
+                  alt="Bored character illustration"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    console.error('Failed to load monster image');
+                    console.error('Failed to load bored.svg image');
                     // Fallback to a placeholder if image fails to load
                     const target = e.target as HTMLImageElement;
                     target.src = 'https://images.pexels.com/photos/8197528/pexels-photo-8197528.jpeg?auto=compress&cs=tinysrgb&w=400';
