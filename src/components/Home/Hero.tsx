@@ -309,7 +309,7 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
-            {/* FIXED: Heading with proper Barriecito font + DROP IN animation + JIGGLE */}
+            {/* INCREASED: Heading with larger mobile size - text-4xl on mobile, text-5xl on sm, text-6xl on md+ */}
             <motion.div
               variants={dropInVariants}
               initial="hidden"
@@ -322,7 +322,7 @@ const Hero: React.FC = () => {
               }}
             >
               <motion.h1 
-                className="font-barriecito text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight"
+                className="font-barriecito text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gray-900 mb-8 leading-tight"
                 variants={jiggleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 style={{
