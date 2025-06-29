@@ -12,25 +12,26 @@ const Hero: React.FC = () => {
     offset: ["start start", "end start"]
   });
 
-  // Trigger fly-away animation when user starts scrolling
+  // Trigger fly-away animation when user starts scrolling - much more sensitive
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      if (latest > 0.05 && !hasTriggered) {
+      // Trigger at just 0.5% scroll instead of 5% - super sensitive!
+      if (latest > 0.005 && !hasTriggered) {
         setHasTriggered(true);
         // Hide elements after animation completes
         setTimeout(() => {
           setShowElements(false);
-        }, 800); // Match animation duration
+        }, 600); // Slightly faster completion
       }
     });
 
     return () => unsubscribe();
   }, [scrollYProgress, hasTriggered]);
 
-  // Reset when scrolling back to top
+  // Reset when scrolling back to top - also more sensitive
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      if (latest < 0.01 && hasTriggered) {
+      if (latest < 0.001 && hasTriggered) {
         setHasTriggered(false);
         setShowElements(true);
       }
@@ -58,7 +59,7 @@ const Hero: React.FC = () => {
                       rotate: -45,
                       scale: 0.3,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut" }
+                      transition: { duration: 0.6, ease: "easeInOut" }
                     } : { 
                       x: [0, -5, 0], 
                       y: [0, -2, 0],
@@ -76,7 +77,7 @@ const Hero: React.FC = () => {
                       rotate: -45,
                       scale: 0.3,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut" }
+                      transition: { duration: 0.6, ease: "easeInOut" }
                     }}
                   >
                     Math could be boring!
@@ -92,7 +93,7 @@ const Hero: React.FC = () => {
                       rotate: -25,
                       scale: 0.4,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut", delay: 0.1 }
+                      transition: { duration: 0.6, ease: "easeInOut", delay: 0.05 }
                     } : { 
                       x: [0, -3, 0], 
                       y: [0, 1, 0],
@@ -111,7 +112,7 @@ const Hero: React.FC = () => {
                       rotate: -25,
                       scale: 0.4,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut", delay: 0.1 }
+                      transition: { duration: 0.6, ease: "easeInOut", delay: 0.05 }
                     }}
                   >
                     Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
@@ -128,7 +129,7 @@ const Hero: React.FC = () => {
                         rotate: -180,
                         scale: 0.2,
                         opacity: 0,
-                        transition: { duration: 0.8, ease: "easeInOut", delay: 0.2 }
+                        transition: { duration: 0.6, ease: "easeInOut", delay: 0.1 }
                       } : { 
                         x: [0, -2, 0], 
                         y: [0, 2, 0],
@@ -148,7 +149,7 @@ const Hero: React.FC = () => {
                         rotate: -180,
                         scale: 0.2,
                         opacity: 0,
-                        transition: { duration: 0.8, ease: "easeInOut", delay: 0.2 }
+                        transition: { duration: 0.6, ease: "easeInOut", delay: 0.1 }
                       }}
                     >
                       <span>WATCH THIS</span>
@@ -172,7 +173,7 @@ const Hero: React.FC = () => {
                     rotate: 360,
                     scale: 0.1,
                     opacity: 0,
-                    transition: { duration: 0.8, ease: "easeInOut", delay: 0.3 }
+                    transition: { duration: 0.6, ease: "easeInOut", delay: 0.15 }
                   } : { 
                     x: [0, 3, 0], 
                     y: [0, -2, 0],
@@ -192,7 +193,7 @@ const Hero: React.FC = () => {
                     rotate: 360,
                     scale: 0.1,
                     opacity: 0,
-                    transition: { duration: 0.8, ease: "easeInOut", delay: 0.3 }
+                    transition: { duration: 0.6, ease: "easeInOut", delay: 0.15 }
                   }}
                 >
                   <img 
@@ -217,7 +218,7 @@ const Hero: React.FC = () => {
                       rotate: 720,
                       scale: 0,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut", delay: 0.4 }
+                      transition: { duration: 0.6, ease: "easeInOut", delay: 0.2 }
                     } : { 
                       scale: [1, 1.2, 1],
                       rotate: [0, 10, 0],
@@ -234,7 +235,7 @@ const Hero: React.FC = () => {
                       rotate: 720,
                       scale: 0,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut", delay: 0.4 }
+                      transition: { duration: 0.6, ease: "easeInOut", delay: 0.2 }
                     }}
                   />
                   <motion.div 
@@ -246,7 +247,7 @@ const Hero: React.FC = () => {
                       rotate: -540,
                       scale: 0,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut", delay: 0.5 }
+                      transition: { duration: 0.6, ease: "easeInOut", delay: 0.25 }
                     } : { 
                       scale: [1, 1.3, 1],
                       rotate: [0, -15, 0],
@@ -264,7 +265,7 @@ const Hero: React.FC = () => {
                       rotate: -540,
                       scale: 0,
                       opacity: 0,
-                      transition: { duration: 0.8, ease: "easeInOut", delay: 0.5 }
+                      transition: { duration: 0.6, ease: "easeInOut", delay: 0.25 }
                     }}
                   />
                 </motion.div>
