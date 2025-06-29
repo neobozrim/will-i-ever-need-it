@@ -24,26 +24,6 @@ const Header: React.FC = () => {
               Bored? Opposite!
             </span>
           </Link>
-          
-          {/* Bolt.new link */}
-          <a 
-            href="https://bolt.new/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200 group"
-          >
-            <span className="font-nunito text-sm">Built with</span>
-            <div className="flex items-center space-x-1">
-              <svg 
-                className="w-4 h-4 text-orange-500 group-hover:text-orange-600 transition-colors duration-200" 
-                viewBox="0 0 24 24" 
-                fill="currentColor"
-              >
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-              </svg>
-              <span className="font-nunito text-sm font-medium">Bolt</span>
-            </div>
-          </a>
         </div>
       </div>
     </header>
