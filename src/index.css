@@ -2,17 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import CCMEANWHILE font */
-@import url('https://fonts.googleapis.com/css2?family=CC+Meanwhile:wght@400;700&display=swap');
+/* CCMEANWHILE font from Adobe Fonts */
+@import url('https://use.typekit.net/fuf8ojy.css');
 
 /* Set CCMEANWHILE as the default font */
 @layer base {
   html {
-    font-family: 'CC Meanwhile', system-ui, sans-serif;
+    font-family: 'cc-meanwhile', 'CC Meanwhile', system-ui, sans-serif;
   }
   
   body {
-    font-family: 'CC Meanwhile', system-ui, sans-serif;
+    font-family: 'cc-meanwhile', 'CC Meanwhile', system-ui, sans-serif;
+  }
+  
+  * {
+    font-family: 'cc-meanwhile', 'CC Meanwhile', system-ui, sans-serif;
   }
 }
 

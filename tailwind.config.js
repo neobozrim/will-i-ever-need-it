@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'ccmeanwhile': ['CC Meanwhile', 'system-ui', 'sans-serif'],
-        'sans': ['CC Meanwhile', 'system-ui', 'sans-serif'],
+        'ccmeanwhile': ['cc-meanwhile', 'CC Meanwhile', 'system-ui', 'sans-serif'],
+        'sans': ['cc-meanwhile', 'CC Meanwhile', 'system-ui', 'sans-serif'],
       },
     },
   },
