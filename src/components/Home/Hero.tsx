@@ -7,17 +7,12 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
           <div className="text-left">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-2 leading-tight">
-              math could be boring
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+              Bored? Opposite!
             </h1>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                like... real boring
-              </span>
-            </h2>
             
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
-              but not when it actually helps you do cool stuff in real life.
+              Use that "boring" math to build an epic treehouse, run a slime empire, crush gaming rivals, and become the smartest kid who actually gets stuff done... while the rest are still clueless!
             </p>
             
             <p className="text-xl text-gray-600 mb-8">

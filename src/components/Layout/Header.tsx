@@ -10,7 +10,7 @@ const Header: React.FC = () => {
             <div className="flex items-center justify-center w-10 h-10 group-hover:scale-105 transition-transform duration-200">
               <img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//logo.svg" 
-                alt="Will I Ever Need It Logo"
+                alt="Bored? Opposite! Logo"
                 className="w-full h-full object-contain"
                 onError={(e) => {
                   console.error('Failed to load logo:', e);
@@ -21,7 +21,7 @@ const Header: React.FC = () => {
               />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              will i ever need it?
+              Bored? Opposite!
             </span>
           </Link>
         </div>
