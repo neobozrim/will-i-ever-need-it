@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Image as ImageIcon } from 'lucide-react';
 import { MathConcept } from '../../types';
 import { GlowEffect } from '../ui/glow-effect';
 
 interface ConceptCardProps {
   concept: MathConcept;
-  onOpenOverlay: (concept: MathConcept) => void;
 }
 
-const ConceptCard: React.FC<ConceptCardProps> = ({ concept, onOpenOverlay }) => {
+const ConceptCard: React.FC<ConceptCardProps> = ({ concept }) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -26,17 +26,12 @@ const ConceptCard: React.FC<ConceptCardProps> = ({ concept, onOpenOverlay }) => 
     setImageLoaded(true);
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    onOpenOverlay(concept);
-  };
-
   return (
-    <div 
-      className="group block h-full cursor-pointer"
+    <Link 
+      to={`/concepts/${concept.slug}`}
+      className="group block h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
     >
       <div className="relative h-full flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-2xl hover:border-transparent transition-all duration-500 transform hover:-translate-y-2">
         {/* Purple and Orange Glow Effect - visible on hover with increased intensity */}
@@ -95,7 +90,7 @@ const ConceptCard: React.FC<ConceptCardProps> = ({ concept, onOpenOverlay }) => 
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
