@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Loader2, MicOff, Settings, Volume2, VolumeX, X, Minimize2, Maximize2 } from 'lucide-react';
+import { Mic, Loader2, MicOff, Settings, Volume2, VolumeX, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 // Type for our conversation data
@@ -51,7 +51,6 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   const [isMuted, setIsMuted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   // Auto-start functionality
   useEffect(() => {
@@ -285,7 +284,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 ${isExpanded ? 'w-96 h-96' : 'w-80 h-80'} transition-all duration-300`}>
+    <div className="fixed bottom-6 right-6 z-50 w-80 h-80 transition-all duration-300">
       <div className="w-full h-full bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-purple-50 to-pink-50">
@@ -316,7 +315,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             </div>
           </div>
           
-          {/* Control buttons */}
+          {/* Control buttons - Only settings and X */}
           <div className="flex items-center space-x-1">
             {showVolumeControls && conversation && (
               <button
@@ -326,12 +325,6 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
                 <Settings className="h-4 w-4" />
               </button>
             )}
-            <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
-            >
-              {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
-            </button>
             <button
               onClick={() => setIsMinimized(true)}
               className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
