@@ -397,7 +397,7 @@ const Hero: React.FC = () => {
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
-                className="font-barriecito group text-black px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-[#97ECF1] to-[#FEC868] hover:from-[#7DD3DA] hover:to-[#FDB94E]"
+                className="font-barriecito group text-black px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-[#97ECF1] to-[#BDB2FF] hover:from-[#7DD3DA] hover:to-[#A89EFF]"
                 initial="hidden"
                 animate={getAnimationState('button')}
                 whileHover={{ scale: 1.05 }}

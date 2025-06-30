@@ -147,7 +147,7 @@ const ConceptLibrary: React.FC = () => {
                     href="https://yavor3.typeform.com/to/wrZL0wBL"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-barriecito inline-flex items-center justify-center w-full text-black py-3 px-4 rounded-xl text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200 bg-gradient-to-r from-[#97ECF1] to-[#FEC868] hover:from-[#7DD3DA] hover:to-[#FDB94E]"
+                    className="font-barriecito inline-flex items-center justify-center w-full text-black py-3 px-4 rounded-xl text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200 bg-gradient-to-r from-[#97ECF1] to-[#BDB2FF] hover:from-[#7DD3DA] hover:to-[#A89EFF]"
                   >
                     SUGGEST NOW
                   </a>
