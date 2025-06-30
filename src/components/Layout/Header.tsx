@@ -42,7 +42,14 @@ const Header: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-xl font-barriecito hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                  className="flex items-center space-x-2 text-gray-700 px-4 py-2 rounded-xl font-barriecito hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                  style={{ backgroundColor: '#BDB2FF' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#A89EF5';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#BDB2FF';
+                  }}
                 >
                   <User className="h-4 w-4" />
                   <span>Sign In</span>
