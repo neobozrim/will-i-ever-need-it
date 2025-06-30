@@ -189,7 +189,7 @@ const ConceptPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Full-screen image overlay */}
+      {/* FIXED: Full-screen image overlay with scrolling support for tall images */}
       <AnimatePresence>
         {showImageOverlay && (
           <motion.div
@@ -197,34 +197,51 @@ const ConceptPage: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm cursor-pointer"
-            onClick={handleCloseImageOverlay}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm"
           >
-            {/* Close button */}
+            {/* Close button - fixed position */}
             <button
               onClick={handleCloseImageOverlay}
-              className="absolute top-4 right-4 z-20 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-200 backdrop-blur-sm"
+              className="fixed top-4 right-4 z-30 p-3 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-200 backdrop-blur-sm"
               aria-label="Close image overlay"
             >
               <X className="h-6 w-6" />
             </button>
 
-            {/* Full-screen image */}
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3, type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
+            {/* Scrollable container for the image */}
+            <div 
+              className="w-full h-full overflow-auto p-4 flex items-start justify-center cursor-pointer"
+              onClick={handleCloseImageOverlay}
             >
-              <OptimizedImage
-                src={heroImageUrl}
-                alt={`${concept.title} - Full size view`}
-                fallbackSrc={defaultHeroImage}
-                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                priority={true}
-              />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.3, type: "spring", damping: 25, stiffness: 300 }}
+                className="relative max-w-4xl w-full min-h-full flex items-start justify-center py-8"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <OptimizedImage
+                  src={heroImageUrl}
+                  alt={`${concept.title} - Full size view`}
+                  fallbackSrc={defaultHeroImage}
+                  className="w-full h-auto object-contain rounded-lg shadow-2xl"
+                  priority={true}
+                />
+              </motion.div>
+            </div>
+
+            {/* Instructions for scrolling - appears briefly */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20"
+            >
+              <div className="bg-black/70 text-white px-4 py-2 rounded-lg text-sm font-nunito backdrop-blur-sm">
+                Scroll to see the full image • Click anywhere to close
+              </div>
             </motion.div>
           </motion.div>
         )}
