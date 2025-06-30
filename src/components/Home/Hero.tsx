@@ -124,10 +124,10 @@ const Hero: React.FC = () => {
         scale: 1,
         transition: {
           type: "spring",
-          damping: 8,
-          stiffness: 180, // INCREASED: Faster spring for quicker return
-          mass: 0.4, // REDUCED: Lighter mass for faster movement
-          delay: 0.3 // REDUCED: From 0.8 to 0.3 for much faster appearance
+          damping: 6, // REDUCED: Even lighter damping for instant response
+          stiffness: 200, // INCREASED: Maximum stiffness for immediate return
+          mass: 0.3, // REDUCED: Ultra-light mass for instant movement
+          delay: 0.8 // INITIAL DELAY: Only for first appearance, not return
         }
       }
     },
@@ -148,7 +148,7 @@ const Hero: React.FC = () => {
           damping: 10,
           stiffness: 140, // INCREASED: Faster spring for quicker return
           mass: 0.6, // REDUCED: Lighter mass for faster movement
-          delay: 0.4 // REDUCED: From 1.1 to 0.4 for much faster appearance
+          delay: 1.1 // INITIAL DELAY: Only for first appearance, not return
         }
       }
     }
@@ -189,7 +189,7 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FIXED: Unified animation state logic with predictable exit paths
+  // FIXED: Unified animation state logic with IMMEDIATE return for button
   const getAnimationState = (element: 'heading' | 'description' | 'button' | 'image') => {
     if (!hasLoaded) return "hidden";
     
@@ -252,7 +252,23 @@ const Hero: React.FC = () => {
       return exitAnimations[element];
     }
     
-    // Return to visible state using variants
+    // FIXED: Return animations with NO DELAY for button
+    if (element === 'button') {
+      return {
+        y: 0, 
+        opacity: 1, 
+        scale: 1,
+        transition: {
+          type: "spring",
+          damping: 6,
+          stiffness: 200,
+          mass: 0.3,
+          delay: 0 // CRITICAL: NO DELAY on return - immediate response
+        }
+      };
+    }
+    
+    // Return to visible state using variants for other elements
     return "visible";
   };
 
@@ -377,12 +393,11 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* FIXED: Button with unified animation variants and FASTER return */}
+            {/* FIXED: Button with IMMEDIATE return - NO DELAYS */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
                 className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
-                variants={entryVariants.button}
                 initial="hidden"
                 animate={getAnimationState('button')}
                 whileHover={{ scale: 1.05 }}
