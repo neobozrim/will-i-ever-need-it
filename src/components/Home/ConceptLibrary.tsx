@@ -100,16 +100,36 @@ const ConceptLibrary: React.FC = () => {
           
           {/* Feedback Card - Always visible at the end */}
           <div className="group block h-full">
-            <div className="relative h-full flex flex-col bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl shadow-sm border-2 border-dashed border-purple-200 overflow-hidden hover:shadow-2xl hover:border-purple-400 transition-all duration-500 transform hover:-translate-y-2">
+            <div className="relative h-full flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-2xl hover:border-transparent transition-all duration-500 transform hover:-translate-y-2">
               {/* Card Content */}
-              <div className="relative z-10 h-full flex flex-col">
-                {/* Icon/Visual Area */}
-                <div className="aspect-square bg-gradient-to-br from-purple-100 to-blue-100 relative overflow-hidden rounded-t-xl flex items-center justify-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <ExternalLink className="w-10 h-10 text-white" />
-                  </div>
+              <div className="relative z-10 h-full flex flex-col bg-white rounded-xl">
+                {/* Thumbnail */}
+                <div className="aspect-square bg-gradient-to-br from-purple-50 to-blue-50 relative overflow-hidden rounded-t-xl">
+                  <img 
+                    src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//feedback.png"
+                    alt="Suggest a topic or leave feedback"
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    onError={(e) => {
+                      // Fallback to icon if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `
+                          <div class="w-full h-full bg-gradient-to-br from-purple-100 to-blue-100 flex items-center justify-center">
+                            <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                              </svg>
+                            </div>
+                          </div>
+                        `;
+                      }
+                    }}
+                  />
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-200/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
                 
                 {/* Content */}
@@ -122,12 +142,19 @@ const ConceptLibrary: React.FC = () => {
                     Help us make math even more awesome! Share your ideas for new topics or let us know how we're doing.
                   </p>
                   
-                  {/* CTA Button */}
+                  {/* CTA Button with custom color */}
                   <a
                     href="https://yavor3.typeform.com/to/wrZL0wBL"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-full bg-gradient-to-r from-purple-500 to-blue-600 text-white py-3 px-4 rounded-xl font-barriecito text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 group-hover:from-purple-600 group-hover:to-blue-700"
+                    className="inline-flex items-center justify-center w-full text-gray-700 py-3 px-4 rounded-xl font-barriecito text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200"
+                    style={{ backgroundColor: '#DEDAF4' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#D1CCE8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#DEDAF4';
+                    }}
                   >
                     <span>Do it</span>
                     <ExternalLink className="ml-2 h-4 w-4" />
