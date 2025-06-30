@@ -393,25 +393,17 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* FIXED: Button with IMMEDIATE return - NO DELAYS - UPDATED COLOR */}
+            {/* FIXED: Button with IMMEDIATE return - NO DELAYS - UPDATED WITH GRADIENT */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
-                className="font-barriecito group text-gray-700 px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
-                style={{ backgroundColor: '#BDB2FF' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#A89EF5';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#BDB2FF';
-                }}
+                className="font-barriecito group text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-[#BDB2FF] to-[#FAD1FA] hover:from-[#A89EF5] hover:to-[#F5C2F5]"
                 initial="hidden"
                 animate={getAnimationState('button')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 style={{
-                  willChange: 'transform',
-                  backgroundColor: '#BDB2FF'
+                  willChange: 'transform'
                 }}
               >
                 WATCH THIS

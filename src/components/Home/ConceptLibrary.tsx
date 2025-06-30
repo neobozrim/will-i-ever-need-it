@@ -98,7 +98,7 @@ const ConceptLibrary: React.FC = () => {
             />
           ))}
           
-          {/* Feedback Card - Always visible at the end */}
+          {/* Feedback Card - Always visible at the end with updated gradient */}
           <div className="group block h-full">
             <div className="relative h-full flex flex-col bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-2xl hover:border-transparent transition-all duration-500 transform hover:-translate-y-2">
               {/* Card Content */}
@@ -142,19 +142,12 @@ const ConceptLibrary: React.FC = () => {
                     Help us make math even more awesome! Share your ideas for new topics or let us know how we're doing.
                   </p>
                   
-                  {/* CTA Button - ICON REMOVED, CLEAN BARRIECITO FONT */}
+                  {/* CTA Button - Updated with beautiful gradient */}
                   <a
                     href="https://yavor3.typeform.com/to/wrZL0wBL"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-barriecito inline-flex items-center justify-center w-full text-gray-700 py-3 px-4 rounded-xl text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200"
-                    style={{ backgroundColor: '#BDB2FF' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = '#A89EF5';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = '#BDB2FF';
-                    }}
+                    className="font-barriecito inline-flex items-center justify-center w-full text-white py-3 px-4 rounded-xl text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200 bg-gradient-to-r from-[#BDB2FF] to-[#FAD1FA] hover:from-[#A89EF5] hover:to-[#F5C2F5]"
                   >
                     SUGGEST NOW
                   </a>
