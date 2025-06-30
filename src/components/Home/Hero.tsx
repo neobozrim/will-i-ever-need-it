@@ -393,11 +393,11 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* FIXED: Button with IMMEDIATE return - NO DELAYS - UPDATED WITH GRADIENT */}
+            {/* FIXED: Button with IMMEDIATE return - NO DELAYS - UPDATED WITH NEW GRADIENT */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
-                className="font-barriecito group text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-[#BDB2FF] to-[#FAD1FA] hover:from-[#A89EF5] hover:to-[#F5C2F5]"
+                className="font-barriecito group text-black px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-[#97ECF1] to-[#FEC868] hover:from-[#7DD3DA] hover:to-[#FDB94E]"
                 initial="hidden"
                 animate={getAnimationState('button')}
                 whileHover={{ scale: 1.05 }}

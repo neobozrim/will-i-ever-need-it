@@ -41,7 +41,7 @@ const Header: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="text-white px-4 py-2 rounded-xl font-barriecito hover:shadow-lg transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-[#BDB2FF] to-[#FAD1FA] hover:from-[#A89EF5] hover:to-[#F5C2F5]"
+                  className="text-black px-4 py-2 rounded-xl font-barriecito hover:shadow-lg transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-[#97ECF1] to-[#FEC868] hover:from-[#7DD3DA] hover:to-[#FDB94E]"
                 >
                   SIGN IN
                 </button>
