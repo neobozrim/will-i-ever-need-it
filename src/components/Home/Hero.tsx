@@ -125,9 +125,9 @@ const Hero: React.FC = () => {
         transition: {
           type: "spring",
           damping: 8,
-          stiffness: 150,
-          mass: 0.6,
-          delay: 0.8
+          stiffness: 180, // INCREASED: Faster spring for quicker return
+          mass: 0.4, // REDUCED: Lighter mass for faster movement
+          delay: 0.3 // REDUCED: From 0.8 to 0.3 for much faster appearance
         }
       }
     },
@@ -146,9 +146,9 @@ const Hero: React.FC = () => {
         transition: {
           type: "spring",
           damping: 10,
-          stiffness: 120,
-          mass: 0.8,
-          delay: 1.1
+          stiffness: 140, // INCREASED: Faster spring for quicker return
+          mass: 0.6, // REDUCED: Lighter mass for faster movement
+          delay: 0.4 // REDUCED: From 1.1 to 0.4 for much faster appearance
         }
       }
     }
@@ -377,7 +377,7 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* FIXED: Button with unified animation variants */}
+            {/* FIXED: Button with unified animation variants and FASTER return */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
@@ -396,7 +396,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* FIXED: Right side with unified animation variants and subtle image jiggle */}
+          {/* FIXED: Right side with unified animation variants and FASTER return */}
           <div className="flex justify-center lg:justify-end relative">
             <motion.div 
               className="relative"
