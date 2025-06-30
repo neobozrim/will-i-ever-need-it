@@ -327,7 +327,7 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
-            {/* INCREASED: Heading with larger mobile size - text-4xl on mobile, text-5xl on sm, text-6xl on md+ */}
+            {/* UPDATED: Heading with ellipsis instead of exclamation mark */}
             <motion.div
               variants={dropInVariants}
               initial="hidden"
@@ -347,7 +347,7 @@ const Hero: React.FC = () => {
                   fontFamily: "'Barriecito', cursive !important"
                 }}
               >
-                Math could be boring!
+                Math could be boring...
               </motion.h1>
             </motion.div>
             
