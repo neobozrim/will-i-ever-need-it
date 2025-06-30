@@ -13,12 +13,13 @@ interface ConversationData {
   auth_created: boolean;
 }
 
-// Type for ElevenLabs conversation instance
+// Type for ElevenLabs conversation instance - UPDATED WITH CONTEXTUAL UPDATE METHOD
 interface ElevenLabsConversation {
   endSession: () => Promise<void>;
   setVolume: (volume: { volume: number }) => void;
   getInputVolume: () => number;
   getOutputVolume: () => number;
+  sendContextualUpdate?: (message: string) => Promise<void>; // Added this line
 }
 
 interface VoiceAIAgentProps {
@@ -113,26 +114,25 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
     }
   };
 
-  // PAGE CHANGE ANNOUNCEMENT - Phase 2 Enhancement
+  // PAGE CHANGE ANNOUNCEMENT - Phase 2 Enhancement - UPDATED WITH REAL IMPLEMENTATION
   const announcePageChange = async (oldConcept: string, newConcept: string) => {
     if (!conversation) return;
 
     try {
-      // Create a natural transition message
-      const oldName = formatConceptName(oldConcept);
       const newName = formatConceptName(newConcept);
       
-      console.log(`Announcing page change from ${oldName} to ${newName}`);
-      
-      // This would ideally send a system message to Maya
-      // For now, we'll log it (ElevenLabs API may not support system messages during conversation)
-      console.log(`Maya should acknowledge: User switched from ${oldName} to ${newName}`);
-      
-      // Alternative: Could trigger a brief synthetic message to Maya about the change
-      // or update conversation context through the API if supported
+      // Send contextual update to Maya using the official SDK method
+      if (conversation.sendContextualUpdate) {
+        await conversation.sendContextualUpdate(
+          `User is now viewing: ${newName}. Acknowledge this page change naturally if it makes sense for the conversation.`
+        );
+        console.log(`✅ Sent contextual update to Maya: User viewing ${newName}`);
+      } else {
+        console.log('⚠️ sendContextualUpdate method not available on conversation object');
+      }
       
     } catch (error) {
-      console.error('Error announcing page change:', error);
+      console.error('❌ Error sending contextual update:', error);
     }
   };
 
