@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, AlertCircle, Loader2, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMathConcept } from '../hooks/useMathConcepts';
-import VoiceAIAgent from '../components/Concept/VoiceAIAgent';
 import BlogContent from '../components/Concept/BlogContent';
 
 const ConceptPage: React.FC = () => {
@@ -174,9 +173,6 @@ const ConceptPage: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* Sticky Voice AI Agent - Always visible in bottom right */}
-        <VoiceAIAgent conceptSlug={slug} />
       </div>
 
       {/* Full-screen image overlay */}

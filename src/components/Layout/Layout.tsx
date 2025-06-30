@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
+import VoiceAIAgent from '../Concept/VoiceAIAgent';
 
 const Layout: React.FC = () => {
   return (
@@ -9,6 +10,8 @@ const Layout: React.FC = () => {
       <main className="pt-0">
         <Outlet />
       </main>
+      {/* Global Voice AI Agent - Available on all pages */}
+      <VoiceAIAgent />
     </div>
   );
 };

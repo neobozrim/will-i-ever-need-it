@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Mic, Loader2, MicOff, Settings, Volume2, VolumeX, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -42,6 +43,12 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   autoStart = false,
   buttonSize = 'large'
 }) => {
+  // Get URL parameters to detect current concept
+  const { slug: urlSlug } = useParams<{ slug: string }>();
+  
+  // Determine active concept slug - prioritize prop, then URL, then default
+  const activeConceptSlug = conceptSlug || urlSlug || 'general-math';
+
   const [isLoading, setIsLoading] = useState(false);
   const [conversationData, setConversationData] = useState<ConversationData | null>(null);
   const [conversation, setConversation] = useState<ElevenLabsConversation | null>(null);
@@ -72,7 +79,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       return;
     }
 
-    const slug = conceptSlug || 'general-math';
+    const slug = activeConceptSlug;
     
     setIsLoading(true);
     setError(null);
@@ -458,7 +465,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                       ? 'cursor-not-allowed opacity-50'
                       : 'hover:scale-105 active:scale-95'
                   }`}
-                  aria-label={`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
+                  aria-label={`Start conversation with Maya about ${activeConceptSlug ? formatConceptName(activeConceptSlug) : 'mathematics'}`}
                 >
                   {isLoading ? (
                     <div className="absolute inset-0 flex items-center justify-center bg-white rounded-full">
@@ -517,7 +524,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                 {isLoading 
                   ? 'Starting conversation...' 
                   : !conversation
-                  ? 'Tap to start conversation'
+                  ? `Tap to chat about ${formatConceptName(activeConceptSlug)}`
                   : connectionStatus === 'connecting'
                   ? 'Connecting to Maya...'
                   : isListening
