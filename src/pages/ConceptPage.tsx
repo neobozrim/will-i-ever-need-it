@@ -3,7 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, AlertCircle, Loader2, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMathConcept } from '../hooks/useMathConcepts';
+import { useSEO } from '../hooks/useSEO';
 import BlogContent from '../components/Concept/BlogContent';
+import OptimizedImage from '../components/ui/OptimizedImage';
 
 const ConceptPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -11,6 +13,16 @@ const ConceptPage: React.FC = () => {
   const [heroImageError, setHeroImageError] = useState(false);
   const [showImageOverlay, setShowImageOverlay] = useState(false);
   const defaultHeroImage = 'https://images.pexels.com/photos/6256065/pexels-photo-6256065.jpeg?auto=compress&cs=tinysrgb&w=800';
+
+  // SEO optimization for concept pages
+  useSEO({
+    title: concept?.title,
+    description: concept?.description,
+    keywords: `${concept?.title}, math, real world applications, ${slug?.replace(/-/g, ' ')}`,
+    image: concept?.hero_image_url || concept?.thumbnail_url,
+    url: `https://boredoppo.site/concepts/${slug}`,
+    type: 'article'
+  });
 
   // Force scroll to top when component mounts or slug changes
   useEffect(() => {
@@ -152,17 +164,19 @@ const ConceptPage: React.FC = () => {
               </p>
             </div>
             
-            {/* Hero image - centered, 9:16 aspect ratio, clickable */}
+            {/* Hero image - centered, 9:16 aspect ratio, clickable, optimized */}
             <div className="w-full flex justify-center">
               <div 
                 className="w-full max-w-md aspect-[9/16] bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
                 onClick={handleImageClick}
               >
-                <img 
-                  src={heroImageUrl} 
-                  alt={concept.title}
+                <OptimizedImage
+                  src={heroImageUrl}
+                  alt={`${concept.title} - Math concept illustration`}
+                  fallbackSrc={defaultHeroImage}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  onError={handleImageError}
+                  priority={true}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
             </div>
@@ -204,11 +218,12 @@ const ConceptPage: React.FC = () => {
               className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img 
-                src={heroImageUrl} 
-                alt={concept.title}
+              <OptimizedImage
+                src={heroImageUrl}
+                alt={`${concept.title} - Full size view`}
+                fallbackSrc={defaultHeroImage}
                 className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                onError={handleImageError}
+                priority={true}
               />
             </motion.div>
           </motion.div>
