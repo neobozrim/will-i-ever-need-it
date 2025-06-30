@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Loader2 } from 'lucide-react';
+import { X, Mail, Lock, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -244,19 +244,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 </div>
               )}
 
-              {/* Submit Button */}
+              {/* Submit Button - UPDATED: Removed icon and applied beautiful gradient */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-xl font-barriecito text-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                className="w-full text-black py-3 px-4 rounded-xl font-barriecito text-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 bg-gradient-to-r from-[#97ECF1] to-[#BDB2FF] hover:from-[#7DD3DA] hover:to-[#A89EFF]"
               >
                 {loading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
-                  <>
-                    <User className="h-5 w-5" />
-                    <span>{mode === 'login' ? 'Sign In' : 'Create Account'}</span>
-                  </>
+                  <span>{mode === 'login' ? 'SIGN IN' : 'CREATE ACCOUNT'}</span>
                 )}
               </button>
             </form>
