@@ -21,11 +21,14 @@ export const useSEO = ({
   const location = useLocation();
 
   useEffect(() => {
-    // Default values
-    const defaultTitle = 'Bored? Opposite! - Real World Math That Actually Matters';
-    const defaultDescription = 'Transform boring math into empire-building adventures! Learn quadratic equations, Pythagorean theorem, probability, and more through real-world applications.';
-    const defaultImage = 'https://boredoppo.site/og-image.png';
+    // Enhanced default values with new description
+    const defaultTitle = 'Bored? Opposite! - Turn Boring Math Into Fun, Relatable Stories';
+    const defaultDescription = 'At Bored?Opposite! we turn boring math into fun, relatable stories — from treehouses to slime factories. In the AI era, math is your edge. Is math boring? Opposite. It unlocks the future.';
+    const defaultImage = 'https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png';
     const baseUrl = 'https://boredoppo.site';
+    
+    // Enhanced keywords including all math concepts
+    const defaultKeywords = 'math education, real world math, quadratic equations, pythagorean theorem, probability, area calculations, volume calculations, proportional scaling, prime numbers, percentages, outliers, coordinate systems, unit rates, math applications, interactive learning, math games, AI era math, math stories, treehouse math, slime factory math, Maya AI tutor, math superpowers, boring math opposite';
 
     // Set document title
     document.title = title ? `${title} | Bored? Opposite!` : defaultTitle;
@@ -46,7 +49,7 @@ export const useSEO = ({
 
     // Basic meta tags
     updateMetaTag('description', description || defaultDescription);
-    if (keywords) updateMetaTag('keywords', keywords);
+    updateMetaTag('keywords', keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywords);
 
     // Open Graph tags
     updateMetaTag('og:title', title || defaultTitle, true);
@@ -54,11 +57,13 @@ export const useSEO = ({
     updateMetaTag('og:image', image || defaultImage, true);
     updateMetaTag('og:url', url || `${baseUrl}${location.pathname}`, true);
     updateMetaTag('og:type', type, true);
+    updateMetaTag('og:image:alt', 'BoredOppo and Maya - Math learning characters from Bored? Opposite!', true);
 
     // Twitter tags
     updateMetaTag('twitter:title', title || defaultTitle, true);
     updateMetaTag('twitter:description', description || defaultDescription, true);
     updateMetaTag('twitter:image', image || defaultImage, true);
+    updateMetaTag('twitter:image:alt', 'BoredOppo and Maya - Math learning characters from Bored? Opposite!', true);
 
     // Canonical URL
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
