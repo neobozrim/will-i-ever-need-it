@@ -325,21 +325,16 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               />
             </div>
             <div>
-              {/* REMOVED: "Chat with Maya" heading for unauthenticated users */}
-              {user ? (
-                <>
-                  <h3 className="font-barriecito text-lg text-gray-900">Chat with Maya</h3>
-                  {showStatusIndicator && (
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
-                      <span className={`font-nunito text-xs font-medium transition-colors ${getStatusColor()}`}>
-                        {getStatusText()}
-                      </span>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="h-6"></div> // Spacer to maintain layout
+              {/* RESTORED: "Chat with Maya" heading for ALL users */}
+              <h3 className="font-barriecito text-lg text-gray-900">Chat with Maya</h3>
+              {/* Status indicator - only show for authenticated users */}
+              {showStatusIndicator && user && (
+                <div className="flex items-center space-x-2">
+                  <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
+                  <span className={`font-nunito text-xs font-medium transition-colors ${getStatusColor()}`}>
+                    {getStatusText()}
+                  </span>
+                </div>
               )}
             </div>
           </div>
@@ -371,7 +366,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
         {!authLoading && !user && (
           <div className="absolute inset-0 top-16 bg-white/95 backdrop-blur-sm flex items-center justify-center z-40 rounded-b-2xl">
             <AuthOverlay
-              title="" // REMOVED: Empty title to remove "Chat with Maya" heading
+              title="" // Empty title to avoid duplicate heading
               description="Sign in to start chatting with your AI math tutor Maya!"
               className="bg-transparent backdrop-blur-none"
             />
