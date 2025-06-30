@@ -49,6 +49,9 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   
   // Determine active concept slug - prioritize prop, then URL, then default
   const activeConceptSlug = conceptSlug || urlSlug || 'general-math';
+  
+  // Track previous concept for page change detection
+  const prevConceptRef = useRef<string>(activeConceptSlug);
 
   // FIXED: Always start minimized by default - user must explicitly open it
   const getInitialMinimizedState = (): boolean => {
@@ -82,6 +85,21 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
 
   const { user, loading: authLoading } = useAuth();
 
+  // PAGE CHANGE DETECTION - Phase 2 Enhancement
+  useEffect(() => {
+    const currentConcept = activeConceptSlug;
+    const previousConcept = prevConceptRef.current;
+
+    // Only announce if Maya is connected and concept actually changed
+    if (conversation && isConnected && currentConcept !== previousConcept) {
+      console.log(`Page change detected: ${previousConcept} → ${currentConcept}`);
+      announcePageChange(previousConcept, currentConcept);
+    }
+
+    // Update the ref for next comparison
+    prevConceptRef.current = currentConcept;
+  }, [location.pathname, activeConceptSlug, conversation, isConnected]);
+
   // Persist minimized state to localStorage whenever it changes
   const updateMinimizedState = (minimized: boolean) => {
     try {
@@ -92,6 +110,29 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       console.error('Error saving minimized state to localStorage:', error);
       // Still update the state even if localStorage fails
       setIsMinimized(minimized);
+    }
+  };
+
+  // PAGE CHANGE ANNOUNCEMENT - Phase 2 Enhancement
+  const announcePageChange = async (oldConcept: string, newConcept: string) => {
+    if (!conversation) return;
+
+    try {
+      // Create a natural transition message
+      const oldName = formatConceptName(oldConcept);
+      const newName = formatConceptName(newConcept);
+      
+      console.log(`Announcing page change from ${oldName} to ${newName}`);
+      
+      // This would ideally send a system message to Maya
+      // For now, we'll log it (ElevenLabs API may not support system messages during conversation)
+      console.log(`Maya should acknowledge: User switched from ${oldName} to ${newName}`);
+      
+      // Alternative: Could trigger a brief synthetic message to Maya about the change
+      // or update conversation context through the API if supported
+      
+    } catch (error) {
+      console.error('Error announcing page change:', error);
     }
   };
 
@@ -110,13 +151,14 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       return;
     }
 
-    const slug = activeConceptSlug;
+    // Use 'general-math' as the concept since Maya can now discuss all topics
+    const slug = 'general-math'; // Changed from activeConceptSlug to enable cross-topic discussions
     
     setIsLoading(true);
     setError(null);
     
     try {
-      console.log(`Starting tutor for concept: ${slug}`);
+      console.log(`Starting global tutor - currently viewing: ${activeConceptSlug}`);
       
       // Get signed URL from our edge function
       const response = await fetch(`https://xjmktjcflmjrqbtofdjq.supabase.co/functions/v1/start-conversation`, {
@@ -182,29 +224,36 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       console.log('Starting ElevenLabs session with options:', sessionOptions);
       setConnectionStatus('connecting');
 
-      // Build conversation prompt - use custom prompt if provided
-      const prompt = customPrompt || `You are Maya, the confident math genius from Bored? Opposite! - a site that aims to make math approachable for students by showing how it applies in real life using fun examples.  You've built a slime empire, a successful lemonade delivery by drone business, an ice-cream shop, crushed video game rivals, and become legendary using math.
+      // PHASE 2: IMPROVED GLOBAL CONTEXT-AWARE PROMPT
+      const currentPage = formatConceptName(activeConceptSlug);
       
-      You're helping with ${data.concept}. Keep your responses:
-      - SHORT and punchy (like your comic style)
-      - SPECIFIC - when asked a general question, make sure to clarify the intent in order to be on point
-      - CONFIDENT - you're the expert who beats Jimmy at everything using MATH
-      - NO customer service language - no "Is there anything else I can help you with?" every response. Instead keep things conversational, as if you are talking to fellow school kid.
-      
-      Your knowledge base contains theory (including practice problems) and comic examples showing how ${data.concept} applies to real life . Use ALL of it and choose the most relevant parts to refer to, based on the conversation needs. Connect formulas to real examples when it makes sense.
-      
-      When users ask broad questions (like "area formula"),  don't assume - check if multiple specific concepts or formulas are discussed in the text and if more than one, clarify the student's exact need, if the question was too broad. 
-      
-      If you are asked about something that isn't in the knowledge base, politely explain that you are prepared to only talk about the content in the Bored? Opposite site!  
-      
-      Keep the energy from the comics - you are fun, sometimes cheeky, high energy math empire builder, not a helpdesk.`;
+      const prompt = customPrompt || `You are Maya, the confident math genius from Bored? Opposite! - a site that aims to make math approachable for students by showing how it applies in real life using fun examples. You've built a slime empire, a successful lemonade delivery by drone business, an ice-cream shop, crushed video game rivals, and become legendary using math.
+
+User is currently viewing: ${currentPage}
+
+You can discuss ANY math topic from the Bored? Opposite site! Your knowledge base contains ALL concepts: quadratic equations, Pythagorean theorem, proportional scaling, probability, prime numbers, percentages, outliers, coordinate systems, area calculations, volume calculations, and unit rates.
+
+When users switch pages, acknowledge naturally, if it makes sense for the conversation.
+
+Keep your responses:
+- SHORT and punchy (like your comic style)
+- SPECIFIC - when asked a general question, clarify which specific concept they need
+- CONFIDENT - you're the expert who beats Jimmy at everything using MATH
+- CROSS-TOPIC - encourage connections between different math concepts
+- NO customer service language - keep it conversational, like talking to a fellow school kid
+
+Connect formulas to real examples from your comics when it makes sense. If someone asks about area formulas and you have multiple shapes (rectangle, triangle, circle, etc.), ask which specific shape they need.
+
+Encourage learning connections like "That's just like the coordinate system we used for fly tracking!" or "Remember the percentage calculations from your allowance negotiation?"
+
+Keep the energy from the comics - you are fun, sometimes cheeky, high energy math empire builder, not a helpdesk.`;
       
       const conversationOverride = {
         agent: {
           prompt: {
             prompt: prompt
           },
-          firstMessage: `Hey! Ready to master ${data.concept.replace(/-/g, ' ')}? Where do you want to start?`,
+          firstMessage: `Hey! I see you're looking at ${currentPage}. Ready to dive in, or want to explore how it connects to other math concepts?`,
           language: "en" as const
         }
       };
@@ -380,12 +429,12 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
               <div>
                 {/* "Discuss with Maya" heading for ALL users */}
                 <h3 className="font-barriecito text-lg text-gray-900">Discuss with Maya</h3>
-                {/* Status indicator - only show for authenticated users */}
+                {/* Status indicator with current page context */}
                 {showStatusIndicator && user && (
                   <div className="flex items-center space-x-2">
                     <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
                     <span className={`font-nunito text-xs font-medium transition-colors ${getStatusColor()}`}>
-                      {getStatusText()}
+                      {isConnected ? `${getStatusText()} • ${formatConceptName(activeConceptSlug)}` : getStatusText()}
                     </span>
                   </div>
                 )}
@@ -497,7 +546,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                       ? 'cursor-not-allowed opacity-50'
                       : 'hover:scale-105 active:scale-95'
                   }`}
-                  aria-label={`Start conversation with Maya about ${activeConceptSlug ? formatConceptName(activeConceptSlug) : 'mathematics'}`}
+                  aria-label={`Start conversation with Maya about mathematics`}
                 >
                   {isLoading ? (
                     <div className="absolute inset-0 flex items-center justify-center bg-white rounded-full">
