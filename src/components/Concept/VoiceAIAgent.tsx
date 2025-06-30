@@ -443,7 +443,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
 
                 {/* Description */}
                 <p className="font-nunito text-gray-600 mb-6 leading-relaxed">
-                  Sign in to start discussing with your AI math tutor Maya!
+                  Sign in to start discussing math with Maya!
                 </p>
 
                 {/* Single Sign In Link - opens the shared modal */}
