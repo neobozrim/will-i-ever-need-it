@@ -363,7 +363,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               </button>
             )}
             
-            {/* X button - different behavior for auth vs non-auth users */}
+            {/* BLACK X button - different behavior for auth vs non-auth users */}
             <button
               onClick={() => {
                 if (user) {
@@ -374,7 +374,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
                   setIsCollapsed(true);
                 }
               }}
-              className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
+              className="p-1.5 text-black hover:text-gray-800 hover:bg-gray-100 transition-colors rounded-lg"
               title={user ? "Minimize to avatar" : "Close chat"}
             >
               <X className="h-4 w-4" />
