@@ -27,6 +27,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Get the correct redirect URL for the current environment
+  const getRedirectUrl = () => {
+    const baseUrl = window.location.origin;
+    return `${baseUrl}/auth/callback`;
+  };
+
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
@@ -62,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`
+        emailRedirectTo: getRedirectUrl()
       }
     });
     
@@ -82,7 +88,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: getRedirectUrl()
       }
     });
     
