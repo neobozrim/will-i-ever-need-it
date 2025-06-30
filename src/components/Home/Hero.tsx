@@ -152,19 +152,37 @@ const Hero: React.FC = () => {
     }
   };
 
-  // ENHANCED: More dynamic jiggle animation with larger movement and scaling - MATCHING HEADING EXACTLY
-  const jiggleVariants = {
+  // TEXT JIGGLE ANIMATION - Aggressive for heading text
+  const textJiggleVariants = {
     idle: {
-      x: [0, -4, 4, -3, 3, -2, 2, 0], // ENHANCED: Larger horizontal movement
-      y: [0, -3, 3, -2, 2, -1, 1, 0], // ENHANCED: Larger vertical movement
-      rotate: [0, -1.5, 1.5, -1, 1, -0.5, 0.5, 0], // ENHANCED: More rotation
-      scale: [1, 1.03, 0.97, 1.02, 0.98, 1.01, 0.99, 1], // ENHANCED: More scaling variation
+      x: [0, -4, 4, -3, 3, -2, 2, 0],
+      y: [0, -3, 3, -2, 2, -1, 1, 0],
+      rotate: [0, -1.5, 1.5, -1, 1, -0.5, 0.5, 0],
+      scale: [1, 1.03, 0.97, 1.02, 0.98, 1.01, 0.99, 1],
       transition: {
-        duration: 4, // ENHANCED: Slightly longer duration for more noticeable effect
+        duration: 4,
         repeat: Infinity,
         repeatType: "loop",
         ease: "easeInOut",
-        times: [0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1] // ENHANCED: More keyframes for smoother motion
+        times: [0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1]
+      }
+    }
+  };
+
+  // IMAGE JIGGLE ANIMATION - Subtle and natural for character portrait
+  const imageJiggleVariants = {
+    idle: {
+      // SUBTLE: Much smaller movements appropriate for an image
+      x: [0, -2, 2, -1.5, 1.5, -1, 1, 0], // Reduced from 4px to 2px max
+      y: [0, -1.5, 1.5, -1, 1, -0.5, 0.5, 0], // Reduced from 3px to 1.5px max
+      rotate: [0, -0.8, 0.8, -0.6, 0.6, -0.4, 0.4, 0], // Reduced from 1.5deg to 0.8deg max
+      scale: [1, 1.015, 0.985, 1.01, 0.99, 1.005, 0.995, 1], // Much subtler scaling
+      transition: {
+        duration: 5, // Slightly slower for more graceful movement
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut",
+        times: [0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1]
       }
     }
   };
@@ -323,7 +341,7 @@ const Hero: React.FC = () => {
             >
               <motion.h1 
                 className="font-barriecito text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gray-900 mb-8 leading-tight"
-                variants={jiggleVariants}
+                variants={textJiggleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 style={{
                   fontFamily: "'Barriecito', cursive !important"
@@ -371,7 +389,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* ENHANCED: Right side - BoredOppo and Maya characters with ENHANCED JIGGLE ANIMATION matching heading */}
+          {/* OPTIMIZED: Right side - BoredOppo and Maya characters with IMAGE-SPECIFIC JIGGLE ANIMATION */}
           <div className="flex justify-center lg:justify-end relative">
             <motion.div 
               className="relative"
@@ -385,12 +403,12 @@ const Hero: React.FC = () => {
                 willChange: 'transform'
               }}
             >
-              {/* ENHANCED: Hero image with ENHANCED JIGGLE animation - MORE DYNAMIC than before */}
+              {/* OPTIMIZED: Hero image with IMAGE-SPECIFIC JIGGLE - subtle and natural for visual content */}
               <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
                 className="w-80 h-96 lg:w-96 lg:h-[450px] object-contain transform hover:scale-105 transition-transform duration-300"
-                variants={jiggleVariants}
+                variants={imageJiggleVariants}
                 animate={hasLoaded && !hasTriggered ? "idle" : ""}
                 style={{
                   willChange: 'transform'
