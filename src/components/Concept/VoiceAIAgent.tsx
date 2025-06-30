@@ -53,6 +53,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   const [isMuted, setIsMuted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false); // New state for non-auth users
 
   const { user, loading: authLoading } = useAuth();
 
@@ -266,8 +267,13 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
     return 'bg-gray-500';
   };
 
-  // Minimized view - just Maya's avatar
-  if (isMinimized) {
+  // Collapsed view for non-authenticated users - completely hidden
+  if (!user && isCollapsed) {
+    return null; // Component is completely hidden
+  }
+
+  // Minimized view for authenticated users - just Maya's avatar
+  if (user && isMinimized) {
     return (
       <div className="fixed bottom-6 right-6 z-50">
         <button
@@ -345,8 +351,9 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             </div>
           </div>
           
-          {/* Control buttons - Settings (only for authenticated users) and X (for all users) */}
+          {/* Control buttons */}
           <div className="flex items-center space-x-1">
+            {/* Settings button - only for authenticated users with active conversation */}
             {showVolumeControls && conversation && user && (
               <button
                 onClick={() => setShowSettings(!showSettings)}
@@ -355,9 +362,20 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
                 <Settings className="h-4 w-4" />
               </button>
             )}
+            
+            {/* X button - different behavior for auth vs non-auth users */}
             <button
-              onClick={() => setIsMinimized(true)}
+              onClick={() => {
+                if (user) {
+                  // Authenticated users: minimize to avatar
+                  setIsMinimized(true);
+                } else {
+                  // Non-authenticated users: completely collapse/hide
+                  setIsCollapsed(true);
+                }
+              }}
               className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
+              title={user ? "Minimize to avatar" : "Close chat"}
             >
               <X className="h-4 w-4" />
             </button>
