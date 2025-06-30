@@ -50,19 +50,20 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   // Determine active concept slug - prioritize prop, then URL, then default
   const activeConceptSlug = conceptSlug || urlSlug || 'general-math';
 
-  // Initialize minimized state - always minimized by default unless user has explicitly opened it
+  // FIXED: Always start minimized by default - user must explicitly open it
   const getInitialMinimizedState = (): boolean => {
     try {
       const stored = localStorage.getItem('voiceAgentMinimized');
       if (stored !== null) {
-        // User has a preference stored - use it
+        // User has explicitly set a preference - respect it
         return JSON.parse(stored);
       }
-      // No stored preference - default to minimized
+      // No stored preference - ALWAYS start minimized
       return true;
     } catch (error) {
       console.error('Error reading minimized state from localStorage:', error);
-      return true; // fallback to minimized
+      // On error, default to minimized for safety
+      return true;
     }
   };
 
@@ -86,6 +87,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
     try {
       setIsMinimized(minimized);
       localStorage.setItem('voiceAgentMinimized', JSON.stringify(minimized));
+      console.log(`Voice agent ${minimized ? 'minimized' : 'expanded'} - preference saved`);
     } catch (error) {
       console.error('Error saving minimized state to localStorage:', error);
       // Still update the state even if localStorage fails
@@ -322,6 +324,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
         <button
           onClick={() => updateMinimizedState(false)}
           className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-purple-200 hover:border-purple-300 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300/50 overflow-hidden"
+          title="Click to discuss with Maya"
         >
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
@@ -405,7 +408,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
               <button
                 onClick={() => updateMinimizedState(true)}
                 className="p-1.5 text-black hover:text-gray-800 hover:bg-gray-100 transition-colors rounded-lg"
-                title="Minimize chat"
+                title="Minimize discussion"
               >
                 <X className="h-4 w-4" />
               </button>
