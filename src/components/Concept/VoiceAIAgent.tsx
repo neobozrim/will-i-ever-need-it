@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, Loader2, MicOff, Settings, Volume2, VolumeX, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../contexts/AuthContext';
+import AuthOverlay from '../Auth/AuthOverlay';
 
 // Type for our conversation data
 interface ConversationData {
@@ -52,15 +54,23 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   const [showSettings, setShowSettings] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
-  // Auto-start functionality
+  const { user, loading: authLoading } = useAuth();
+
+  // Auto-start functionality - only if authenticated
   useEffect(() => {
-    if (autoStart && !conversation && !isLoading) {
+    if (autoStart && !conversation && !isLoading && user) {
       startTutor();
     }
-  }, [autoStart]);
+  }, [autoStart, user]);
 
   // Use dynamic import for ElevenLabs SDK since it's browser-only
   const startTutor = async () => {
+    // Check authentication first
+    if (!user) {
+      setError('Please sign in to use the voice tutor');
+      return;
+    }
+
     const slug = conceptSlug || 'general-math';
     
     setIsLoading(true);
@@ -285,7 +295,15 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
 
   return (
     <div className="fixed bottom-6 right-6 z-50 w-80 h-80 transition-all duration-300">
-      <div className="w-full h-full bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
+      <div className="relative w-full h-full bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
+        {/* Authentication Overlay */}
+        {!authLoading && !user && (
+          <AuthOverlay
+            title="Chat with Maya"
+            description="Sign in to start chatting with your AI math tutor Maya!"
+          />
+        )}
+
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-purple-50 to-pink-50">
           <div className="flex items-center space-x-3">
@@ -304,7 +322,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             </div>
             <div>
               <h3 className="font-barriecito text-lg text-gray-900">Discuss with Maya</h3>
-              {showStatusIndicator && (
+              {showStatusIndicator && user && (
                 <div className="flex items-center space-x-2">
                   <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
                   <span className={`font-nunito text-xs font-medium transition-colors ${getStatusColor()}`}>
@@ -317,7 +335,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           
           {/* Control buttons - Only settings and X */}
           <div className="flex items-center space-x-1">
-            {showVolumeControls && conversation && (
+            {showVolumeControls && conversation && user && (
               <button
                 onClick={() => setShowSettings(!showSettings)}
                 className="p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
@@ -334,8 +352,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           </div>
         </div>
 
-        {/* Volume Controls */}
-        {showSettings && showVolumeControls && conversation && (
+        {/* Volume Controls - Only show if authenticated */}
+        {showSettings && showVolumeControls && conversation && user && (
           <div className="p-3 bg-gray-50 border-b border-gray-100">
             <div className="flex items-center space-x-2">
               <button
@@ -361,97 +379,99 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
           </div>
         )}
         
-        {/* Main content area */}
-        <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-4">
-          {/* Start conversation button - Using custom SVG */}
-          {!conversation && (
-            <button
-              onClick={startTutor}
-              disabled={isLoading}
-              className={`w-24 h-24 relative transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-purple-300 ${
-                isLoading
-                  ? 'cursor-not-allowed opacity-50'
-                  : 'hover:scale-105 active:scale-95'
-              }`}
-              aria-label={`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
-            >
-              {isLoading ? (
-                <div className="absolute inset-0 flex items-center justify-center bg-white rounded-full">
-                  <Loader2 className="h-6 w-6 text-purple-600 animate-spin" />
-                </div>
-              ) : (
-                <img 
-                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-button.svg"
-                  alt="Start conversation with Maya"
-                  className="w-full h-full object-contain hover:drop-shadow-lg transition-all duration-300"
-                  onError={(e) => {
-                    console.error('Failed to load voice AI button');
-                    // Fallback to a simple gradient button
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.className += ' bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center';
-                      parent.innerHTML = '<svg class="h-6 w-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.84L16.5 10 6.3 17.16V2.84z" /></svg>';
-                    }
-                  }}
-                />
-              )}
-            </button>
-          )}
-
-          {/* Voice interaction controls */}
-          {conversation && (
-            <div className="flex flex-col items-center space-y-4">
-              <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
-                isListening
-                  ? 'bg-green-500 animate-pulse shadow-lg'
-                  : isConnected
-                  ? `bg-${primaryColor}-500`
-                  : 'bg-gray-400'
-              }`}>
-                {isListening ? (
-                  <Mic className="h-6 w-6 text-white" />
-                ) : isConnected ? (
-                  <MicOff className="h-6 w-6 text-white" />
-                ) : (
-                  <Loader2 className="h-6 w-6 text-white animate-spin" />
-                )}
-              </div>
-              
+        {/* Main content area - Only show if authenticated */}
+        {user && (
+          <div className="flex-1 flex flex-col items-center justify-center p-6 space-y-4">
+            {/* Start conversation button - Using custom SVG */}
+            {!conversation && (
               <button
-                onClick={endConversation}
-                className="font-barriecito px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+                onClick={startTutor}
+                disabled={isLoading}
+                className={`w-24 h-24 relative transition-all duration-300 transform focus:outline-none focus:ring-4 focus:ring-purple-300 ${
+                  isLoading
+                    ? 'cursor-not-allowed opacity-50'
+                    : 'hover:scale-105 active:scale-95'
+                }`}
+                aria-label={`Start conversation with Maya about ${conceptSlug ? formatConceptName(conceptSlug) : 'mathematics'}`}
               >
-                End Session
+                {isLoading ? (
+                  <div className="absolute inset-0 flex items-center justify-center bg-white rounded-full">
+                    <Loader2 className="h-6 w-6 text-purple-600 animate-spin" />
+                  </div>
+                ) : (
+                  <img 
+                    src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-button.svg"
+                    alt="Start conversation with Maya"
+                    className="w-full h-full object-contain hover:drop-shadow-lg transition-all duration-300"
+                    onError={(e) => {
+                      console.error('Failed to load voice AI button');
+                      // Fallback to a simple gradient button
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.className += ' bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center';
+                        parent.innerHTML = '<svg class="h-6 w-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.84L16.5 10 6.3 17.16V2.84z" /></svg>';
+                      }
+                    }}
+                  />
+                )}
               </button>
-            </div>
-          )}
-          
-          <p className="font-nunito text-sm text-gray-600 text-center leading-relaxed">
-            {isLoading 
-              ? 'Starting conversation...' 
-              : !conversation
-              ? 'Tap to start conversation'
-              : connectionStatus === 'connecting'
-              ? 'Connecting to Maya...'
-              : isListening
-              ? 'Maya is listening!'
-              : isConnected
-              ? 'Ready to chat'
-              : 'Reconnecting...'
-            }
-          </p>
-        </div>
+            )}
+
+            {/* Voice interaction controls */}
+            {conversation && (
+              <div className="flex flex-col items-center space-y-4">
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  isListening
+                    ? 'bg-green-500 animate-pulse shadow-lg'
+                    : isConnected
+                    ? `bg-${primaryColor}-500`
+                    : 'bg-gray-400'
+                }`}>
+                  {isListening ? (
+                    <Mic className="h-6 w-6 text-white" />
+                  ) : isConnected ? (
+                    <MicOff className="h-6 w-6 text-white" />
+                  ) : (
+                    <Loader2 className="h-6 w-6 text-white animate-spin" />
+                  )}
+                </div>
+                
+                <button
+                  onClick={endConversation}
+                  className="font-barriecito px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300"
+                >
+                  End Session
+                </button>
+              </div>
+            )}
+            
+            <p className="font-nunito text-sm text-gray-600 text-center leading-relaxed">
+              {isLoading 
+                ? 'Starting conversation...' 
+                : !conversation
+                ? 'Tap to start conversation'
+                : connectionStatus === 'connecting'
+                ? 'Connecting to Maya...'
+                : isListening
+                ? 'Maya is listening!'
+                : isConnected
+                ? 'Ready to chat'
+                : 'Reconnecting...'
+              }
+            </p>
+          </div>
+        )}
         
-        {/* Status messages */}
-        {conversationData && isConnected && !error && (
+        {/* Status messages - Only show if authenticated */}
+        {user && conversationData && isConnected && !error && (
           <div className="p-3 bg-green-50 border-t border-green-200">
             <p className="font-nunito text-xs text-green-700 font-medium text-center">✅ Maya is ready to chat!</p>
           </div>
         )}
         
-        {error && (
+        {user && error && (
           <div className="p-3 bg-red-50 border-t border-red-200">
             <p className="font-nunito text-xs text-red-700 font-medium text-center">❌ Error</p>
             <p className="font-nunito text-xs text-red-600 mt-1 text-center break-words">{error}</p>
