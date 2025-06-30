@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertCircle, Loader2 } from 'lucide-react';
+import { AlertCircle, Loader2, ExternalLink } from 'lucide-react';
 import ConceptCard from './ConceptCard';
 import { useMathConcepts } from '../../hooks/useMathConcepts';
 
@@ -97,6 +97,45 @@ const ConceptLibrary: React.FC = () => {
               concept={concept} 
             />
           ))}
+          
+          {/* Feedback Card - Always visible at the end */}
+          <div className="group block h-full">
+            <div className="relative h-full flex flex-col bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl shadow-sm border-2 border-dashed border-purple-200 overflow-hidden hover:shadow-2xl hover:border-purple-400 transition-all duration-500 transform hover:-translate-y-2">
+              {/* Card Content */}
+              <div className="relative z-10 h-full flex flex-col">
+                {/* Icon/Visual Area */}
+                <div className="aspect-square bg-gradient-to-br from-purple-100 to-blue-100 relative overflow-hidden rounded-t-xl flex items-center justify-center">
+                  <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <ExternalLink className="w-10 h-10 text-white" />
+                  </div>
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-200/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                {/* Content */}
+                <div className="p-6 flex-1 bg-white rounded-b-xl">
+                  <h3 className="font-barriecito text-xl text-gray-900 mb-2 group-hover:text-purple-600 transition-colors duration-300">
+                    Suggest a topic or leave feedback
+                  </h3>
+                  
+                  <p className="font-nunito text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                    Help us make math even more awesome! Share your ideas for new topics or let us know how we're doing.
+                  </p>
+                  
+                  {/* CTA Button */}
+                  <a
+                    href="https://yavor3.typeform.com/to/wrZL0wBL"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full bg-gradient-to-r from-purple-500 to-blue-600 text-white py-3 px-4 rounded-xl font-barriecito text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 group-hover:from-purple-600 group-hover:to-blue-700"
+                  >
+                    <span>Do it</span>
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
         {hasMoreConcepts && (
