@@ -142,12 +142,12 @@ const ConceptLibrary: React.FC = () => {
                     Help us make math even more awesome! Share your ideas for new topics or let us know how we're doing.
                   </p>
                   
-                  {/* CTA Button with Barriecito font for button text */}
+                  {/* CTA Button with Barriecito font for button text - FIXED */}
                   <a
                     href="https://yavor3.typeform.com/to/wrZL0wBL"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-full text-gray-700 py-3 px-4 rounded-xl text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200"
+                    className="inline-flex items-center justify-center w-full text-gray-700 py-3 px-4 rounded-xl text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-200 font-barriecito"
                     style={{ backgroundColor: '#BDB2FF' }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.backgroundColor = '#A89EF5';
@@ -156,7 +156,7 @@ const ConceptLibrary: React.FC = () => {
                       e.currentTarget.style.backgroundColor = '#BDB2FF';
                     }}
                   >
-                    <span className="font-barriecito">SUGGEST NOW</span>
+                    <span>SUGGEST NOW</span>
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </div>
