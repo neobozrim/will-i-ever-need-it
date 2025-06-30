@@ -21,11 +21,11 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Trigger fly-away animation when user starts scrolling - ultra sensitive
+  // FIXED: Much less sensitive scroll triggers - better mobile experience
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      // Trigger at just 0.2% scroll - even more sensitive!
-      if (latest > 0.002 && !hasTriggered) {
+      // FIXED: Trigger at 10% scroll instead of 0.2% - much less sensitive
+      if (latest > 0.1 && !hasTriggered) {
         setHasTriggered(true);
       }
     });
@@ -33,10 +33,11 @@ const Hero: React.FC = () => {
     return () => unsubscribe();
   }, [scrollYProgress, hasTriggered]);
 
-  // Reset when scrolling back to top - also more sensitive
+  // FIXED: More responsive return trigger - 5% instead of 0.1%
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      if (latest < 0.001 && hasTriggered) {
+      // FIXED: Return when hero is 5% visible instead of 0.1%
+      if (latest < 0.05 && hasTriggered) {
         setHasTriggered(false);
       }
     });
@@ -65,89 +66,90 @@ const Hero: React.FC = () => {
     }
   };
 
-  // Entry animation variants
-  const dropInVariants = {
-    hidden: { 
-      y: -100, 
-      opacity: 0, 
-      scale: 0.8,
-      rotate: -10
-    },
-    visible: { 
-      y: 0, 
-      opacity: 1, 
-      scale: 1,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100,
-        mass: 0.8
+  // UNIFIED: Entry animation variants using consistent structure
+  const entryVariants = {
+    heading: {
+      hidden: { 
+        y: -100, 
+        opacity: 0, 
+        scale: 0.8,
+        rotate: -10
+      },
+      visible: { 
+        y: 0, 
+        opacity: 1, 
+        scale: 1,
+        rotate: 0,
+        transition: {
+          type: "spring",
+          damping: 12,
+          stiffness: 100,
+          mass: 0.8,
+          delay: 0.2
+        }
       }
-    }
-  };
-
-  // FIXED: Description animation - slides from left but stays at proper Y position
-  const slideInFromLeftVariants = {
-    hidden: { 
-      x: -200, 
-      y: 0, // FIXED: Keep Y at 0 so it doesn't appear above heading
-      opacity: 0, 
-      scale: 0.9,
-      rotate: -5
     },
-    visible: { 
-      x: 0, 
-      y: 0, // FIXED: Return to Y: 0, not negative
-      opacity: 1, 
-      scale: 1,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 120,
-        mass: 1
+    description: {
+      hidden: { 
+        x: -200, 
+        y: 0,
+        opacity: 0, 
+        scale: 0.9,
+        rotate: -5
+      },
+      visible: { 
+        x: 0, 
+        y: 0,
+        opacity: 1, 
+        scale: 1,
+        rotate: 0,
+        transition: {
+          type: "spring",
+          damping: 15,
+          stiffness: 120,
+          mass: 1,
+          delay: 0.5
+        }
       }
-    }
-  };
-
-  // FASTER: Button return animation - reduced spring damping and mass for quicker return
-  const bounceInVariants = {
-    hidden: { 
-      y: 50, 
-      opacity: 0, 
-      scale: 0.7
     },
-    visible: { 
-      y: 0, 
-      opacity: 1, 
-      scale: 1,
-      transition: {
-        type: "spring",
-        damping: 6, // REDUCED from 8 for faster return
-        stiffness: 180, // INCREASED from 150 for snappier return
-        mass: 0.4 // REDUCED from 0.6 for lighter, faster movement
+    button: {
+      hidden: { 
+        y: 50, 
+        opacity: 0, 
+        scale: 0.7
+      },
+      visible: { 
+        y: 0, 
+        opacity: 1, 
+        scale: 1,
+        transition: {
+          type: "spring",
+          damping: 8,
+          stiffness: 150,
+          mass: 0.6,
+          delay: 0.8
+        }
       }
-    }
-  };
-
-  // FIXED: Image return animation - MUCH SIMPLER and FASTER with direct path
-  const slideInFromRightVariants = {
-    hidden: { 
-      x: 300, 
-      opacity: 0, 
-      scale: 0.8,
-      rotate: 15
     },
-    visible: { 
-      x: 0, 
-      opacity: 1, 
-      scale: 1,
-      rotate: 0,
-      transition: {
-        type: "tween", // CHANGED: Using tween instead of spring for more predictable path
-        duration: 0.6, // FIXED: Direct duration control instead of spring physics
-        ease: "easeOut" // SMOOTH: Ease out for natural deceleration
+    image: {
+      hidden: { 
+        x: 300, 
+        opacity: 0, 
+        scale: 0.8,
+        rotate: 15
+      },
+      visible: { 
+        x: 0, 
+        opacity: 1, 
+        scale: 1,
+        rotate: 0,
+        transition: {
+          type: "spring",
+          damping: 10,
+          stiffness: 120,
+          mass: 0.8,
+          delay: 1.1
+        }
       }
     }
   };
@@ -187,55 +189,70 @@ const Hero: React.FC = () => {
     }
   };
 
-  // FIXED: Animation states with DIRECT PATHS - no complex spring physics on return
+  // FIXED: Unified animation state logic with predictable exit paths
   const getAnimationState = (element: 'heading' | 'description' | 'button' | 'image') => {
     if (!hasLoaded) return "hidden";
     
     if (hasTriggered) {
-      // Exit animations - each element flies out in different directions
-      switch (element) {
-        case 'heading':
-          return {
-            x: -1200,
-            y: -600,
-            rotate: -45,
-            scale: 0.3,
-            opacity: 0,
-            transition: { duration: 0.5, ease: "easeInOut" }
-          };
-        case 'description':
-          return {
-            x: -1000,
-            y: -200, // Flies out to upper left
-            rotate: -25,
-            scale: 0.4,
-            opacity: 0,
-            transition: { duration: 0.5, ease: "easeInOut", delay: 0.02 }
-          };
-        case 'button':
-          return {
-            x: -800,
-            y: 500,
-            rotate: -180,
-            scale: 0.2,
-            opacity: 0,
-            transition: { duration: 0.5, ease: "easeInOut", delay: 0.04 }
-          };
-        case 'image':
-          return {
-            x: 1000,
-            y: 600,
-            rotate: 360,
-            scale: 0.1,
-            opacity: 0,
-            transition: { duration: 0.5, ease: "easeInOut", delay: 0.06 }
-          };
-        default:
-          return "visible";
-      }
+      // FIXED: Exit animations with explicit, predictable paths
+      const exitAnimations = {
+        heading: {
+          x: -1200,
+          y: -600,
+          rotate: -45,
+          scale: 0.3,
+          opacity: 0,
+          transition: { 
+            type: "tween",
+            duration: 0.6, 
+            ease: "easeIn"
+          }
+        },
+        description: {
+          x: -1000,
+          y: -200,
+          rotate: -25,
+          scale: 0.4,
+          opacity: 0,
+          transition: { 
+            type: "tween",
+            duration: 0.6, 
+            ease: "easeIn", 
+            delay: 0.05 
+          }
+        },
+        button: {
+          x: -800,
+          y: 500,
+          rotate: -180,
+          scale: 0.2,
+          opacity: 0,
+          transition: { 
+            type: "tween",
+            duration: 0.6, 
+            ease: "easeIn", 
+            delay: 0.1 
+          }
+        },
+        image: {
+          x: 1000,
+          y: 600,
+          rotate: 360,
+          scale: 0.1,
+          opacity: 0,
+          transition: { 
+            type: "tween",
+            duration: 0.6, 
+            ease: "easeIn", 
+            delay: 0.15 
+          }
+        }
+      };
+      
+      return exitAnimations[element];
     }
     
-    // FIXED: Return to normal position - clean, direct path
+    // Return to visible state using variants
     return "visible";
   };
 
@@ -264,7 +281,7 @@ const Hero: React.FC = () => {
         }}
       />
 
-      {/* CLEAN PULSING BACKGROUND IMAGE - Using new Hero-underlying-banner.svg */}
+      {/* STABLE BACKGROUND IMAGE - Fixed positioning to prevent layout shifts */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
         <motion.div 
           className="absolute inset-0 w-full h-full flex items-center justify-center"
@@ -278,14 +295,13 @@ const Hero: React.FC = () => {
             repeatType: "loop"
           }}
           style={{
-            transform: 'none',
             willChange: 'transform'
           }}
         >
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//Hero-underlying-banner.svg"
             alt="Mathematical background pattern"
-            className="w-full h-full object-cover opacity-20" // Fixed opacity, no animation
+            className="w-full h-full object-cover opacity-20"
             style={{
               minWidth: '110vw',
               minHeight: '110vh',
@@ -327,14 +343,11 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           {/* Left content */}
           <div className="text-left">
-            {/* UPDATED: Heading with ellipsis instead of exclamation mark */}
+            {/* FIXED: Heading with unified animation variants */}
             <motion.div
-              variants={dropInVariants}
+              variants={entryVariants.heading}
               initial="hidden"
               animate={getAnimationState('heading')}
-              transition={{
-                delay: 0.2
-              }}
               style={{
                 willChange: 'transform'
               }}
@@ -351,15 +364,12 @@ const Hero: React.FC = () => {
               </motion.h1>
             </motion.div>
             
-            {/* FIXED: Description with SLIDE IN FROM LEFT animation - stays below heading */}
+            {/* FIXED: Description with unified animation variants */}
             <motion.p 
               className="font-nunito text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed"
-              variants={slideInFromLeftVariants}
+              variants={entryVariants.description}
               initial="hidden"
               animate={getAnimationState('description')}
-              transition={{
-                delay: 0.5
-              }}
               style={{
                 willChange: 'transform'
               }}
@@ -367,19 +377,16 @@ const Hero: React.FC = () => {
               Or it could help you build a treehouse, crush gaming rivals, and become a legend, while the rest remain bored and... clueless!
             </motion.p>
             
-            {/* FASTER: Button with BOUNCE IN animation - SPEEDED UP RETURN */}
+            {/* FIXED: Button with unified animation variants */}
             <div className="flex justify-start">
               <motion.button 
                 onClick={handleWatchClick}
                 className="font-barriecito group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-xl text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 cursor-pointer"
-                variants={bounceInVariants}
+                variants={entryVariants.button}
                 initial="hidden"
                 animate={getAnimationState('button')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{
-                  delay: 0.8
-                }}
                 style={{
                   willChange: 'transform'
                 }}
@@ -389,21 +396,18 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* OPTIMIZED: Right side - BoredOppo and Maya characters with IMAGE-SPECIFIC JIGGLE ANIMATION */}
+          {/* FIXED: Right side with unified animation variants and subtle image jiggle */}
           <div className="flex justify-center lg:justify-end relative">
             <motion.div 
               className="relative"
-              variants={slideInFromRightVariants}
+              variants={entryVariants.image}
               initial="hidden"
               animate={getAnimationState('image')}
-              transition={{
-                delay: 1.1
-              }}
               style={{
                 willChange: 'transform'
               }}
             >
-              {/* OPTIMIZED: Hero image with IMAGE-SPECIFIC JIGGLE - subtle and natural for visual content */}
+              {/* OPTIMIZED: Hero image with subtle, image-appropriate jiggle animation */}
               <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
