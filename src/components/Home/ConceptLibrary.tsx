@@ -134,8 +134,8 @@ const ConceptLibrary: React.FC = () => {
                 
                 {/* Content */}
                 <div className="p-6 flex-1 bg-white rounded-b-xl">
-                  <h3 className="font-barriecito text-xl text-gray-900 mb-2 group-hover:text-purple-600 transition-colors duration-300">
-                    Suggest a topic or leave feedback
+                  <h3 className="font-barriecito text-xl text-gray-900 mb-2 group-hover:text-purple-600 transition-colors duration-300 uppercase">
+                    SUGGEST A TOPIC OR LEAVE FEEDBACK
                   </h3>
                   
                   <p className="font-nunito text-gray-600 mb-4 line-clamp-3 leading-relaxed">
