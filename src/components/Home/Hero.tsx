@@ -283,6 +283,27 @@ const Hero: React.FC = () => {
         </motion.div>
       </div>
 
+      {/* Bolt Banner - FIXED POSITIONING: 80px below the sign-in button */}
+      <div className="absolute top-24 right-4 sm:right-6 lg:right-8 z-[100]">
+        <a 
+          href="https://bolt.new/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block hover:scale-105 transition-transform duration-300"
+        >
+          <img 
+            src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//white_circle_360x360%20(2).png"
+            alt="Built with Bolt - Click to visit bolt.new"
+            className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+            onError={(e) => {
+              console.error('Failed to load white circle image');
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        </a>
+      </div>
+
       {/* Content positioned lower with proper spacing */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 h-full flex items-end pb-20 pt-32 lg:pt-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
@@ -352,27 +373,6 @@ const Hero: React.FC = () => {
 
           {/* MATCHED: Right side - BoredOppo and Maya characters with SAME JIGGLE ANIMATION as heading */}
           <div className="flex justify-center lg:justify-end relative">
-            {/* Bolt Banner - MOVED HERE, positioned below the sign-in button area */}
-            <div className="absolute top-0 right-0 z-[100]">
-              <a 
-                href="https://bolt.new/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="block hover:scale-105 transition-transform duration-300"
-              >
-                <img 
-                  src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//white_circle_360x360%20(2).png"
-                  alt="Built with Bolt - Click to visit bolt.new"
-                  className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
-                  onError={(e) => {
-                    console.error('Failed to load white circle image');
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              </a>
-            </div>
-
             <motion.div 
               className="relative"
               variants={slideInFromRightVariants}
