@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import UserMenu from '../Auth/UserMenu';
 import AuthModal from '../Auth/AuthModal';
@@ -42,7 +41,7 @@ const Header: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setShowAuthModal(true)}
-                  className="flex items-center space-x-2 text-gray-700 px-4 py-2 rounded-xl font-barriecito hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                  className="text-gray-700 px-4 py-2 rounded-xl font-barriecito hover:shadow-lg transition-all duration-300 transform hover:scale-105"
                   style={{ backgroundColor: '#BDB2FF' }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = '#A89EF5';
@@ -51,8 +50,7 @@ const Header: React.FC = () => {
                     e.currentTarget.style.backgroundColor = '#BDB2FF';
                   }}
                 >
-                  <User className="h-4 w-4" />
-                  <span>Sign In</span>
+                  Sign In
                 </button>
               )}
             </div>
