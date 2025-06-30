@@ -29,8 +29,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Get the correct redirect URL for the current environment
   const getRedirectUrl = () => {
-    const baseUrl = window.location.origin;
-    return `${baseUrl}/auth/callback`;
+    // Always use the production URL since that's what's configured in Supabase
+    return 'https://boredoppo.site/auth/callback';
   };
 
   useEffect(() => {
