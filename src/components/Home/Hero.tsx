@@ -152,19 +152,19 @@ const Hero: React.FC = () => {
     }
   };
 
-  // JIGGLE ANIMATION VARIANTS - SAME FOR BOTH HEADING AND HERO IMAGE
+  // ENHANCED: More dynamic jiggle animation with larger movement and scaling - MATCHING HEADING EXACTLY
   const jiggleVariants = {
     idle: {
-      x: [0, -3, 3, -2, 2, 0],
-      y: [0, -2, 2, -1, 1, 0],
-      rotate: [0, -1, 1, -0.5, 0.5, 0],
-      scale: [1, 1.02, 0.98, 1.01, 0.99, 1],
+      x: [0, -4, 4, -3, 3, -2, 2, 0], // ENHANCED: Larger horizontal movement
+      y: [0, -3, 3, -2, 2, -1, 1, 0], // ENHANCED: Larger vertical movement
+      rotate: [0, -1.5, 1.5, -1, 1, -0.5, 0.5, 0], // ENHANCED: More rotation
+      scale: [1, 1.03, 0.97, 1.02, 0.98, 1.01, 0.99, 1], // ENHANCED: More scaling variation
       transition: {
-        duration: 3,
+        duration: 4, // ENHANCED: Slightly longer duration for more noticeable effect
         repeat: Infinity,
         repeatType: "loop",
         ease: "easeInOut",
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+        times: [0, 0.14, 0.28, 0.42, 0.56, 0.7, 0.84, 1] // ENHANCED: More keyframes for smoother motion
       }
     }
   };
@@ -371,7 +371,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          {/* MATCHED: Right side - BoredOppo and Maya characters with SAME JIGGLE ANIMATION as heading */}
+          {/* ENHANCED: Right side - BoredOppo and Maya characters with ENHANCED JIGGLE ANIMATION matching heading */}
           <div className="flex justify-center lg:justify-end relative">
             <motion.div 
               className="relative"
@@ -385,7 +385,7 @@ const Hero: React.FC = () => {
                 willChange: 'transform'
               }}
             >
-              {/* MATCHED: Hero image with EXACT SAME JIGGLE animation as the heading */}
+              {/* ENHANCED: Hero image with ENHANCED JIGGLE animation - MORE DYNAMIC than before */}
               <motion.img 
                 src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//BoredOppoAndMaya.png" 
                 alt="BoredOppo and Maya - Math learning characters"
