@@ -53,7 +53,6 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   const [isMuted, setIsMuted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false); // New state for non-auth users
 
   const { user, loading: authLoading } = useAuth();
 
@@ -267,13 +266,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
     return 'bg-gray-500';
   };
 
-  // Collapsed view for non-authenticated users - completely hidden
-  if (!user && isCollapsed) {
-    return null; // Component is completely hidden
-  }
-
-  // Minimized view for authenticated users - just Maya's avatar
-  if (user && isMinimized) {
+  // FIXED: Unified minimized view for ALL users - shows Maya's avatar
+  if (isMinimized) {
     return (
       <div className="fixed bottom-6 right-6 z-50">
         <button
@@ -296,7 +290,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               }
             }}
           />
-          {/* Status indicator */}
+          {/* Status indicator - only show for authenticated users */}
           {showStatusIndicator && user && (
             <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusIcon()}`}></div>
           )}
@@ -363,19 +357,11 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               </button>
             )}
             
-            {/* BLACK X button - different behavior for auth vs non-auth users */}
+            {/* FIXED: BLACK X button - ALWAYS minimizes to avatar for ALL users */}
             <button
-              onClick={() => {
-                if (user) {
-                  // Authenticated users: minimize to avatar
-                  setIsMinimized(true);
-                } else {
-                  // Non-authenticated users: completely collapse/hide
-                  setIsCollapsed(true);
-                }
-              }}
+              onClick={() => setIsMinimized(true)}
               className="p-1.5 text-black hover:text-gray-800 hover:bg-gray-100 transition-colors rounded-lg"
-              title={user ? "Minimize to avatar" : "Close chat"}
+              title="Minimize chat"
             >
               <X className="h-4 w-4" />
             </button>
