@@ -132,11 +132,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
             
             <div className="text-center">
               <h2 className="font-barriecito text-2xl mb-2">
-                {mode === 'login' ? 'Welcome Back!' : 'Join the Adventure!'}
+                {mode === 'login' ? 'Bored? Opposite!' : 'Join the Adventure!'}
               </h2>
               <p className="font-nunito text-blue-100">
                 {mode === 'login' 
-                  ? 'Sign in to continue your math journey' 
+                  ? 'Sign in to discuss math with Maya' 
                   : 'Create your account to start learning'
                 }
               </p>
