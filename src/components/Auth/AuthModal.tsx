@@ -244,7 +244,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'l
                 </div>
               )}
 
-              {/* Submit Button - UPDATED: Removed icon and applied beautiful gradient */}
+              {/* Submit Button - UPDATED: Using Barriecito font for consistency */}
               <button
                 type="submit"
                 disabled={loading}
