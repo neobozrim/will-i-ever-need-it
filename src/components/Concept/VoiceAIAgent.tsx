@@ -375,8 +375,8 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                 />
               </div>
               <div>
-                {/* "Chat with Maya" heading for ALL users */}
-                <h3 className="font-barriecito text-lg text-gray-900">Chat with Maya</h3>
+                {/* "Discuss with Maya" heading for ALL users */}
+                <h3 className="font-barriecito text-lg text-gray-900">Discuss with Maya</h3>
                 {/* Status indicator - only show for authenticated users */}
                 {showStatusIndicator && user && (
                   <div className="flex items-center space-x-2">
@@ -440,7 +440,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
 
                 {/* Description */}
                 <p className="font-nunito text-gray-600 mb-6 leading-relaxed">
-                  Sign in to start chatting with your AI math tutor Maya!
+                  Sign in to start discussing with your AI math tutor Maya!
                 </p>
 
                 {/* Single Sign In Link - opens the shared modal */}
@@ -553,13 +553,13 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                 {isLoading 
                   ? 'Starting conversation...' 
                   : !conversation
-                  ? `Tap to chat about ${formatConceptName(activeConceptSlug)}`
+                  ? `Tap to discuss ${formatConceptName(activeConceptSlug)}`
                   : connectionStatus === 'connecting'
                   ? 'Connecting to Maya...'
                   : isListening
                   ? 'Maya is listening!'
                   : isConnected
-                  ? 'Ready to chat'
+                  ? 'Ready to discuss'
                   : 'Reconnecting...'
                 }
               </p>
@@ -569,7 +569,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
           {/* Status messages - Only show if authenticated */}
           {user && conversationData && isConnected && !error && (
             <div className="p-3 bg-green-50 border-t border-green-200">
-              <p className="font-nunito text-xs text-green-700 font-medium text-center">✅ Maya is ready to chat!</p>
+              <p className="font-nunito text-xs text-green-700 font-medium text-center">✅ Maya is ready to discuss!</p>
             </div>
           )}
           
