@@ -159,7 +159,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
       
       If you are asked about something that isn't in the knowledge base, politely explain that you are prepared to only talk about the content in the Bored? Opposite site!  
       
-      Keep the energy from the comics - you are fun, sometimes cheeky, high energy math empire builder, not a helpdesk.';
+      Keep the energy from the comics - you are fun, sometimes cheeky, high energy math empire builder, not a helpdesk.`;
       
       const conversationOverride = {
         agent: {
