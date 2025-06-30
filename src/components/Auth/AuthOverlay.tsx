@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Lock } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AuthModal from './AuthModal';
 
@@ -15,10 +15,8 @@ const AuthOverlay: React.FC<AuthOverlayProps> = ({
   className = ""
 }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
 
-  const handleAuthClick = (mode: 'login' | 'register') => {
-    setAuthMode(mode);
+  const handleSignInClick = () => {
     setShowAuthModal(true);
   };
 
@@ -48,41 +46,13 @@ const AuthOverlay: React.FC<AuthOverlayProps> = ({
             {description}
           </p>
 
-          {/* Auth Buttons */}
-          <div className="space-y-3">
-            <button
-              onClick={() => handleAuthClick('login')}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-xl font-barriecito text-lg hover:shadow-lg transition-all duration-300 transform hover:scale-105"
-            >
-              Sign In
-            </button>
-            
-            <button
-              onClick={() => handleAuthClick('register')}
-              className="w-full border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-xl font-barriecito text-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-300"
-            >
-              Create Account
-            </button>
-          </div>
-
-          {/* Benefits */}
-          <div className="mt-6 text-left">
-            <p className="font-nunito text-sm text-gray-500 mb-2">With an account you can:</p>
-            <ul className="font-nunito text-sm text-gray-600 space-y-1">
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                <span>Chat with Maya, your AI tutor</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
-                <span>Track your learning progress</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-pink-500 rounded-full"></div>
-                <span>Save your favorite concepts</span>
-              </li>
-            </ul>
-          </div>
+          {/* Single Sign In Link */}
+          <button
+            onClick={handleSignInClick}
+            className="font-barriecito text-blue-600 hover:text-blue-700 underline text-lg transition-colors"
+          >
+            Sign in
+          </button>
         </motion.div>
       </div>
 
@@ -90,7 +60,7 @@ const AuthOverlay: React.FC<AuthOverlayProps> = ({
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        initialMode={authMode}
+        initialMode="login"
       />
     </>
   );
