@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Mic, Loader2, MicOff, Settings, Volume2, VolumeX, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
@@ -43,11 +43,31 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   autoStart = false,
   buttonSize = 'large'
 }) => {
-  // Get URL parameters to detect current concept
+  // Get URL parameters to detect current concept and location
   const { slug: urlSlug } = useParams<{ slug: string }>();
+  const location = useLocation();
   
   // Determine active concept slug - prioritize prop, then URL, then default
   const activeConceptSlug = conceptSlug || urlSlug || 'general-math';
+
+  // Determine if we're on the homepage
+  const isHomePage = location.pathname === '/';
+
+  // Initialize minimized state based on localStorage and current page
+  const getInitialMinimizedState = (): boolean => {
+    try {
+      const stored = localStorage.getItem('voiceAgentMinimized');
+      if (stored !== null) {
+        // User has a preference stored - use it regardless of page
+        return JSON.parse(stored);
+      }
+      // No stored preference - use default based on page
+      return isHomePage; // minimized on homepage, open on internal pages
+    } catch (error) {
+      console.error('Error reading minimized state from localStorage:', error);
+      return isHomePage; // fallback to page-based default
+    }
+  };
 
   const [isLoading, setIsLoading] = useState(false);
   const [conversationData, setConversationData] = useState<ConversationData | null>(null);
@@ -59,10 +79,36 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(getInitialMinimizedState);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const { user, loading: authLoading } = useAuth();
+
+  // Update minimized state when location changes (only if no user preference is stored)
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('voiceAgentMinimized');
+      if (stored === null) {
+        // No user preference stored - update based on current page
+        setIsMinimized(isHomePage);
+      }
+      // If user has a preference stored, don't change it
+    } catch (error) {
+      console.error('Error checking localStorage:', error);
+    }
+  }, [location.pathname, isHomePage]);
+
+  // Persist minimized state to localStorage whenever it changes
+  const updateMinimizedState = (minimized: boolean) => {
+    try {
+      setIsMinimized(minimized);
+      localStorage.setItem('voiceAgentMinimized', JSON.stringify(minimized));
+    } catch (error) {
+      console.error('Error saving minimized state to localStorage:', error);
+      // Still update the state even if localStorage fails
+      setIsMinimized(minimized);
+    }
+  };
 
   // Auto-start functionality - only if authenticated
   useEffect(() => {
@@ -286,12 +332,12 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
     setShowAuthModal(true);
   };
 
-  // FIXED: Unified minimized view for ALL users - shows Maya's avatar
+  // Minimized view - shows Maya's avatar
   if (isMinimized) {
     return (
       <div className="fixed bottom-6 right-6 z-50">
         <button
-          onClick={() => setIsMinimized(false)}
+          onClick={() => updateMinimizedState(false)}
           className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-purple-200 hover:border-purple-300 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300/50 overflow-hidden"
         >
           <img 
@@ -346,7 +392,7 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                 />
               </div>
               <div>
-                {/* RESTORED: "Chat with Maya" heading for ALL users */}
+                {/* "Chat with Maya" heading for ALL users */}
                 <h3 className="font-barriecito text-lg text-gray-900">Chat with Maya</h3>
                 {/* Status indicator - only show for authenticated users */}
                 {showStatusIndicator && user && (
@@ -372,9 +418,9 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
                 </button>
               )}
               
-              {/* FIXED: BLACK X button - ALWAYS VISIBLE for ALL users */}
+              {/* X button - ALWAYS VISIBLE for ALL users - saves preference */}
               <button
-                onClick={() => setIsMinimized(true)}
+                onClick={() => updateMinimizedState(true)}
                 className="p-1.5 text-black hover:text-gray-800 hover:bg-gray-100 transition-colors rounded-lg"
                 title="Minimize chat"
               >
