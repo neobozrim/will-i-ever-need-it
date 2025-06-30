@@ -272,20 +272,26 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsMinimized(false)}
-          className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-purple-200 hover:border-purple-300 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300/50"
+          className="w-16 h-16 rounded-full bg-white shadow-lg border-2 border-purple-200 hover:border-purple-300 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300/50 overflow-hidden"
         >
           <img 
             src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
             alt="Maya - Click to expand"
-            className="w-full h-full rounded-full object-cover"
+            className="w-full h-full object-cover"
             onError={(e) => {
               console.error('Failed to load Maya avatar');
+              // Fallback to gradient background with initials
               const target = e.target as HTMLImageElement;
               target.style.display = 'none';
+              const parent = target.parentElement;
+              if (parent) {
+                parent.className = 'w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-barriecito text-xl shadow-lg border-2 border-purple-200 hover:border-purple-300 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300/50';
+                parent.innerHTML = 'M';
+              }
             }}
           />
           {/* Status indicator */}
-          {showStatusIndicator && (
+          {showStatusIndicator && user && (
             <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${getStatusIcon()}`}></div>
           )}
         </button>
@@ -296,7 +302,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   return (
     <div className="fixed bottom-6 right-6 z-50 w-80 h-80 transition-all duration-300">
       <div className="relative w-full h-full bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
-        {/* Authentication Overlay */}
+        {/* Authentication Overlay - Only show for unauthenticated users */}
         {!authLoading && !user && (
           <AuthOverlay
             title="Chat with Maya"
@@ -315,8 +321,14 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
                 className="w-10 h-10 rounded-full object-cover border-2 border-purple-200"
                 onError={(e) => {
                   console.error('Failed to load Maya avatar');
+                  // Fallback to gradient background with initials
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.className = 'w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-barriecito text-sm border-2 border-purple-200 flex-shrink-0';
+                    parent.innerHTML = 'M';
+                  }
                 }}
               />
             </div>
@@ -333,7 +345,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             </div>
           </div>
           
-          {/* Control buttons - Only settings and X */}
+          {/* Control buttons - Settings (only for authenticated users) and X (for all users) */}
           <div className="flex items-center space-x-1">
             {showVolumeControls && conversation && user && (
               <button

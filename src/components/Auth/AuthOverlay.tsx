@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AuthModal from './AuthModal';
 
@@ -29,10 +28,25 @@ const AuthOverlay: React.FC<AuthOverlayProps> = ({
           transition={{ duration: 0.3 }}
           className="text-center p-6 max-w-sm"
         >
-          {/* Lock Icon */}
+          {/* Maya's Avatar */}
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <Lock className="h-8 w-8 text-white" />
+            <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-purple-200 shadow-lg">
+              <img 
+                src="https://xjmktjcflmjrqbtofdjq.supabase.co/storage/v1/object/public/thumbnails//voice-ai-avatar.png"
+                alt="Maya - AI Math Tutor"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  console.error('Failed to load Maya avatar');
+                  // Fallback to gradient background with initials
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.className = 'w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-barriecito text-xl shadow-lg';
+                    parent.innerHTML = 'M';
+                  }
+                }}
+              />
             </div>
           </div>
 
