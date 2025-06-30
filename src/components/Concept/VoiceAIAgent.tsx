@@ -302,16 +302,8 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
   return (
     <div className="fixed bottom-6 right-6 z-50 w-80 h-80 transition-all duration-300">
       <div className="relative w-full h-full bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden">
-        {/* Authentication Overlay - Only show for unauthenticated users */}
-        {!authLoading && !user && (
-          <AuthOverlay
-            title="Chat with Maya"
-            description="Sign in to start chatting with your AI math tutor Maya!"
-          />
-        )}
-
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-purple-50 to-pink-50">
+        {/* Header - ALWAYS VISIBLE with X button */}
+        <div className="relative flex items-center justify-between p-4 border-b border-gray-100 bg-gradient-to-r from-purple-50 to-pink-50 z-50">
           <div className="flex items-center space-x-3">
             {/* Maya's Avatar */}
             <div className="flex-shrink-0">
@@ -333,7 +325,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               />
             </div>
             <div>
-              <h3 className="font-barriecito text-lg text-gray-900">Discuss with Maya</h3>
+              <h3 className="font-barriecito text-lg text-gray-900">Chat with Maya</h3>
               {showStatusIndicator && user && (
                 <div className="flex items-center space-x-2">
                   <div className={`w-2 h-2 rounded-full transition-colors ${getStatusIcon()}`}></div>
@@ -345,7 +337,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             </div>
           </div>
           
-          {/* Control buttons */}
+          {/* Control buttons - ALWAYS VISIBLE */}
           <div className="flex items-center space-x-1">
             {/* Settings button - only for authenticated users with active conversation */}
             {showVolumeControls && conversation && user && (
@@ -357,7 +349,7 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
               </button>
             )}
             
-            {/* FIXED: BLACK X button - ALWAYS minimizes to avatar for ALL users */}
+            {/* FIXED: BLACK X button - ALWAYS VISIBLE for ALL users */}
             <button
               onClick={() => setIsMinimized(true)}
               className="p-1.5 text-black hover:text-gray-800 hover:bg-gray-100 transition-colors rounded-lg"
@@ -367,6 +359,17 @@ Only discuss ${data.concept} - ignore other math topics in your knowledge base.`
             </button>
           </div>
         </div>
+
+        {/* Authentication Overlay - positioned BELOW header */}
+        {!authLoading && !user && (
+          <div className="absolute inset-0 top-16 bg-white/95 backdrop-blur-sm flex items-center justify-center z-40 rounded-b-2xl">
+            <AuthOverlay
+              title="Chat with Maya"
+              description="Sign in to start chatting with your AI math tutor Maya!"
+              className="bg-transparent backdrop-blur-none"
+            />
+          </div>
+        )}
 
         {/* Volume Controls - Only show if authenticated */}
         {showSettings && showVolumeControls && conversation && user && (
