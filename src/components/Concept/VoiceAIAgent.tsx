@@ -50,22 +50,19 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   // Determine active concept slug - prioritize prop, then URL, then default
   const activeConceptSlug = conceptSlug || urlSlug || 'general-math';
 
-  // Determine if we're on the homepage
-  const isHomePage = location.pathname === '/';
-
-  // Initialize minimized state based on localStorage and current page
+  // Initialize minimized state - always minimized by default unless user has explicitly opened it
   const getInitialMinimizedState = (): boolean => {
     try {
       const stored = localStorage.getItem('voiceAgentMinimized');
       if (stored !== null) {
-        // User has a preference stored - use it regardless of page
+        // User has a preference stored - use it
         return JSON.parse(stored);
       }
-      // No stored preference - use default based on page
-      return isHomePage; // minimized on homepage, open on internal pages
+      // No stored preference - default to minimized
+      return true;
     } catch (error) {
       console.error('Error reading minimized state from localStorage:', error);
-      return isHomePage; // fallback to page-based default
+      return true; // fallback to minimized
     }
   };
 
@@ -83,20 +80,6 @@ const VoiceAIAgent: React.FC<VoiceAIAgentProps> = ({
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const { user, loading: authLoading } = useAuth();
-
-  // Update minimized state when location changes (only if no user preference is stored)
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('voiceAgentMinimized');
-      if (stored === null) {
-        // No user preference stored - update based on current page
-        setIsMinimized(isHomePage);
-      }
-      // If user has a preference stored, don't change it
-    } catch (error) {
-      console.error('Error checking localStorage:', error);
-    }
-  }, [location.pathname, isHomePage]);
 
   // Persist minimized state to localStorage whenever it changes
   const updateMinimizedState = (minimized: boolean) => {
